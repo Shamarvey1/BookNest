@@ -1,0 +1,209 @@
+.landing-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.landing-left {
+  flex: 1;
+  position: relative;
+  background-image: url("/src/assets/images/landing-bg.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.landing-left::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(40, 110, 255, 0.75);
+}
+
+.brand-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  z-index: 5;
+  width: 80%;
+  max-width: 500px;
+}
+
+.logo img {
+  width: 150px;         
+  height: auto;
+  margin-bottom: 30px;
+  filter: brightness(0) invert(1);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.brand-box h1 {
+  font-size: 42px;
+  font-weight: 700;
+  white-space: nowrap;
+  margin-bottom: 12px;
+}
+
+
+.brand-box p {
+  font-size: 17px;
+  opacity: 0.95;
+}
+
+.landing-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #eef2f7;
+}
+
+
+
+.form-card {
+  width: 520px;                     
+  background: white;
+  padding: 65px 50px;              
+  border-radius: 24px;
+  box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.10);
+}
+
+.form-card h2 {
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.form-card p {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #555;
+  font-size: 15px;
+}
+
+.input-group {
+  margin-bottom: 22px;
+}
+
+.input-group label {
+  font-size: 14px;
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #777;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;  
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+.input-wrapper input:focus {
+  border-color: #1e56ff;
+  box-shadow: 0 0 0 3px rgba(30, 86, 255, 0.15);
+  outline: none;
+}
+
+
+.forgot {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.forgot a {
+  font-size: 13px;
+  color: #1e56ff;
+  text-decoration: none;
+}
+
+
+.btn-primary {
+  width: 100%;
+  padding: 15px;
+  background: #1e56ff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 15px;
+  transition: 0.2s;
+}
+
+.btn-primary:hover {
+  background: #1647d6;
+}
+
+.switch-text {
+  text-align: center;
+  font-size: 15px;
+}
+
+.switch-text span {
+  color: #1e56ff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .landing-container {
+    flex-direction: column;
+  }
+
+  .landing-left {
+    height: 45%;
+  }
+
+  .landing-right {
+    height: 55%;
+  }
+
+  .form-card {
+    width: 90%;
+  }
+
+  .brand-box h1 {
+    font-size: 34px;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 600px) {
+  .landing-left {
+    display: none;
+  }
+
+  .landing-right {
+    width: 100%;
+    height: 100%;
+  }
+
+  .form-card {
+    width: 92%;
+    padding: 35px 25px;
+  }
+}

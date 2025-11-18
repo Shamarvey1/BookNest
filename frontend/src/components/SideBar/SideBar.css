@@ -1,0 +1,168 @@
+.sidebar {
+  width: 20%;
+  height: 100vh;
+  background-color: #fff;
+  border-right: 1px solid #e5e7eb;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.3s ease;
+}
+
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2563eb;
+  margin-bottom: 2rem;
+  margin-left: 1.3rem;
+}
+
+.nav-section {
+  flex: 1;
+}
+
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  margin-bottom: 1rem;
+}
+
+.nav-links a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #374151;
+  font-size: 1.05rem;
+  font-weight: 500;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+  background-color: #f1f5f9;
+}
+
+.nav-links a.active {
+  background-color: #eff6ff;
+  color: #2563eb;
+}
+
+
+.icon {
+  width: 22px;
+  height: 22px;
+}
+
+
+
+.dark-mode button {
+  background: #3675db;
+  color: #ffffff;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%; 
+}
+
+
+.dark-mode button:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}
+
+
+.dark-mode .icon {
+  color: #ffffff;
+  width: 22px;
+  height: 22px;
+}
+
+
+
+.auth-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.btn {
+  width: 100%;
+  padding: 0.9rem 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+
+.login-btn {
+  background: transparent;
+  color: #2563eb;
+  border: 2px solid #2563eb;
+}
+
+.login-btn:hover {
+  background: #2563eb;
+  color: #fff;
+}
+
+
+.signup-btn {
+  background: #f97316;
+  color: #fff;
+  border: 2px solid #f97316;
+}
+
+.signup-btn:hover {
+  background: #ea580c;
+}
+
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+
+  .nav-section {
+    flex: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.2rem;
+  }
+
+  .auth-buttons {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  .dark-mode {
+    display: none;
+  }
+
+  .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
+  }
+}
