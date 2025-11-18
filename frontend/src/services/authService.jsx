@@ -1,6 +1,4 @@
-const API_URL = "http://localhost:5001/api/auth";
-
-
+const API_URL = "https://booknest-aewf.onrender.com/api/auth";
 export const signupAPI = async (data) => {
   const res = await fetch(`${API_URL}/signup`, {
     method: "POST",
