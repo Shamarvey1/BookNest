@@ -3,7 +3,7 @@ import {createBrowserRouter,createRoutesFromElements,Route,RouterProvider} from 
 import Landing from './pages/Landing/Landing.jsx';
 import MainLayout from './components/layout/MainLayout.jsx';
 import Home from './pages/Home/Home.jsx';
-import Premium from './pages/premium/premiun.jsx';
+import Premium from './pages/premium/premium.jsx';
 import ProtectedRoute from './components/protectedRoute/ProtectedRoute.jsx';
 
 const router = createBrowserRouter(
