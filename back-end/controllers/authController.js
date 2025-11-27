@@ -1,12 +1,10 @@
-import prisma from "../config/prisma.js";
-import bcrypt from "bcryptjs";
-import { generateToken } from "../utils/jwt.js";
+const prisma = require("../config/prisma.js");
+const bcrypt = require("bcryptjs");
+const { generateToken } = require("../utils/jwt.js");
 
-export const signup = async (req, res) => {
+const signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-
-    console.log("Signup request received:", req.body);
 
     const existing = await prisma.user.findUnique({
       where: { email }
@@ -33,13 +31,9 @@ export const signup = async (req, res) => {
   }
 };
 
-
-export const login = async (req, res) => {
+const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    console.log("Login request received:", req.body);
-
 
     const user = await prisma.user.findUnique({
       where: { email }
@@ -62,3 +56,4 @@ export const login = async (req, res) => {
     res.status(500).json({ msg: "Server error" });
   }
 };
+module.exports = { signup, login };

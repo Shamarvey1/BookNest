@@ -1,6 +1,5 @@
 import React from "react";
 import "./Home.css";
-
 import SearchBar from "../../components/SearchBar/SearchBar";
 import BookCard from "../../components/BookCard/BookCard";
 

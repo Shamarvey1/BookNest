@@ -1,13 +1,11 @@
-import jwt from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
 
-export const protect = (req, res, next) => {
+const protect = (req, res, next) => {
   const authHeader = req.headers.authorization;
-
   if (!authHeader)
     return res.status(401).json({ msg: "No token, authorization denied" });
 
   const token = authHeader.split(" ")[1];
-
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.userId = decoded.userId;
@@ -16,3 +14,5 @@ export const protect = (req, res, next) => {
     res.status(401).json({ msg: "Invalid token" });
   }
 };
+
+module.exports =  {protect} ;
