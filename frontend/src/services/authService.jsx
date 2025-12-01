@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:5001/api/auth";
+import { ENDPOINT } from "../constants";
+const API_URL = `${ENDPOINT}/api/auth`;
 
 export const signupAPI = async (data) => {
   const res = await fetch(`${API_URL}/signup`, {

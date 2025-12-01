@@ -1,5 +1,4 @@
 let ENDPOINT;
-
 if(process.env.NODE_ENV === 'production'){
   ENDPOINT = "https://booknest-1-hiti.onrender.com";
 } else {

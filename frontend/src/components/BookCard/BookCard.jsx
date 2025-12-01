@@ -1,12 +1,18 @@
 import React from "react";
 import "./BookCard.css";
 
-const BookCard = ({ title, author, cover }) => {
+const BookCard = ({ book, onRead }) => {
   return (
     <div className="book-card">
-      <img src={cover} alt={title} className="book-cover" />
-      <h3 className="book-title">{title}</h3>
-      <p className="book-author">{author}</p>
+      <img
+        src={book.coverUrl || "/placeholder-cover.png"}
+        alt={book.title}
+      />
+
+      <h3>{book.title}</h3>
+      <p className="author">{book.authors.join(", ")}</p>
+
+      <button onClick={onRead}>Read</button>
     </div>
   );
 };

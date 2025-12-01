@@ -1,47 +1,58 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import "./Home.css";
-import SearchBar from "../../components/SearchBar/SearchBar";
+import { searchBooksAPI, saveBookAPI } from "../../services/bookService";
 import BookCard from "../../components/BookCard/BookCard";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const sampleBooks = [
-    {
-      id: 1,
-      title: "Atomic Habits",
-      author: "James Clear",
-      cover:
-        "https://images-na.ssl-images-amazon.com/images/I/81wgcld4wxL.jpg",
-    },
-    {
-      id: 2,
-      title: "The Psychology of Money",
-      author: "Morgan Housel",
-      cover:
-        "https://m.media-amazon.com/images/I/71g2ednj0JL._AC_UF1000,1000_QL80_.jpg",
-    },
-    {
-      id: 3,
-      title: "Rich Dad Poor Dad",
-      author: "Robert Kiyosaki",
-      cover:
-        "https://m.media-amazon.com/images/I/81bsw6fnUiL._AC_UF1000,1000_QL80_.jpg",
-    },
-  ];
+  const [query, setQuery] = useState("");
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const debounceRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleAutoSearch = (value) => {
+    clearTimeout(debounceRef.current);
+
+    debounceRef.current = setTimeout(async () => {
+      if (!value.trim()) {
+        setBooks([]);
+        return;
+      }
+
+      setLoading(true);
+      const data = await searchBooksAPI(value);
+      setBooks(data.books);
+      setLoading(false);
+    }, 400);
+  };
+
+  const handleRead = async (gutenId) => {
+    const book = await saveBookAPI(gutenId);
+    navigate(`/reader/${book.id}`);
+  };
 
   return (
-    <div className="home-container">
-      <SearchBar />
-
-      <h2 className="section-title">Recommended Books</h2>
+    <div className="home">
+      <div className="search-wrapper">
+        <input
+          type="text"
+          placeholder="Search books by title or author..."
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            handleAutoSearch(e.target.value);
+          }}
+        />
+      </div>
       <div className="books-grid">
-        {sampleBooks.map((book) => (
-          <BookCard
-            key={book.id}
-            title={book.title}
-            author={book.author}
-            cover={book.cover}
-          />
-        ))}
+        {loading && <p className="loading">Searching...</p>}
+
+        {!loading &&
+          books.map((book) => (
+            <BookCard key={book.gutenId} book={book} onRead={() => handleRead(book.gutenId)} />
+          ))}
       </div>
     </div>
   );

@@ -16,3 +16,14 @@ model User {
   isPremium Boolean  @default(false)
   createdAt DateTime @default(now())
 }
+
+
+model Book {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  gutenId    Int      @unique
+  title      String
+  authors    String[]
+  coverUrl   String?
+  content    String?
+  createdAt  DateTime @default(now())
+}
