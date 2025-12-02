@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const bookController = require("../controllers/bookController");
-router.get("/search", bookController.searchBooks);
-router.post("/save/:gutenId", bookController.saveBook);
-router.get("/:id", bookController.getBook);
-
+const {searchBooks,saveBook,getBook,defaultBooks} = require("../controllers/bookController");
+const protect = require("../middleware/authMiddleware.js");
+router.get("/default",defaultBooks);
+router.get("/search",searchBooks);
+router.post("/save/:gutenId",saveBook);
+router.get("/:id",getBook);
 module.exports = router;

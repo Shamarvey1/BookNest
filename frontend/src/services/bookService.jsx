@@ -1,5 +1,11 @@
 const API_URL = "http://localhost:5001/api/books";
 
+
+export const getDefaultBooksAPI = async () => {
+  const res = await fetch(`${API_URL}/default`);
+  return res.json();
+};
+
 export const searchBooksAPI = async (query) => {
   const res = await fetch(`${API_URL}/search?q=${query}`);
   return res.json();

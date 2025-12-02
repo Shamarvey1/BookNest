@@ -26,7 +26,7 @@ const signup = async (req, res) => {
 
     res.json({ msg: "Signup successful" });
   } catch (err) {
-    console.error("🔥 SIGNUP ERROR:", err);  
+    console.error(" SIGNUP ERROR:", err);  
     res.status(500).json({ msg: "Server error" });
   }
 };
@@ -52,7 +52,7 @@ const login = async (req, res) => {
 
     res.json({ token });
   } catch (err) {
-    console.error("🔥 LOGIN ERROR:", err);     
+    console.error("LOGIN ERROR:", err);     
     res.status(500).json({ msg: "Server error" });
   }
 };

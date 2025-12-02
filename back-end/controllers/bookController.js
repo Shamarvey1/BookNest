@@ -2,7 +2,26 @@ const prisma = require("../config/prisma");
 const axios = require("axios");
 
 
-exports.searchBooks = async (req, res) => {
+defaultBooks = async (req, res) => {
+  try {
+    const response = await axios.get("https://gutendex.com/books");
+    const data = response.data;
+
+    const books = data.results.map((b) => ({
+      gutenId: b.id,
+      title: b.title,
+      authors: b.authors?.map((a) => a.name) || [],
+      coverUrl: b.formats?.["image/jpeg"] || null,
+    }));
+
+    res.json({ books });
+  } catch (err) {
+    console.error("DEFAULT BOOKS ERROR:", err.message);
+    res.json({ books: [] });
+  }
+};
+
+searchBooks = async (req, res) => {
   try {
     const q = req.query.q || "";
 
@@ -27,7 +46,7 @@ exports.searchBooks = async (req, res) => {
   }
 };
 
-exports.saveBook = async (req, res) => {
+saveBook = async (req, res) => {
   try {
     const gutenId = Number(req.params.gutenId);
 
@@ -70,7 +89,7 @@ exports.saveBook = async (req, res) => {
   }
 };
 
-exports.getBook = async (req, res) => {
+getBook = async (req, res) => {
   try {
     const id = req.params.id;
 
@@ -83,6 +102,8 @@ exports.getBook = async (req, res) => {
     res.json(book);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ msg: "Error loading book" });
+    console.error(" GET BOOK ERROR:");
+    res.status(500).json({ msg: "Error loading books" });
   }
 };
+module.exports = { searchBooks, saveBook, getBook,defaultBooks};
