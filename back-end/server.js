@@ -14,6 +14,9 @@ app.use(cors());
 
 app.use("/api/auth", authRoutes);   
 app.use("/api/books", bookRoutes);
+// app.use("/api/bookmarks", require("./routes/bookmarkRoutes"));
+// app.use("/api/favorites", require("./routes/favoriteRoutes"));
+
 
 
 app.get("/", (req, res) => {

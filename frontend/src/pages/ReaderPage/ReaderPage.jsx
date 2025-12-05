@@ -7,25 +7,38 @@ const ReaderPage = () => {
   const { id } = useParams();
   const [book, setBook] = useState(null);
 
-  useEffect(() => {
-    const loadBook = async () => {
+useEffect(() => {
+  const loadBook = async () => {
+    try {
       const data = await getBookByIdAPI(id);
-      setBook(data);
-    };
+      if (!data || !data.id || !data.content) {
+        return; 
+      }
 
-    loadBook();
-  }, [id]);
+      setBook(data);
+    } catch (err) {
+      console.error("READER LOAD ERROR:", err);
+    }
+  };
+
+  loadBook();
+}, [id]);
+
 
   if (!book) return <div className="reader-loading">Loading book...</div>;
+
+  const authors = Array.isArray(book.authors)
+    ? book.authors.join(", ")
+    : book.authors;
 
   return (
     <div className="reader-container">
       <h1>{book.title}</h1>
-      <p className="author">By: {book.authors.join(", ")}</p>
+      <p className="author">By: {authors}</p>
 
-      <pre className="reader-content">
+      <div className="reader-content">
         {book.content}
-      </pre>
+      </div>
     </div>
   );
 };

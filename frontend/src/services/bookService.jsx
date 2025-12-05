@@ -27,11 +27,12 @@ export const saveBookAPI = async (gutenId) => {
 export const getBookByIdAPI = async (id) => {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`${API_URL}/${id}`, {
+  const res = await fetch(`${API_URL}/${id}`,{
     headers: {
       Authorization: "Bearer " + token,
-    },
+    }
   });
+  console.log(res,"res in getBookByIdAPI");
 
   return res.json();
 };

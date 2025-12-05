@@ -5,6 +5,9 @@ import MainLayout from './components/layout/MainLayout.jsx';
 import Home from './pages/Home/Home.jsx';
 import Premium from './pages/premium/Premium.jsx';
 import ProtectedRoute from './components/protectedRoute/ProtectedRoute.jsx';
+import ReaderPage from './pages/ReaderPage/ReaderPage.jsx';
+// import BookDetails from './pages/BookDetails/BookDetails.jsx';
+// import Library from './pages/Library/Library.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -15,8 +18,10 @@ const router = createBrowserRouter(
       <Route path="/main" element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
         <Route index element={<Home />} />
         <Route path="premium" element={<Premium />} />
+        {/* <Route path="book/:id" element={<BookDetails />} />
+        <Route path="library" element={<Library />} /> */}
       </Route>
-
+      <Route path="/reader/:id" element={<ReaderPage />} />
       <Route path="*" element={<div>404 Not Found</div>} />
     </>
   )

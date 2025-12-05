@@ -4,6 +4,6 @@ const {searchBooks,saveBook,getBook,defaultBooks} = require("../controllers/book
 const protect = require("../middleware/authMiddleware.js");
 router.get("/default",defaultBooks);
 router.get("/search",searchBooks);
-router.post("/save/:gutenId",saveBook);
-router.get("/:id",getBook);
+router.post("/save/:gutenId",protect,saveBook);
+router.get("/:id",protect,getBook);
 module.exports = router;
