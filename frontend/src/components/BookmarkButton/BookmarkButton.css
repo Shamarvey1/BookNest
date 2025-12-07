@@ -1,0 +1,12 @@
+.bd-icon-btn {
+  background: #eee;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+}
+
+.bd-icon-btn:hover {
+  background: #ddd;
+}

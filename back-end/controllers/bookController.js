@@ -1,9 +1,9 @@
-// backend/controllers/bookController.js
+
 const prisma = require("../config/prisma");
 const axios = require("axios");
 const { htmlToText } = require("html-to-text");
 
-// Helper: map Gutendex result → our frontend book card shape
+
 const mapGutendexBook = (b) => ({
   gutenId: b.id,
   title: b.title,
@@ -11,7 +11,7 @@ const mapGutendexBook = (b) => ({
   coverUrl: b.formats?.["image/jpeg"] || null,
 });
 
-// Helper: pick best readable format URL (txt > html)
+
 const pickReadableFormat = (formats = {}) => {
   if (!formats) return { url: null, type: null };
 
@@ -45,7 +45,6 @@ const defaultBooks = async (req, res) => {
   }
 };
 
-// ------------------ SEARCH BOOKS FROM GUTENDEX ------------------
 const searchBooks = async (req, res) => {
   try {
     const q = req.query.q || "";
@@ -64,7 +63,7 @@ const searchBooks = async (req, res) => {
   }
 };
 
-// ------------------ SAVE FULL TEXT OF BOOK (TXT OR HTML→TEXT) ------------------
+
 const saveBook = async (req, res) => {
   try {
     const gutenId = Number(req.params.gutenId);
@@ -73,7 +72,7 @@ const saveBook = async (req, res) => {
       return res.status(400).json({ msg: "Invalid Guten ID" });
     }
 
-    // 1️⃣ Check if exists in DB already
+
     const existing = await prisma.book.findUnique({
       where: { gutenId },
     });
@@ -83,11 +82,11 @@ const saveBook = async (req, res) => {
       return res.json(existing);
     }
 
-    // 2️⃣ Fetch metadata from Gutendex
+
     const metaRes = await axios.get(`https://gutendex.com/books/${gutenId}`);
     const meta = metaRes.data;
 
-    // 3️⃣ Pick best format
+
     const { url, type } = pickReadableFormat(meta.formats);
 
     if (!url) {
@@ -95,11 +94,10 @@ const saveBook = async (req, res) => {
       return res.status(400).json({ msg: "Text/HTML version unavailable" });
     }
 
-    // 4️⃣ Download content
     const textRes = await axios.get(url, { responseType: "text" });
     let content = textRes.data;
 
-    // 5️⃣ If HTML → convert to plain text
+
     if (type === "html") {
       content = htmlToText(content, {
         wordwrap: 120,
@@ -107,7 +105,7 @@ const saveBook = async (req, res) => {
       });
     }
 
-    // 6️⃣ Save in MongoDB via Prisma
+
     const savedBook = await prisma.book.create({
       data: {
         gutenId,
@@ -126,7 +124,6 @@ const saveBook = async (req, res) => {
   }
 };
 
-// ------------------ GET BOOK FROM DATABASE ------------------
 const getBook = async (req, res) => {
   try {
     const id = req.params.id;

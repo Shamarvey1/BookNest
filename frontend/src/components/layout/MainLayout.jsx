@@ -28,7 +28,7 @@ const MainLayout = () => {
         }
         setUser(data);
       } catch (err) {
-        console.err("Auth verify failed:", err);
+        console.error("Auth verify failed:", err);
         localStorage.removeItem("token");
         navigate("/");
       }

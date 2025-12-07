@@ -1,0 +1,35 @@
+.heart-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+
+  background: #ffffff;
+  border-radius: 50%;
+  border: 1.8px solid #e2e2e2;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.heart-btn:hover {
+  background: rgba(255, 0, 0, 0.08);
+  border-color: #ff4d4d;
+  transform: scale(1.05);
+}
+
+.heart-btn:active {
+  transform: scale(0.92);
+}
+
+.heart-btn svg {
+  transition: all 0.25s ease;
+}
+.heart-btn.filled svg {
+  transform: scale(1.15);
+}
+.heart-btn svg {
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.15));
+}

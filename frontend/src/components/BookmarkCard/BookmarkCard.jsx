@@ -1,0 +1,41 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./BookCard.css";
+
+function BookCard({ book, onRemove }) {
+  const navigate = useNavigate();
+
+  const realId = book.id || book._id || book.bookId;
+
+  if (!realId) {
+    console.error(" BookCard ERROR: Book has no valid ID:", book);
+  }
+
+  function openDetails() {
+    if (!realId) return;
+    navigate(`/main/book/${realId}`, { state: { book } });
+  }
+
+  return (
+    <div className="book-card" onClick={openDetails}>
+      {onRemove && (
+        <button
+          className="remove-btn"
+          onClick={(e) => {
+            e.stopPropagation(); 
+            onRemove(realId);
+          }}
+        >
+          ✕
+        </button>
+      )}
+      <img src={book.coverUrl} className="book-cover" alt={book.title} />
+      <h4 className="book-title">{book.title}</h4>
+      {book.authors && (
+        <p className="book-author">{book.authors.join(", ")}</p>
+      )}
+    </div>
+  );
+}
+
+export default BookCard;

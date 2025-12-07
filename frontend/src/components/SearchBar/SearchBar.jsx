@@ -4,7 +4,7 @@ import "./SearchBar.css";
 const SearchBar = ({ query, setQuery, onSearch, onAutoSearch }) => {
   const debounceRef = useRef(null);
 
-//  Meaning of your sentence:
+
 // “I have 350 ms to write new string or else it will call API after 350 ms.
 // If I write a new string again, it clears previous timer and starts a new 350 ms.”
   const handleChange = (e) => {

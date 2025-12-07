@@ -1,5 +1,12 @@
-const API_URL = "http://localhost:5001/api/books";
 
+import { ENDPOINT } from "../constants";
+const API_URL = `${ENDPOINT}/api/books`;
+
+export const getBookMetaAPI = async (gutenId) => {
+  const res = await fetch(`https://gutendex.com/books/${gutenId}`);
+  if (!res.ok) throw new Error("Failed to fetch book meta");
+  return res.json();
+};
 
 export const getDefaultBooksAPI = async () => {
   const res = await fetch(`${API_URL}/default`);

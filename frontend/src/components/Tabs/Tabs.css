@@ -1,0 +1,46 @@
+.tabs-root {
+  display: inline-flex;
+  border-bottom: 1px solid #e5e7eb;
+  gap: 2px;
+}
+
+.tabs-item {
+  position: relative;
+  border: none;
+  background: none;
+  padding: 10px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.tabs-item-active {
+  color: #111827;
+}
+
+.tabs-item-active::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: -1px;
+  height: 2px;
+  border-radius: 999px;
+  background-color: #4f46e5;
+}
+
+.tabs-icon {
+  font-size: 15px;
+}
+
+.tabs-pill {
+  min-width: 18px;
+  padding: 0 6px;
+  font-size: 11px;
+  border-radius: 999px;
+  background-color: #f3f4f6;
+  color: #4b5563;
+}

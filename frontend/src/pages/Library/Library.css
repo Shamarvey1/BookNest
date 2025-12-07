@@ -1,0 +1,54 @@
+.library-page {
+  padding: 25px;
+  color: #222;
+}
+
+.library-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+
+.tab-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.tabs {
+  background: #ffffff;
+  padding: 6px;
+  border-radius: 14px;
+  display: flex;
+  gap: 8px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+}
+
+.tab {
+  padding: 10px 20px;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  color: #555;
+}
+
+.tab:hover {
+  background: #f4f2ff;
+}
+
+.tab.active {
+  background: #7c6fff;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(124, 111, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+  gap: 20px;
+}
