@@ -1,5 +1,5 @@
 
-import { ENDPOINT } from "../constants";
+import { ENDPOINT } from "../config/endpoint";
 const API_URL = `${ENDPOINT}/api/books`;
 
 export const getBookMetaAPI = async (gutenId) => {

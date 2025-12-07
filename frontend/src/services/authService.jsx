@@ -1,4 +1,4 @@
-import { ENDPOINT } from "../constants";
+import { ENDPOINT } from "../config/endpoint";
 const API_URL = `${ENDPOINT}/api/auth`;
 
 export const signupAPI = async (data) => {

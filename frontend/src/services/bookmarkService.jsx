@@ -1,4 +1,4 @@
-import { ENDPOINT } from "../constants";
+import { ENDPOINT } from "../config/endpoint";
 const API = `${ENDPOINT}/api`;
 
 function auth() {

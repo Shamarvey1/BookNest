@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import SideBar from "../SideBar/SideBar";
 import "./MainLayout.css";
-import { ENDPOINT } from "../../constants";
+import { ENDPOINT } from "../../config/endpoint";
 
 const MainLayout = () => {
   const navigate = useNavigate();
