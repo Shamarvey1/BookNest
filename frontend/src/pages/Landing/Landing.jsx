@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { FiMail, FiLock, FiUser } from "react-icons/fi";   
 import "./Landing.css";
 import { signupAPI, loginAPI } from "../../services/authService";
+import openBook from "../../assets/icons/open-book.png";
 
 const Landing = ({ mode }) => {
   const location = useLocation();
@@ -53,7 +54,8 @@ const Landing = ({ mode }) => {
       <div className="landing-left">
         <div className="brand-box">
           <div className="logo">
-            <img src="/src/assets/icons/open-book.png" alt="BookNest Logo" />
+            <img src={openBook} alt="BookNest Logo" />
+
           </div>
           <h1>Welcome to BookNest</h1>
           <p>Your personal library to discover, read, and track your favorite books</p>
