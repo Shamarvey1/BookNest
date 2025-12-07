@@ -7,7 +7,11 @@ const router = express.Router();
 router.post("/signup",signup);
 router.post("/login", login);
 router.get("/main", protect, (req, res) => {
-  res.json({ msg: "Authorized access to main route"});
+  res.json({
+    id: req.user.id,
+    name: req.user.name,
+    email: req.user.email,
+  });
 });
 
 module.exports = router;
