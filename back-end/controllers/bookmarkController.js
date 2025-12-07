@@ -15,11 +15,11 @@ exports.addBookmark = async (req, res) => {
     if (exists) return res.json({ message: "Already bookmarked" });
 
     const bookmark = await prisma.bookmark.create({
-      data: { userId, bookId },
-      include: { book: true },
-    });
+  data: { userId, bookId },
+  include: { book: true },   
+});
 
-    res.status(201).json(bookmark);
+res.json(bookmark);
 
   } catch (err) {
     console.error("BOOKMARK ADD ERROR:", err);
@@ -37,7 +37,7 @@ exports.removeBookmark = async (req, res) => {
       where: { userId, bookId }
     });
 
-    res.status(200).json({ message: "Bookmark removed" });
+    res.json({ message: "Bookmark removed" });
   } catch (err) {
     console.error("BOOKMARK REMOVE ERROR:", err);
     res.status(500).json({ message: "Server error" });
@@ -54,9 +54,9 @@ exports.getBookmarks = async (req, res) => {
       include: { book: true }
     });
 
-    res.status(200).json({userId: req.user.id, bookmarks });
+    res.json(bookmarks);
   } catch (err) {
     console.error("BOOKMARK GET ERROR:", err);
-    res.status(500).json({ message: "Server error",userId: req.user.id });
+    res.status(500).json({ message: "Server error" });
   }
 };
