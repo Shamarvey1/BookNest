@@ -12,7 +12,6 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// ⭐ ALLOW BOTH LOCALHOST & VERCEL FRONTEND
 app.use(
   cors({
     origin: [
@@ -25,18 +24,18 @@ app.use(
   })
 );
 
-// ⭐ API ROUTES
+
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api/bookmarks", bookmarkRoutes);
 app.use("/api/favorites", favoriteRoutes);
 
-// TEST ROUTE
+
 app.get("/", (req, res) => {
   res.send("BookNest API is running...");
 });
 
-// SERVER
+
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`🔥 Server running on port ${PORT}`);

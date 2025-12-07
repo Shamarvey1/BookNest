@@ -50,7 +50,6 @@ function Library() {
     <div className="library-page">
       <h1 className="library-title">My Library</h1>
 
-      {/* Tabs */}
       <div className="tab-container">
         <button
           className={`tab ${activeTab === "all" ? "active" : ""}`}

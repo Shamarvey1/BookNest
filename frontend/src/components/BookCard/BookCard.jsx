@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./BookCard.css";
-import { ENDPOINT } from "../../constants";
+import { ENDPOINT } from "../../config/endpoint";
+
 const API_BASE = `${ENDPOINT}/api`;
 
 function BookCard({ book, onRemove }) {
@@ -11,9 +12,10 @@ function BookCard({ book, onRemove }) {
 
   async function openDetails() {
     let finalId = realId;
+    let finalBook = book;
 
     if (!finalId) {
-      console.log(" Book has no ID — saving to DB now...", book);
+      console.log("📚 Saving new book into DB...", book);
 
       const res = await fetch(`${API_BASE}/books/save/${book.gutenId}`, {
         method: "POST",
@@ -24,11 +26,17 @@ function BookCard({ book, onRemove }) {
       });
 
       const saved = await res.json();
+
       finalId = saved.id;
-      console.log("📘 Book saved, DB ID =", finalId);
+
+
+      finalBook = { ...book, id: saved.id };
+
+      console.log("📘 Book saved successfully — new ID =", finalId);
     }
 
-    navigate(`/main/book/${finalId}`, { state: { book } });
+  
+    navigate(`/main/book/${finalId}`, { state: { book: finalBook } });
   }
 
   return (
@@ -45,7 +53,7 @@ function BookCard({ book, onRemove }) {
         </button>
       )}
 
-      <img src={book.coverUrl} className="book-cover" />
+      <img src={book.coverUrl} alt={book.title} className="book-cover" />
 
       <h4 className="book-title">{book.title}</h4>
 
