@@ -7,87 +7,25 @@
   display: flex;
   justify-content: center;
   margin-bottom: 25px;
-  padding: 0 10px;
 }
 
 .search-wrapper input {
-  width: 100%;
-  max-width: 600px;
+  width: 70%;
   padding: 14px 20px;
   border-radius: 12px;
   border: 1px solid #ddd;
   background: #f7f7f7;
   font-size: 17px;
   outline: none;
-  transition: 0.25s ease;
-}
-
-.search-wrapper input:focus {
-  border-color: #6c63ff;
-  box-shadow: 0 0 5px rgba(108, 99, 255, 0.3);
 }
 
 .books-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 22px;
 }
-
 
 .loading {
   text-align: center;
   font-size: 20px;
-  margin-top: 20px;
-}
-
-
-
-@media (max-width: 900px) {
-  .search-wrapper input {
-    max-width: 500px;
-    padding: 12px 18px;
-    font-size: 16px;
-  }
-
-  .books-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 18px;
-  }
-}
-
-
-@media (max-width: 600px) {
-  .search-wrapper input {
-    padding: 12px 16px;
-    font-size: 15px;
-  }
-
-  .books-grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 16px;
-  }
-}
-
-@media (max-width: 480px) {
-  .home {
-    padding: 14px;
-  }
-
-  .search-wrapper {
-    padding: 0 6px;
-  }
-
-  .search-wrapper input {
-    padding: 10px 14px;
-    font-size: 14px;
-  }
-
-  .books-grid {
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: 14px;
-  }
-
-  .loading {
-    font-size: 18px;
-  }
 }

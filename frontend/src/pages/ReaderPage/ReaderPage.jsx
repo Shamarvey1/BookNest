@@ -1,82 +1,71 @@
-
 import React, { useEffect, useState } from "react";
-import "./ReaderPage.css";
+import HTMLFlipBook from "react-pageflip";
 import { useParams } from "react-router-dom";
+import "./ReaderPage.css";
 import { getBookByIdAPI } from "../../services/bookService";
 
-const PAGE_SIZE = 1500; 
+const PAGE_SIZE = 1500;
 
-const ReaderPage = () => {
+function ReaderPage() {
   const { id } = useParams();
   const [book, setBook] = useState(null);
   const [pages, setPages] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     const loadBook = async () => {
-      try {
-        const data = await getBookByIdAPI(id);
+      const data = await getBookByIdAPI(id);
+      if (!data || !data.content) return;
 
-        if (!data || !data.content) return;
+      const text = data.content;
+      const chunks = [];
 
-        const text = data.content;
-        const pageList = [];
-
-        for (let i = 0; i < text.length; i += PAGE_SIZE) {
-          pageList.push(text.substring(i, i + PAGE_SIZE));
-        }
-
-        setBook(data);
-        setPages(pageList);
-      } catch (err) {
-        console.error("READER LOAD ERROR:", err);
+      for (let i = 0; i < text.length; i += PAGE_SIZE) {
+        chunks.push(text.substring(i, i + PAGE_SIZE));
       }
+
+      setBook(data);
+      setPages(chunks);
     };
 
     loadBook();
   }, [id]);
 
-  if (!book) return <div className="reader-loading">Loading book...</div>;
-
-  const authors = Array.isArray(book.authors)
-    ? book.authors.join(", ")
-    : book.authors;
-
-  const totalPages = pages.length;
-  const pageText = pages[currentPage] || "";
+  if (!book) return <div className="reader-loading">Loading book…</div>;
 
   return (
-    <div className="reader-container">
+    <div className="reader-wrapper">
+      <h1 className="reader-title">{book.title}</h1>
 
-      <h1>{book.title}</h1>
-      <p className="author">By: {authors}</p>
+      <HTMLFlipBook
+        width={500}
+        height={700}
+        size="fixed"
+        minWidth={315}
+        maxWidth={600}
+        minHeight={400}
+        maxHeight={900}
+        showCover={true}
+        mobileScrollSupport={true}
+        className="flip-book"
+      >
+        <div className="page cover-page">
+          <h2>{book.title}</h2>
+          <p className="author">{book.authors?.join(", ")}</p>
+        </div>
 
-      <div className="reader-content">
-        {pageText}
-      </div>
+        {pages.map((p, i) => (
+          <div key={i} className="page">
+            <div className="page-text">{p}</div>
+            <div className="page-number">{i + 1}</div>
+          </div>
+        ))}
 
-      <div className="pagination-controls">
-        <button
-          disabled={currentPage === 0}
-          onClick={() => setCurrentPage((p) => p - 1)}
-        >
-          ← Previous
-        </button>
-
-        <span>
-          Page {currentPage + 1} / {totalPages}
-        </span>
-
-        <button
-          disabled={currentPage === totalPages - 1}
-          onClick={() => setCurrentPage((p) => p + 1)}
-        >
-          Next →
-        </button>
-      </div>
-
+        <div className="page end-page">
+          <h2>THE END</h2>
+        </div>
+      </HTMLFlipBook>
     </div>
   );
-};
+}
 
 export default ReaderPage;

@@ -1,42 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./BookCard.css";
-import { ENDPOINT } from "../../config/endpoint";
-
-const API_BASE = `${ENDPOINT}/api`;
 
 function BookCard({ book, onRemove }) {
   const navigate = useNavigate();
 
-  const realId = book.id || book._id || book.bookId;
+  const realId = book.id || book._id || book.bookId || null;
 
-  async function openDetails() {
-    let finalId = realId;
-    let finalBook = book;
-
-    if (!finalId) {
-      console.log("📚 Saving new book into DB...", book);
-
-      const res = await fetch(`${API_BASE}/books/save/${book.gutenId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
-
-      const saved = await res.json();
-
-      finalId = saved.id;
-
-
-      finalBook = { ...book, id: saved.id };
-
-      console.log("📘 Book saved successfully — new ID =", finalId);
-    }
-
-  
-    navigate(`/main/book/${finalId}`, { state: { book: finalBook } });
+  function openDetails() {
+    navigate(`/main/book/${realId || book.gutenId}`, {
+      state: { book }
+    });
   }
 
   return (

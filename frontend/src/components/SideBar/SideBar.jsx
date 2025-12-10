@@ -13,11 +13,9 @@ function SideBar() {
           <li><NavLink to="/main" end><Home className="icon" /><span>Home</span></NavLink></li>
           <li><NavLink to="/main/library"><Library/><span>My Library</span></NavLink></li>
           <li><NavLink to="/main/premium"><Crown className="icon" /><span>Premium</span></NavLink></li>
-          
         </ul>
       </div>
       <div className="dark-mode"><Moon className="icon" />
-        <button><span>Dark Mode</span></button>
       </div>
     </div>
   );

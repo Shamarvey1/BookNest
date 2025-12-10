@@ -112,7 +112,7 @@ const saveBook = async (req, res) => {
         title: meta.title,
         authors: meta.authors?.map((a) => a.name) || [],
         coverUrl: meta.formats?.["image/jpeg"] || null,
-        content,
+        content
       },
     });
 
