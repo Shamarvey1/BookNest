@@ -35,7 +35,7 @@ const defaultBooks = async (req, res) => {
   try {
     const response = await axios.get("https://gutendex.com/books");
     const data = response.data;
-
+    console.log("DEFAULT BOOKS FETCHED:");
     const books = (data.results || []).map(mapGutendexBook);
 
     res.json({ books });
@@ -52,7 +52,6 @@ const searchBooks = async (req, res) => {
     const url = `https://gutendex.com/books?search=${encodeURIComponent(q)}`;
     const response = await axios.get(url);
     const data = response.data;
-
     const results = Array.isArray(data.results) ? data.results : [];
     const books = results.map(mapGutendexBook);
 

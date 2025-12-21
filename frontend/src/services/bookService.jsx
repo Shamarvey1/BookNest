@@ -11,7 +11,7 @@ export const getBookMetaAPI = async (gutenId) => {
 export const getDefaultBooksAPI = async () => {
   const res = await fetch(`${API_URL}/default`);
   return res.json();
-};
+};1
 
 export const searchBooksAPI = async (query) => {
   const res = await fetch(`${API_URL}/search?q=${query}`);
@@ -36,7 +36,7 @@ export const getBookByIdAPI = async (id) => {
 
   const res = await fetch(`${API_URL}/${id}`,{
     headers: {
-      Authorization: "Bearer " + token,
+      Authorization: "Bearer " + token
     }
   });
   console.log(res,"res in getBookByIdAPI");

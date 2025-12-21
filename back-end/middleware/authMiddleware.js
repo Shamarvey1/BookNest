@@ -12,15 +12,13 @@ const protect = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
     const user = await prisma.user.findUnique({
-      where: { id: decoded.userId },
+      where: { id: decoded.userId }
     });
 
     if (!user) {
       return res.status(401).json({ msg: "User no longer exists" });
     }
-
     req.user = user;
     next();
   } catch (err) {

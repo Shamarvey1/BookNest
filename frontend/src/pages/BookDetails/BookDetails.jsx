@@ -121,8 +121,6 @@ function BookDetails() {
               onStatusChange={handleFavoriteStatus}
             />
           </div>
-
-          {/* Info Box */}
           <div className="bd-ready-card">
             <div className="bd-ready-title">
               <span className="bd-ready-icon">📖</span>
