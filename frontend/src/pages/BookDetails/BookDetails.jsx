@@ -5,7 +5,7 @@ import "./BookDetails.css";
 import BookmarkButton from "../../components/BookmarkButton/BookmarkButton";
 import FavoriteButton from "../../components/FavoriteButton/FavoriteButton";
 
-const API_BASE = "http://localhost:5001/api";
+const API_BASE = `${import.meta.env.VITE_API_URL}/api`;
 
 function BookDetails() {
   const location = useLocation();

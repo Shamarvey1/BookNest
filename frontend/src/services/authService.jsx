@@ -14,6 +14,7 @@ export const signupAPI = async (data) => {
 };
 
 export const loginAPI = async (data) => {
+  console.log("API_URL in loginAPI:", API_URL);
   const res = await fetch(`${API_URL}/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

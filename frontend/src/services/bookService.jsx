@@ -21,6 +21,7 @@ export const searchBooksAPI = async (query) => {
 export const saveBookAPI = async (gutenId) => {
   const token = localStorage.getItem("token");
 
+  console.log(API_URL,"API_URL in saveBookAPI");
   const res = await fetch(`${API_URL}/save/${gutenId}`, {
     method: "POST",
     headers: {
@@ -33,7 +34,6 @@ export const saveBookAPI = async (gutenId) => {
 
 export const getBookByIdAPI = async (id) => {
   const token = localStorage.getItem("token");
-
   const res = await fetch(`${API_URL}/${id}`,{
     headers: {
       Authorization: "Bearer " + token
