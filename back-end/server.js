@@ -6,6 +6,7 @@ const authRoutes = require("./routes/authRoutes.js");
 const bookRoutes = require("./routes/bookRoutes");
 const favoriteRoutes = require("./routes/favoriteRoutes");
 const bookmarkRoutes = require("./routes/bookmarkRoutes");
+const writingRoutes = require("./routes/writingRoutes");
 
 dotenv.config();
 
@@ -29,7 +30,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api/bookmarks", bookmarkRoutes);
 app.use("/api/favorites", favoriteRoutes);
-
+app.use("/api/writing", writingRoutes);
 
 app.get("/", (req, res) => {
   res.send("BookNest API is running...");
