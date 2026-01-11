@@ -1,0 +1,17 @@
+.writing-editor textarea {
+  width: 100%;
+  min-height: 260px;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  resize: vertical;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.word-count {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #666;
+  text-align: right;
+}

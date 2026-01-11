@@ -10,7 +10,9 @@ import ReaderPage from "./pages/ReaderPage/ReaderPage.jsx";
 import { BookmarkProvider } from "./context/BookmarkContext.jsx";   
 import { FavoriteProvider } from "./context/FavoriteContext.jsx";   
 import Library from "./pages/Library/Library.jsx";   
-import BookDetails from "./pages/BookDetails/BookDetails.jsx";      
+import BookDetails from "./pages/BookDetails/BookDetails.jsx";    
+import MyBooks from "./pages/Writing/MyBooks/MyBooks.jsx";
+import WriteBook from "./pages/Writing/WriteBook/WriteBook.jsx";  
 
 
 
@@ -24,8 +26,13 @@ const router = createBrowserRouter(
         <Route path="book/:id" element={<BookDetails />} />
         <Route path="premium" element={<Premium />} />
         <Route path="library" element={<Library />} />
+        <Route path="my-books" element={<MyBooks />} />
+        <Route path="write-book" element={<WriteBook />} />
+        <Route path="write-book/:id" element={<WriteBook />} />
+
       </Route>
       <Route path="/reader/:id" element={<ReaderPage />} />
+      
       <Route path="*" element={<div>404 Not Found</div>} />
     </>
   )

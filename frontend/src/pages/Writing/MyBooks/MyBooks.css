@@ -1,0 +1,39 @@
+.my-books-page {
+  padding: 30px;
+}
+
+.my-books-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.my-books-title {
+  font-size: 26px;
+}
+
+.my-books-subtitle {
+  color: #666;
+  margin-top: 4px;
+}
+
+.new-book-btn {
+  padding: 10px 16px;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.my-books-grid {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.error-text {
+  color: red;
+  margin-top: 20px;
+}

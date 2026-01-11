@@ -1,0 +1,52 @@
+.write-book-page {
+  padding: 30px;
+}
+
+.write-book-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.write-book-title {
+  font-size: 26px;
+}
+
+.write-book-subtitle {
+  color: #666;
+  margin-top: 4px;
+}
+
+.write-book-actions button {
+  margin-left: 10px;
+}
+
+.cancel-btn {
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  background: white;
+  border-radius: 6px;
+}
+
+.save-btn {
+  padding: 8px 16px;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+.write-book-content {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.book-title-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}

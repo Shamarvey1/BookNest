@@ -1,0 +1,20 @@
+.writing-tips {
+  background: #eef2ff;
+  padding: 16px;
+  border-radius: 10px;
+  border-left: 4px solid #4f46e5;
+}
+
+.writing-tips h4 {
+  margin-bottom: 10px;
+}
+
+.writing-tips ul {
+  padding-left: 16px;
+}
+
+.writing-tips li {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 6px;
+}

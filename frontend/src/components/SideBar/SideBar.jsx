@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink,useNavigate } from 'react-router-dom';
-import { Home, Crown, Moon, Library } from 'lucide-react';
+import { Home, Crown, Moon, Library,PenLine } from 'lucide-react';
 import './SideBar.css';
 
 function SideBar() {
@@ -13,6 +13,8 @@ function SideBar() {
           <li><NavLink to="/main" end><Home className="icon" /><span>Home</span></NavLink></li>
           <li><NavLink to="/main/library"><Library/><span>My Library</span></NavLink></li>
           <li><NavLink to="/main/premium"><Crown className="icon" /><span>Premium</span></NavLink></li>
+          <li><NavLink to="/main/my-books"><PenLine className="icon" /><span>Self Writing</span></NavLink>
+          </li>
         </ul>
       </div>
       <div className="dark-mode"><Moon className="icon" />
