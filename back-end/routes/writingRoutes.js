@@ -9,12 +9,13 @@ const {
   updateBook
 } = require("../controllers/writingController");
 
-// All routes are protected
 router.use(protect);
 
-router.post("/", createBook);       // Create new book
-router.get("/", getMyBooks);         // Get all my books
-router.get("/:id", getBookById);     // Get single book
-router.put("/:id", updateBook);      // Update book
+router.post("/", createBook);
+router.get("/", getMyBooks);
+router.get("/:id", getBookById);
+router.put("/:id", updateBook);
+router.delete("/:id", deleteBook);
+
 
 module.exports = router;

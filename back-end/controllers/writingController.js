@@ -1,10 +1,5 @@
 const prisma = require("../config/prisma");
 
-/**
- * @desc    Create a new user-written book
- * @route   POST /api/writing
- * @access  Private
- */
 const createBook = async (req, res) => {
   try {
     const { title, content } = req.body;
@@ -28,11 +23,7 @@ const createBook = async (req, res) => {
   }
 };
 
-/**
- * @desc    Get all books written by logged-in user
- * @route   GET /api/writing
- * @access  Private
- */
+
 const getMyBooks = async (req, res) => {
   try {
     const books = await prisma.userBook.findMany({
@@ -51,11 +42,6 @@ const getMyBooks = async (req, res) => {
   }
 };
 
-/**
- * @desc    Get a single user-written book
- * @route   GET /api/writing/:id
- * @access  Private
- */
 const getBookById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -78,11 +64,7 @@ const getBookById = async (req, res) => {
   }
 };
 
-/**
- * @desc    Update an existing user-written book
- * @route   PUT /api/writing/:id
- * @access  Private
- */
+
 const updateBook = async (req, res) => {
   try {
     const { id } = req.params;
@@ -113,10 +95,36 @@ const updateBook = async (req, res) => {
     res.status(500).json({ msg: "Failed to update book" });
   }
 };
+const deleteBook = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const book = await prisma.userBook.findFirst({
+      where: {
+        id,
+        userId: req.user.id
+      }
+    });
+
+    if (!book) {
+      return res.status(404).json({ msg: "Book not found" });
+    }
+
+    await prisma.userBook.delete({
+      where: { id }
+    });
+
+    res.json({ msg: "Book deleted successfully" });
+  } catch (error) {
+    console.error("DELETE BOOK ERROR:", error);
+    res.status(500).json({ msg: "Failed to delete book" });
+  }
+};
 
 module.exports = {
   createBook,
   getMyBooks,
   getBookById,
-  updateBook
+  updateBook,
+  deleteBook
 };
