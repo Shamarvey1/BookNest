@@ -6,7 +6,8 @@ const {
   createBook,
   getMyBooks,
   getBookById,
-  updateBook
+  updateBook,
+  deleteBook
 } = require("../controllers/writingController");
 
 router.use(protect);
