@@ -1,10 +1,9 @@
 import React from 'react';
-import { NavLink,useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Home, Crown, Moon, Library,PenLine } from 'lucide-react';
 import './SideBar.css';
 
 function SideBar() {
-  const navigate = useNavigate();
   return (
     <div className="sidebar">
       <h2 className="logo">BookNest</h2>

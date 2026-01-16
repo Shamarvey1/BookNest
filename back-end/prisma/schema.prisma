@@ -17,7 +17,7 @@ model User {
 
   bookmarks Bookmark[]
   favorites Favorite[]
-  userBooks UserBook[]   // 👈 User-written books
+  userBooks UserBook[]   
 }
 
 model Book {
@@ -65,7 +65,7 @@ model UserBook {
   title       String
   genre       String?        
   description String?        
-  coverUrl    String?        // Cover image URL
+  coverUrl    String?       
   content     String?
 
   createdAt   DateTime @default(now())

@@ -1,7 +1,6 @@
-// Simple in-memory cache (reset when server restarts)
+
 const cache = {};
 
-// key: string, value: any, ttlMs: number (default 5 minutes)
 function setCache(key, value, ttlMs = 5 * 60 * 1000) {
   cache[key] = {
     value,

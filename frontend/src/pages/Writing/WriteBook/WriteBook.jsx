@@ -30,7 +30,6 @@ function WriteBook() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
 
-  // Load book (edit mode)
   useEffect(() => {
     if (!isEdit) return;
 
@@ -52,7 +51,6 @@ function WriteBook() {
     loadBook();
   }, [id, isEdit]);
 
-  // ✅ IMAGE UPLOAD (FIXED & SAFE)
   async function handleCoverUpload(e) {
     const file = e.target.files[0];
     if (!file) return;

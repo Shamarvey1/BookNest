@@ -18,7 +18,7 @@ function MyBooks() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Fetch books
+
   useEffect(() => {
     async function loadBooks() {
       try {
@@ -34,7 +34,7 @@ function MyBooks() {
     loadBooks();
   }, []);
 
-  // New book
+
   const handleNewBook = () => {
     navigate("/main/write-book");
   };
