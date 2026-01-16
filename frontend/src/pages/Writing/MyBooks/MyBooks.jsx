@@ -7,8 +7,8 @@ import {
   deleteBook
 } from "../../../services/writingService";
 
-import EmptyBooks from "../../../components/Writing/EmptyBooks/EmptyBooks";
 import WritingCard from "../../../components/Writing/WritingCard/WritingCard";
+import EmptyBooks from "../../../components/Writing/EmptyBooks/EmptyBooks";
 import WritingSkeleton from "../../../components/Writing/WritingSkeleton/WritingSkeleton";
 
 function MyBooks() {
@@ -17,11 +17,13 @@ function MyBooks() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  // Fetch books
   useEffect(() => {
     async function loadBooks() {
       try {
         const data = await fetchMyBooks();
-        setBooks(data);
+        setBooks(data || []);
       } catch (err) {
         setError(err.message || "Failed to load books");
       } finally {
@@ -32,20 +34,20 @@ function MyBooks() {
     loadBooks();
   }, []);
 
-  // ➕ New Book
-  function handleNewBook() {
+  // New book
+  const handleNewBook = () => {
     navigate("/main/write-book");
-  }
+  };
 
-  // ✏️ Edit Book
-  function handleEditBook(id) {
+  // Edit book
+  const handleEditBook = (id) => {
     navigate(`/main/write-book/${id}`);
-  }
+  };
 
-  // 🗑️ Delete Book
-  async function handleDeleteBook(id) {
+  // Delete book
+  const handleDeleteBook = async (id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this book? This action cannot be undone."
+      "Are you sure you want to delete this book? This cannot be undone."
     );
 
     if (!confirmDelete) return;
@@ -56,10 +58,11 @@ function MyBooks() {
     } catch (err) {
       alert(err.message || "Failed to delete book");
     }
-  }
+  };
 
   return (
     <div className="my-books-page">
+      {/* Header */}
       <div className="my-books-header">
         <div>
           <h1 className="my-books-title">My Books</h1>
@@ -76,11 +79,12 @@ function MyBooks() {
       {loading && <WritingSkeleton />}
 
       {!loading && error && (
-        <p className="error-text">{error}</p>
+        <p className="my-books-error">{error}</p>
       )}
       {!loading && !error && books.length === 0 && (
         <EmptyBooks onStartWriting={handleNewBook} />
       )}
+
       {!loading && !error && books.length > 0 && (
         <div className="my-books-grid">
           {books.map((book) => (

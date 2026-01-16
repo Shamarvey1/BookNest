@@ -2,84 +2,43 @@ import { ENDPOINT } from "../config/endpoint";
 
 const API = `${ENDPOINT}/api/writing`;
 
+const auth = () => ({
+  "Content-Type": "application/json",
+  Authorization: "Bearer " + localStorage.getItem("token")
+});
 
-function auth() {
-  return {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + localStorage.getItem("token"),
-  };
-}
+export const fetchMyBooks = async () => {
+  const res = await fetch(API, { headers: auth() });
+  return res.json();
+};
 
+export const fetchBookById = async (id) => {
+  const res = await fetch(`${API}/${id}`, { headers: auth() });
+  return res.json();
+};
 
-export async function createBook(data) {
+export const createBook = async (data) => {
   const res = await fetch(API, {
     method: "POST",
     headers: auth(),
-    body: JSON.stringify(data),
+    body: JSON.stringify(data)
   });
+  return res.json();
+};
 
-  const result = await res.json();
-  if (!res.ok) {
-    throw new Error(result.msg || "Failed to create book");
-  }
-
-  return result;
-}
-
-
-export async function fetchMyBooks() {
-  const res = await fetch(API, {
-    headers: auth(),
-  });
-
-  const result = await res.json();
-  if (!res.ok) {
-    throw new Error(result.msg || "Failed to fetch books");
-  }
-
-  return result;
-}
-
-
-export async function fetchBookById(id) {
-  const res = await fetch(`${API}/${id}`, {
-    headers: auth(),
-  });
-
-  const result = await res.json();
-  if (!res.ok) {
-    throw new Error(result.msg || "Failed to fetch book");
-  }
-
-  return result;
-}
-
-
-export async function updateBook(id, data) {
+export const updateBook = async (id, data) => {
   const res = await fetch(`${API}/${id}`, {
     method: "PUT",
     headers: auth(),
-    body: JSON.stringify(data),
+    body: JSON.stringify(data)
   });
+  return res.json();
+};
 
-  const result = await res.json();
-  if (!res.ok) {
-    throw new Error(result.msg || "Failed to update book");
-  }
-
-  return result;
-}
-
-export async function deleteBook(id) {
+export const deleteBook = async (id) => {
   const res = await fetch(`${API}/${id}`, {
     method: "DELETE",
-    headers: auth(),
+    headers: auth()
   });
-
-  const result = await res.json();
-  if (!res.ok) {
-    throw new Error(result.msg || "Failed to delete book");
-  }
-
-  return result;
-}
+  return res.json();
+};

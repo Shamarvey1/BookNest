@@ -10,7 +10,7 @@ function SideBar() {
       <h2 className="logo">BookNest</h2>
       <div className="nav-section">
         <ul className="nav-links">
-          <li><NavLink to="/main" end><Home className="icon" /><span>Home</span></NavLink></li>
+          <li><NavLink to="/main" end><Home className="icon" /><span>Discover</span></NavLink></li>
           <li><NavLink to="/main/library"><Library/><span>My Library</span></NavLink></li>
           <li><NavLink to="/main/premium"><Crown className="icon" /><span>Premium</span></NavLink></li>
           <li><NavLink to="/main/my-books"><PenLine className="icon" /><span>Self Writing</span></NavLink>

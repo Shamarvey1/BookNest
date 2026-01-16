@@ -65,7 +65,7 @@ model UserBook {
   title       String
   genre       String?        
   description String?        
-  coverUrl    String?        
+  coverUrl    String?        // Cover image URL
   content     String?
 
   createdAt   DateTime @default(now())

@@ -1,53 +1,46 @@
 import React from "react";
-import { Pencil, Trash2, FileText } from "lucide-react";
+import { Pencil, Trash2, BookOpen } from "lucide-react";
 import "./WritingCard.css";
 
 function WritingCard({ book, onEdit, onDelete }) {
-  const wordCount = book.content
-    ? book.content.trim().split(/\s+/).length
-    : 0;
+  const preview =
+    book.description ||
+    book.content?.slice(0, 90) ||
+    "No description provided";
+
+  const date = new Date(book.updatedAt || book.createdAt);
+  const formattedDate = date.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
 
   return (
     <div className="writing-card">
-      <div className="writing-card-icon">
-        <FileText size={28} />
+      <div className="writing-card-actions-stack">
+        <button className="icon-btn edit" onClick={() => onEdit(book.id)}>
+          <Pencil size={16} />
+        </button>
+        <button className="icon-btn delete" onClick={() => onDelete(book.id)}>
+          <Trash2 size={16} />
+        </button>
+      </div>
+
+      <div className="writing-card-cover">
+        {book.coverUrl ? (
+          <img src={book.coverUrl} alt={book.title} />
+        ) : (
+          <div className="cover-placeholder">
+            <BookOpen size={24} />
+          </div>
+        )}
       </div>
 
       <div className="writing-card-body">
-        <h3 className="writing-card-title">
-          {book.title || "Untitled Book"}
-        </h3>
-
-        <p className="writing-card-meta">
-          Fiction · {wordCount} words
-        </p>
-
-        <p className="writing-card-preview">
-          {book.content?.slice(0, 90) || "Start writing your story..."}
-        </p>
-
-        <div className="writing-card-footer">
-          <span className="writing-card-date">
-            Updated {new Date(book.updatedAt || book.createdAt).toLocaleDateString()}
-          </span>
-
-          <div className="writing-card-actions">
-            <button
-              className="edit-btn"
-              onClick={() => onEdit(book.id)}
-            >
-              <Pencil size={15} />
-              Edit
-            </button>
-
-            <button
-              className="delete-btn"
-              onClick={() => onDelete(book.id)}
-            >
-              <Trash2 size={15} />
-            </button>
-          </div>
-        </div>
+        <h3>{book.title}</h3>
+        <p className="genre">{book.genre || "Fiction"}</p>
+        <p className="date">Last updated · {formattedDate}</p>
+        <p className="preview">{preview}</p>
       </div>
     </div>
   );

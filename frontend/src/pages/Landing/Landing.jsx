@@ -12,13 +12,10 @@ const Landing = ({ mode }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token){
-      navigate("/main");
+    if (token) {
+      navigate("/main", { replace: true });
     }
-    else{
-      navigate("/")
-    }
-  }, []);
+  }, [navigate]);
 
 
   const [isLogin, setIsLogin] = useState(mode !== "signup");

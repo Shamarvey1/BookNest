@@ -2,123 +2,57 @@ const prisma = require("../config/prisma");
 
 const createBook = async (req, res) => {
   try {
-    const { title, content } = req.body;
-
-    if (!title || !content) {
-      return res.status(400).json({ msg: "Title and content are required" });
-    }
+    const { title, content, genre, description, coverUrl } = req.body;
 
     const book = await prisma.userBook.create({
       data: {
         title,
         content,
+        genre,
+        description,
+        coverUrl,
         userId: req.user.id
       }
     });
 
     res.status(201).json(book);
-  } catch (error) {
-    console.error("CREATE BOOK ERROR:", error);
+  } catch (err) {
     res.status(500).json({ msg: "Failed to create book" });
   }
 };
 
-
 const getMyBooks = async (req, res) => {
-  try {
-    const books = await prisma.userBook.findMany({
-      where: {
-        userId: req.user.id
-      },
-      orderBy: {
-        createdAt: "desc"
-      }
-    });
-
-    res.json(books);
-  } catch (error) {
-    console.error("GET BOOKS ERROR:", error);
-    res.status(500).json({ msg: "Failed to fetch books" });
-  }
+  const books = await prisma.userBook.findMany({
+    where: { userId: req.user.id },
+    orderBy: { updatedAt: "desc" }
+  });
+  res.json(books);
 };
 
 const getBookById = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const book = await prisma.userBook.findFirst({
-      where: {
-        id,
-        userId: req.user.id
-      }
-    });
-
-    if (!book) {
-      return res.status(404).json({ msg: "Book not found" });
-    }
-
-    res.json(book);
-  } catch (error) {
-    console.error("GET BOOK ERROR:", error);
-    res.status(500).json({ msg: "Failed to fetch book" });
-  }
+  const book = await prisma.userBook.findFirst({
+    where: { id: req.params.id, userId: req.user.id }
+  });
+  if (!book) return res.status(404).json({ msg: "Book not found" });
+  res.json(book);
 };
-
 
 const updateBook = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { title, content } = req.body;
+  const { title, content, genre, description, coverUrl } = req.body;
 
-    const existingBook = await prisma.userBook.findFirst({
-      where: {
-        id,
-        userId: req.user.id
-      }
-    });
+  const updated = await prisma.userBook.update({
+    where: { id: req.params.id },
+    data: { title, content, genre, description, coverUrl }
+  });
 
-    if (!existingBook) {
-      return res.status(404).json({ msg: "Book not found" });
-    }
-
-    const updatedBook = await prisma.userBook.update({
-      where: { id },
-      data: {
-        title: title ?? existingBook.title,
-        content: content ?? existingBook.content
-      }
-    });
-
-    res.json(updatedBook);
-  } catch (error) {
-    console.error("UPDATE BOOK ERROR:", error);
-    res.status(500).json({ msg: "Failed to update book" });
-  }
+  res.json(updated);
 };
+
 const deleteBook = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const book = await prisma.userBook.findFirst({
-      where: {
-        id,
-        userId: req.user.id
-      }
-    });
-
-    if (!book) {
-      return res.status(404).json({ msg: "Book not found" });
-    }
-
-    await prisma.userBook.delete({
-      where: { id }
-    });
-
-    res.json({ msg: "Book deleted successfully" });
-  } catch (error) {
-    console.error("DELETE BOOK ERROR:", error);
-    res.status(500).json({ msg: "Failed to delete book" });
-  }
+  await prisma.userBook.delete({
+    where: { id: req.params.id }
+  });
+  res.json({ msg: "Book deleted" });
 };
 
 module.exports = {

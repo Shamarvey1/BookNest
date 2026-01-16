@@ -5,49 +5,88 @@ import "./WriteBook.css";
 import {
   createBook,
   fetchBookById,
-  updateBook,
+  updateBook
 } from "../../../services/writingService";
 
 import WritingEditor from "../../../components/Writing/WritingEditor/WritingEditor";
 import WritingTips from "../../../components/Writing/WritingTips/WritingTips";
+import WritingSteps from "../../../components/Writing/WritingSteps/WritingSteps";
 
 function WriteBook() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const isEditMode = Boolean(id);
+  const isEdit = Boolean(id);
 
-  // step: "details" | "content"
   const [step, setStep] = useState("details");
 
   const [title, setTitle] = useState("Untitled Book");
   const [genre, setGenre] = useState("Fiction");
-  const [coverUrl, setCoverUrl] = useState("");
   const [description, setDescription] = useState("");
+  const [coverUrl, setCoverUrl] = useState("");
   const [content, setContent] = useState("");
 
+  const [loading, setLoading] = useState(isEdit);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
 
-  // load existing book
+  // Load book (edit mode)
   useEffect(() => {
-    if (!isEditMode) return;
+    if (!isEdit) return;
 
     async function loadBook() {
       try {
         const book = await fetchBookById(id);
         setTitle(book.title || "Untitled Book");
+        setGenre(book.genre || "Fiction");
+        setDescription(book.description || "");
+        setCoverUrl(book.coverUrl || "");
         setContent(book.content || "");
-      } catch (err) {
-        setError(err.message);
+      } catch {
+        setError("Failed to load book");
+      } finally {
+        setLoading(false);
       }
     }
 
     loadBook();
-  }, [id, isEditMode]);
+  }, [id, isEdit]);
 
-  const wordCount = content.trim()
-    ? content.trim().split(/\s+/).length
-    : 0;
+  // ✅ IMAGE UPLOAD (FIXED & SAFE)
+  async function handleCoverUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    setError("");
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "demo_unsigned");
+
+    try {
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/dotbkqkxc/image/upload",
+        {
+          method: "POST",
+          body: formData
+        }
+      );
+
+      const data = await res.json();
+
+      if (!data.secure_url) {
+        throw new Error("Upload failed");
+      }
+      console.log("Image URL:", data.secure_url);
+      setCoverUrl(data.secure_url);
+    } catch (err) {
+      console.error("UPLOAD ERROR:", err);
+      setError("Image upload failed. Check Cloudinary settings.");
+    } finally {
+      setUploading(false);
+    }
+  }
 
   async function handleSave() {
     if (!title.trim()) {
@@ -55,68 +94,80 @@ function WriteBook() {
       return;
     }
 
+    if (uploading) {
+      setError("Please wait for image upload to finish");
+      return;
+    }
+
     try {
       setSaving(true);
       setError("");
 
-      if (isEditMode) {
-        await updateBook(id, { title, content });
+      const payload = {
+        title,
+        genre,
+        description,
+        coverUrl,
+        content
+      };
+
+      if (isEdit) {
+        await updateBook(id, payload);
       } else {
-        await createBook({ title, content });
+        await createBook(payload);
       }
 
       navigate("/main/my-books");
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Failed to save book");
     } finally {
       setSaving(false);
     }
   }
 
+  if (loading) {
+    return <div className="write-book-loading">Loading...</div>;
+  }
+
   return (
     <div className="write-book-page">
-      {/* Header */}
       <div className="write-book-header">
         <div>
-          <h1>Write New Book</h1>
-          <p>Create your masterpiece</p>
+          <h1>{isEdit ? "Edit Book" : "Write New Book"}</h1>
+          <p>Create and manage your writing</p>
         </div>
 
         <div className="write-book-actions">
-          <button className="cancel-btn" onClick={() => navigate("/main/my-books")}>
+          <button
+            className="cancel-btn"
+            onClick={() => navigate("/main/my-books")}
+          >
             Cancel
           </button>
-          <button className="save-btn" onClick={handleSave} disabled={saving}>
-            Save Book
+
+          <button
+            className="save-btn"
+            onClick={handleSave}
+            disabled={saving || uploading}
+          >
+            {uploading
+              ? "Uploading image..."
+              : saving
+              ? "Saving..."
+              : "Save Book"}
           </button>
         </div>
       </div>
 
-      {/* Steps */}
-      <div className="write-steps">
-        <button
-          className={step === "details" ? "step active" : "step"}
-          onClick={() => setStep("details")}
-        >
-          Book Details
-        </button>
-        <button
-          className={step === "content" ? "step active" : "step"}
-          onClick={() => setStep("content")}
-        >
-          Write Content
-        </button>
-      </div>
+      <WritingSteps currentStep={step} onChange={setStep} />
 
-      {/* Error */}
-      {error && <p className="error-text">{error}</p>}
+      {error && <p className="write-book-error">{error}</p>}
 
-      {/* Step Content */}
       <div className="write-card">
         {step === "details" && (
           <div className="details-form">
             <label>
-              Book Title *
+              Title *
               <input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -125,7 +176,10 @@ function WriteBook() {
 
             <label>
               Genre
-              <select value={genre} onChange={(e) => setGenre(e.target.value)}>
+              <select
+                value={genre}
+                onChange={(e) => setGenre(e.target.value)}
+              >
                 <option>Fiction</option>
                 <option>Non-fiction</option>
                 <option>Poetry</option>
@@ -133,19 +187,29 @@ function WriteBook() {
               </select>
             </label>
 
-            <label>
-              Cover Image URL
+            <label className="cover-upload">
+              Cover Image
               <input
-                placeholder="https://example.com/cover.jpg"
-                value={coverUrl}
-                onChange={(e) => setCoverUrl(e.target.value)}
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={handleCoverUpload}
               />
+
+              <div className="cover-preview">
+                {coverUrl ? (
+                  <img src={coverUrl} alt="Cover preview" />
+                ) : (
+                  <span>
+                    {uploading ? "Uploading..." : "Click to add photo"}
+                  </span>
+                )}
+              </div>
             </label>
 
             <label>
               Description
               <textarea
-                placeholder="Write a brief description of your book..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
@@ -155,11 +219,6 @@ function WriteBook() {
 
         {step === "content" && (
           <>
-            <div className="content-header">
-              <span>Book Content</span>
-              <span>{wordCount} words</span>
-            </div>
-
             <WritingEditor value={content} onChange={setContent} />
             <WritingTips />
           </>
