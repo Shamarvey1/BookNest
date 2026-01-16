@@ -13,8 +13,7 @@ import Library from "./pages/Library/Library.jsx";
 import BookDetails from "./pages/BookDetails/BookDetails.jsx";    
 import MyBooks from "./pages/Writing/MyBooks/MyBooks.jsx";
 import WriteBook from "./pages/Writing/WriteBook/WriteBook.jsx";  
-
-
+import Profile from "./pages/Profile/profile.jsx"
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,7 +28,7 @@ const router = createBrowserRouter(
         <Route path="my-books" element={<MyBooks />} />
         <Route path="write-book" element={<WriteBook />} />
         <Route path="write-book/:id" element={<WriteBook />} />
-
+        <Route path="profile" element={<Profile />} />
       </Route>
       <Route path="/reader/:id" element={<ReaderPage />} />
       
