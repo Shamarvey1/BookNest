@@ -39,12 +39,10 @@ function MyBooks() {
     navigate("/main/write-book");
   };
 
-  // Edit book
   const handleEditBook = (id) => {
     navigate(`/main/write-book/${id}`);
   };
 
-  // Delete book
   const handleDeleteBook = async (id) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this book? This cannot be undone."
@@ -62,7 +60,7 @@ function MyBooks() {
 
   return (
     <div className="my-books-page">
-      {/* Header */}
+
       <div className="my-books-header">
         <div>
           <h1 className="my-books-title">My Books</h1>

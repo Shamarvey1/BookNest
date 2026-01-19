@@ -19,12 +19,11 @@ function BookCard({ book, onRemove }) {
   return (
     <div className="book-card" onClick={openDetails}>
 
-      {/* ❌ REMOVE BUTTON (optional) */}
       {onRemove && (
         <button
           className="remove-btn"
           onClick={(e) => {
-            e.stopPropagation(); // 🛑 prevent opening details
+            e.stopPropagation(); 
             onRemove(realId);
           }}
         >
