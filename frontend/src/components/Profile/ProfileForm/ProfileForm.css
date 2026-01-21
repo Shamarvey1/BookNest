@@ -1,0 +1,37 @@
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.profile-form label {
+  font-size: 13px;
+  color: #b9c7ff;
+}
+
+.profile-form input,
+.profile-form textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #3a4ca0;
+  padding: 8px 0;
+  color: white;
+  outline: none;
+}
+
+.profile-form textarea {
+  resize: none;
+  min-height: 60px;
+}
+
+.profile-form button {
+  margin-top: 18px;
+  padding: 12px;
+  background: #1f4cff;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
