@@ -14,7 +14,8 @@ model User {
   password  String
   isPremium Boolean    @default(false)
   createdAt DateTime   @default(now())
-
+  avatarUrl String?
+  bio       String?
   bookmarks Bookmark[]
   favorites Favorite[]
   userBooks UserBook[]   
@@ -71,3 +72,4 @@ model UserBook {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
