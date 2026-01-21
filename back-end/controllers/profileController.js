@@ -1,5 +1,4 @@
 const prisma = require("../config/prisma");
-
 const getProfile = async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
@@ -13,7 +12,6 @@ const getProfile = async (req, res) => {
         createdAt: true
       }
     });
-
     res.json(user);
   } catch (err) {
     console.error("GET PROFILE ERROR:", err);
@@ -47,7 +45,6 @@ const updateProfile = async (req, res) => {
     res.status(500).json({ msg: "Failed to update profile" });
   }
 };
-
 module.exports = {
   getProfile,
   updateProfile
