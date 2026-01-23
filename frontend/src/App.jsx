@@ -13,7 +13,7 @@ import Library from "./pages/Library/Library.jsx";
 import BookDetails from "./pages/BookDetails/BookDetails.jsx";    
 import MyBooks from "./pages/Writing/MyBooks/MyBooks.jsx";
 import WriteBook from "./pages/Writing/WriteBook/WriteBook.jsx";  
-import Profile from "./pages/Profile/profile.jsx"
+import Profile from "./pages/Profile/Profile.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
