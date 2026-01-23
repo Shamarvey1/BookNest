@@ -4,6 +4,7 @@ import {searchBooksAPI,saveBookAPI,getDefaultBooksAPI} from "../../services/book
 import BookCard from "../../components/BookCard/BookCard";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import { useNavigate } from "react-router-dom";
+import BookCardSkeleton from "../../components/Skeletons/BookCardSkeleton/BookCardSkeleton";
 
 const Home = () => {
   const [query, setQuery] = useState("");
@@ -60,8 +61,15 @@ const Home = () => {
         onSearch={handleSearch}
         onAutoSearch={handleAutoSearch}
       />
-      {loading && <p className="loading-text">Searching...</p>}
+      
       <div className="books-grid">
+        {loading &&
+          Array.from({ length: 10 }).map((_, index) => (
+            <BookCardSkeleton key={index} />
+          ))}
+        {!loading && books.length === 0 && query !== "" && (
+          <p className="no-results">No books found</p>
+        )}
         {!loading && books.length === 0 && query !== "" && (
           <p className="no-results">No books found</p>
         )}

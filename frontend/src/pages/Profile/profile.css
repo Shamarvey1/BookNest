@@ -1,6 +1,6 @@
 .profile-page {
   min-height: 100vh;
-  background: linear-gradient(180deg, #0b1a3a, #08122a);
+  background: #ffff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,7 +10,7 @@
 .profile-card {
   width: 100%;
   max-width: 420px;
-  background: rgba(10, 20, 50, 0.9);
+  background: #280808;
   border-radius: 16px;
   padding: 24px;
   color: #fff;
@@ -34,3 +34,10 @@
   color: #ff6b6b;
   text-align: center;
 }
+
+
+
+
+
+
+
