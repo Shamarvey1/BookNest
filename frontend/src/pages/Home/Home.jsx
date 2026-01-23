@@ -64,7 +64,7 @@ const Home = () => {
       
       <div className="books-grid">
         {loading &&
-          Array.from({ length: 10 }).map((_, index) => (
+          Array.from({ length: 32 }).map((_, index) => (
             <BookCardSkeleton key={index} />
           ))}
         {!loading && books.length === 0 && query !== "" && (
