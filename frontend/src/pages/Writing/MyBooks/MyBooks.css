@@ -38,12 +38,9 @@
   opacity: 0.9;
 }
 
-/* EMPTY STATE WRAPPER */
 .my-books-empty-wrapper {
   border-radius: 16px;
 }
-
-/* GRID */
 .my-books-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));

@@ -56,46 +56,35 @@
   color: #2563eb;
 }
 
-
-.icon {
-  width: 22px;
-  height: 22px;
+.sidebar-logout {
+  margin-top: 16px;
 }
 
-
-
-.dark-mode button {
-  background: #3675db;
-  color: #ffffff;
-  border: none;
-  padding: 0.7rem 1.2rem;
-  border-radius: 10px;
-  font-size: 1rem;
+.logout-btn {
+  width: 70%;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #ffffff;
+  border: 2px solid #e81b0c;
+  border-radius: 18px;
+  color: #f41e06;
+  font-size: 18px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%; 
+  transition: background-color 0.2s ease;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.logout-btn svg {
+  width: 20px;
+  height: 20px;
 }
 
 
-.dark-mode button:hover {
-  background: #2563eb;
-  transform: translateY(-2px);
+.logout-btn:hover {
+  background-color: #fff5f5;
 }
-
-
-.dark-mode .icon {
-  color: #ffffff;
-  width: 22px;
-  height: 22px;
-}
-
-
-
-
-
-  .btn {
-    padding: 0.6rem 1rem;
-    font-size: 0.95rem;
-  }
-

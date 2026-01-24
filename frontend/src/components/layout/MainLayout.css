@@ -19,21 +19,6 @@
   height: 50px;
   margin-bottom: 10px;
 }
-
-.logout-btn {
-  background-color: #ef4444;
-  color: white;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.logout-btn:hover {
-  background-color: #dc2626;
-}
-
 .page-area {
   flex: 1;
   overflow-y: auto;

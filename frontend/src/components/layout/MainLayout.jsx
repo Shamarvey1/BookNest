@@ -44,19 +44,11 @@ const MainLayout = () => {
   return (
     <div className="layout-container">
 
-      <SideBar user={user} />
-
+      <SideBar  />
 
       <div className="layout-content">
-
-        <div className="top-bar">
-          <button className="logout-btn" onClick={handleLogout}>
-            Logout
-          </button>
-        </div>
-
         <div className="page-area">
-          <Outlet context={{ user }} />
+          <Outlet  />
         </div>
 
       </div>
