@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MyBooks.css";
 
-import {
-  fetchMyBooks,
-  deleteBook
-} from "../../../services/writingService";
+import {fetchMyBooks,deleteBook} from "../../../services/writingService";
 
 import WritingCard from "../../../components/Writing/WritingCard/WritingCard";
 import EmptyBooks from "../../../components/Writing/EmptyBooks/EmptyBooks";

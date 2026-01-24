@@ -3,6 +3,7 @@ import HTMLFlipBook from "react-pageflip";
 import { useParams } from "react-router-dom";
 import "./ReaderPage.css";
 import { getBookByIdAPI } from "../../services/bookService";
+import BookNestLoader from "../../components/Loader/BookNestLoader/BookNestLoader";
 
 const PAGE_SIZE = 1500;
 
@@ -30,7 +31,9 @@ function ReaderPage() {
     loadBook();
   }, [id]);
 
-  if (!book) return <div className="reader-loading">Loading book…</div>;
+  if(!book){
+    return <BookNestLoader text="Loading your book..." />;
+  }
 
   return (
     <div className="reader-wrapper">

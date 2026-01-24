@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./WriteBook.css";
 
-import {
-  createBook,
-  fetchBookById,
-  updateBook
-} from "../../../services/writingService";
+import {createBook,fetchBookById,updateBook} from "../../../services/writingService";
 
 import WritingEditor from "../../../components/Writing/WritingEditor/WritingEditor";
 import WritingTips from "../../../components/Writing/WritingTips/WritingTips";
@@ -126,11 +122,10 @@ function WriteBook() {
 
 
 
-if (loading) {
-  return <BookNestLoader text="Loading your book..." />;
-}
-
-
+    if (loading) {
+      return <BookNestLoader text="Loading your book..." />;
+    }
+    
   return (
     <div className="write-book-page">
       <div className="write-book-header">
