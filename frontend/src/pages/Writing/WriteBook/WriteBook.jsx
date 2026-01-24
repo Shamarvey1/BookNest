@@ -11,6 +11,7 @@ import {
 import WritingEditor from "../../../components/Writing/WritingEditor/WritingEditor";
 import WritingTips from "../../../components/Writing/WritingTips/WritingTips";
 import WritingSteps from "../../../components/Writing/WritingSteps/WritingSteps";
+import BookNestLoader from "../../../components/Loader/BookNestLoader/BookNestLoader";
 
 function WriteBook() {
   const navigate = useNavigate();
@@ -123,9 +124,12 @@ function WriteBook() {
     }
   }
 
-  if (loading) {
-    return <div className="write-book-loading">Loading...</div>;
-  }
+
+
+if (loading) {
+  return <BookNestLoader text="Loading your book..." />;
+}
+
 
   return (
     <div className="write-book-page">

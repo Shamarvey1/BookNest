@@ -2,45 +2,53 @@
   padding: 32px;
   max-width: 1200px;
   margin: auto;
+  background: #ffffff;
 }
-
 
 .my-books-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 28px;
+  margin-bottom: 32px;
 }
 
 .my-books-title {
   font-size: 28px;
   font-weight: 600;
+  color: #111827;
 }
 
 .my-books-subtitle {
   color: #6b7280;
   margin-top: 4px;
 }
+
 .new-book-btn {
-  background: #2563eb;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
   color: white;
   padding: 12px 22px;
-  border-radius: 999px;
+  border-radius: 12px;
   border: none;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 600;
 }
 
 .new-book-btn:hover {
-  background: #1e4ed8;
+  opacity: 0.9;
 }
 
+/* EMPTY STATE WRAPPER */
+.my-books-empty-wrapper {
+  border-radius: 16px;
+}
+
+/* GRID */
 .my-books-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 24px;
 }
-
 
 .my-books-error {
   color: red;

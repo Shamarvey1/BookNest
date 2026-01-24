@@ -18,7 +18,6 @@ function MyBooks() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-
   useEffect(() => {
     async function loadBooks() {
       try {
@@ -33,7 +32,6 @@ function MyBooks() {
 
     loadBooks();
   }, []);
-
 
   const handleNewBook = () => {
     navigate("/main/write-book");
@@ -60,7 +58,6 @@ function MyBooks() {
 
   return (
     <div className="my-books-page">
-
       <div className="my-books-header">
         <div>
           <h1 className="my-books-title">My Books</h1>
@@ -79,8 +76,11 @@ function MyBooks() {
       {!loading && error && (
         <p className="my-books-error">{error}</p>
       )}
+
       {!loading && !error && books.length === 0 && (
-        <EmptyBooks onStartWriting={handleNewBook} />
+        <div className="my-books-empty-wrapper">
+          <EmptyBooks onStartWriting={handleNewBook} />
+        </div>
       )}
 
       {!loading && !error && books.length > 0 && (

@@ -1,0 +1,43 @@
+.booknest-loader-wrapper {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Logo animation */
+.booknest-logo {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #2563eb;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+.booknest-logo span {
+  color: #7c3aed;
+}
+
+/* Text */
+.booknest-loader-text {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+
+@keyframes pulse {
+  0% {
+    opacity: 0.4;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(0.96);
+  }
+}
