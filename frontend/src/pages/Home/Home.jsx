@@ -3,67 +3,69 @@ import "./Home.css";
 import {
   searchBooksAPI,
   saveBookAPI,
-  getDefaultBooksAPI
+  getDefaultBooksAPI,
 } from "../../services/bookService";
 import BookCard from "../../components/BookCard/BookCard";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import { useNavigate } from "react-router-dom";
 import BookCardSkeleton from "../../components/Skeletons/BookCardSkeleton/BookCardSkeleton";
+import { useNavigate } from "react-router-dom";
 
-const PAGE_SIZE = 32;
+const SKELETON_COUNT = 30;
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const [query, setQuery] = useState("");
   const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
-
-  const navigate = useNavigate();
+  const [hasNext, setHasNext] = useState(true);
+  const [loading, setLoading] = useState(false);
 
 
   useEffect(() => {
+    let ignore = false;
+
+    const loadBooks = async () => {
+      setLoading(true);
+
+      try {
+        const data = query
+          ? await searchBooksAPI(query, page)
+          : await getDefaultBooksAPI(page);
+
+        if (!ignore) {
+          setBooks(data.books || []);
+          setHasNext(Boolean(data.hasNext));
+        }
+      } catch (err) {
+        console.error("Failed to load books", err);
+        if (!ignore) {
+          setBooks([]);
+          setHasNext(false);
+        }
+      } finally {
+        if (!ignore) setLoading(false);
+      }
+    };
+
     loadBooks();
-  }, [page]);
 
-  const loadBooks = async () => {
-    setLoading(true);
-    try {
-      const data = query
-        ? await searchBooksAPI(query, page, PAGE_SIZE)
-        : await getDefaultBooksAPI(page, PAGE_SIZE);
+    return () => {
+      ignore = true; 
+    };
+  }, [page, query]);
 
-      setBooks(data.books || []);
-    } finally {
-      setLoading(false);
-    }
+
+  const handleSearch = () => {
+    setPage(1);
   };
 
-  const handleAutoSearch = async (text) => {
+
+  const handleAutoSearch = (text) => {
     setQuery(text);
     setPage(1);
-
-    if (!text.trim()) {
-      setLoading(true);
-      const data = await getDefaultBooksAPI(1, PAGE_SIZE);
-      setBooks(data.books || []);
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-    const data = await searchBooksAPI(text, 1, PAGE_SIZE);
-    setBooks(data.books || []);
-    setLoading(false);
   };
 
-  const handleSearch = async () => {
-    if (!query.trim()) return;
-    setPage(1);
-    setLoading(true);
-    const data = await searchBooksAPI(query, 1, PAGE_SIZE);
-    setBooks(data.books || []);
-    setLoading(false);
-  };
 
   const handleRead = async (gutenId) => {
     const savedBook = await saveBookAPI(gutenId);
@@ -81,11 +83,11 @@ const Home = () => {
 
       <div className="books-grid">
         {loading &&
-          Array.from({ length: PAGE_SIZE }).map((_, index) => (
-            <BookCardSkeleton key={index} />
+          Array.from({ length: SKELETON_COUNT }).map((_, i) => (
+            <BookCardSkeleton key={i} />
           ))}
 
-        {!loading && books.length === 0 && query && (
+        {!loading && books.length === 0 && (
           <p className="no-results">No books found</p>
         )}
 
@@ -99,25 +101,24 @@ const Home = () => {
           ))}
       </div>
 
-      {!loading && books.length > 0 && (
-        <div className="pagination">
-          <button
-            disabled={page === 1}
-            onClick={() => setPage((p) => p - 1)}
-          >
-            Previous
-          </button>
 
-          <span>Page {page}</span>
+      <div className="pagination">
+        <button
+          disabled={page === 1 || loading}
+          onClick={() => setPage((p) => p - 1)}
+        >
+          Previous
+        </button>
 
-          <button
-            disabled={books.length < PAGE_SIZE}
-            onClick={() => setPage((p) => p + 1)}
-          >
-            Next
-          </button>
-        </div>
-      )}
+        <span>Page {page}</span>
+
+        <button
+          disabled={!hasNext || loading}
+          onClick={() => setPage((p) => p + 1)}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };
