@@ -1,6 +1,7 @@
-.home {
+.home-container {
   padding: 20px;
 }
+
 
 .search-wrapper {
   width: 100%;
@@ -19,13 +20,56 @@
   outline: none;
 }
 
+/* Books Grid */
 .books-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 22px;
 }
 
-.loading {
+/* No Results */
+.no-results {
+  grid-column: 1 / -1;
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
+  color: #6b7280;
+  margin-top: 40px;
+}
+
+
+.pagination {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+}
+
+.pagination button {
+  background: #2563eb; 
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #1e4ed8;
+  transform: translateY(-1px);
+}
+
+.pagination button:disabled {
+  background: #c7d2fe;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pagination span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
 }
