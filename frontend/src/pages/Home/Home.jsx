@@ -3,69 +3,50 @@ import "./Home.css";
 import {
   searchBooksAPI,
   saveBookAPI,
-  getDefaultBooksAPI,
+  getDefaultBooksAPI
 } from "../../services/bookService";
 import BookCard from "../../components/BookCard/BookCard";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import BookCardSkeleton from "../../components/Skeletons/BookCardSkeleton/BookCardSkeleton";
 import { useNavigate } from "react-router-dom";
+import { Pagination } from "antd";
 
-const SKELETON_COUNT = 30;
+const PAGE_SIZE = 30;
 
 const Home = () => {
-  const navigate = useNavigate();
-
   const [query, setQuery] = useState("");
   const [books, setBooks] = useState([]);
   const [page, setPage] = useState(1);
-  const [hasNext, setHasNext] = useState(true);
+  const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
 
   useEffect(() => {
-    let ignore = false;
-
-    const loadBooks = async () => {
+    async function loadBooks() {
       setLoading(true);
 
-      try {
-        const data = query
-          ? await searchBooksAPI(query, page)
-          : await getDefaultBooksAPI(page);
+      const data = query
+        ? await searchBooksAPI(query, page)
+        : await getDefaultBooksAPI(page);
 
-        if (!ignore) {
-          setBooks(data.books || []);
-          setHasNext(Boolean(data.hasNext));
-        }
-      } catch (err) {
-        console.error("Failed to load books", err);
-        if (!ignore) {
-          setBooks([]);
-          setHasNext(false);
-        }
-      } finally {
-        if (!ignore) setLoading(false);
-      }
-    };
+      setBooks(data.books || []);
+      setTotal(data.total || 0);
+
+      setLoading(false);
+    }
 
     loadBooks();
-
-    return () => {
-      ignore = true; 
-    };
   }, [page, query]);
-
 
   const handleSearch = () => {
     setPage(1);
   };
 
-
   const handleAutoSearch = (text) => {
     setQuery(text);
     setPage(1);
   };
-
 
   const handleRead = async (gutenId) => {
     const savedBook = await saveBookAPI(gutenId);
@@ -83,7 +64,7 @@ const Home = () => {
 
       <div className="books-grid">
         {loading &&
-          Array.from({ length: SKELETON_COUNT }).map((_, i) => (
+          Array.from({ length: PAGE_SIZE }).map((_, i) => (
             <BookCardSkeleton key={i} />
           ))}
 
@@ -101,24 +82,17 @@ const Home = () => {
           ))}
       </div>
 
-
-      <div className="pagination">
-        <button
-          disabled={page === 1 || loading}
-          onClick={() => setPage((p) => p - 1)}
-        >
-          Previous
-        </button>
-
-        <span>Page {page}</span>
-
-        <button
-          disabled={!hasNext || loading}
-          onClick={() => setPage((p) => p + 1)}
-        >
-          Next
-        </button>
-      </div>
+      {total > PAGE_SIZE && (
+        <div style={{ marginTop: 32, display: "flex", justifyContent: "center" }}>
+          <Pagination
+            current={page}
+            total={total}
+            pageSize={PAGE_SIZE}
+            onChange={(p) => setPage(p)}
+            showSizeChanger={false}
+          />
+        </div>
+      )}
     </div>
   );
 };
