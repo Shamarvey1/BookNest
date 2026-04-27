@@ -120,6 +120,7 @@ function Library() {
         >
           <FiBookOpen />
           Progress
+          <span className="count">{progressList.length}</span>
         </button>
       </div>
 
