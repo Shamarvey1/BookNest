@@ -9,12 +9,22 @@ const auth = () => ({
 
 export const fetchMyBooks = async () => {
   const res = await fetch(API, { headers: auth() });
-  return res.json();
+  const result = await res.json().catch(() => null);
+  if (!res.ok) {
+    if (res.status === 401) throw new Error("unauthorized");
+    throw new Error(result?.msg || result?.message || "Failed to load books");
+  }
+  return result;
 };
 
 export const fetchBookById = async (id) => {
   const res = await fetch(`${API}/${id}`, { headers: auth() });
-  return res.json();
+  const result = await res.json().catch(() => null);
+  if (!res.ok) {
+    if (res.status === 401) throw new Error("unauthorized");
+    throw new Error(result?.msg || result?.message || "Failed to load book");
+  }
+  return result;
 };
 
 export const createBook = async (data) => {
@@ -23,7 +33,12 @@ export const createBook = async (data) => {
     headers: auth(),
     body: JSON.stringify(data)
   });
-  return res.json();
+  const result = await res.json().catch(() => null);
+  if (!res.ok) {
+    if (res.status === 401) throw new Error("unauthorized");
+    throw new Error(result?.msg || result?.message || "Failed to create book");
+  }
+  return result;
 };
 
 export const updateBook = async (id, data) => {
@@ -32,7 +47,12 @@ export const updateBook = async (id, data) => {
     headers: auth(),
     body: JSON.stringify(data)
   });
-  return res.json();
+  const result = await res.json().catch(() => null);
+  if (!res.ok) {
+    if (res.status === 401) throw new Error("unauthorized");
+    throw new Error(result?.msg || result?.message || "Failed to update book");
+  }
+  return result;
 };
 
 export const deleteBook = async (id) => {
@@ -40,5 +60,10 @@ export const deleteBook = async (id) => {
     method: "DELETE",
     headers: auth()
   });
-  return res.json();
+  const result = await res.json().catch(() => null);
+  if (!res.ok) {
+    if (res.status === 401) throw new Error("unauthorized");
+    throw new Error(result?.msg || result?.message || "Failed to delete book");
+  }
+  return result;
 };

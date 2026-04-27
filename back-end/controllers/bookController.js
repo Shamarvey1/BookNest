@@ -42,11 +42,12 @@ const defaultBooks = async (req, res) => {
 
     res.json({
       books,
+      total: Number(data.count) || 0,
       hasNext: Boolean(data.next)
     });
   } catch (err) {
     console.error("DEFAULT BOOKS ERROR:", err.message);
-    res.json({ books: [], hasNext: false });
+    res.json({ books: [], total: 0, hasNext: false });
   }
 };
 
@@ -66,11 +67,12 @@ const searchBooks = async (req, res) => {
 
     res.json({
       books,
+      total: Number(data.count) || 0,
       hasNext: Boolean(data.next)
     });
   } catch (err) {
     console.error("SEARCH BOOKS ERROR:", err.message);
-    res.json({ books: [], hasNext: false });
+    res.json({ books: [], total: 0, hasNext: false });
   }
 };
 

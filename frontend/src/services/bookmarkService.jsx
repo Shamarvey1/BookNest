@@ -13,11 +13,13 @@ export async function fetchBookmarks() {
     headers: auth(),
   });
 
+  const result = await res.json().catch(() => null);
   if (!res.ok) {
-    throw new Error("Failed to load bookmarks");
+    if (res.status === 401) throw new Error("unauthorized");
+    throw new Error(result?.msg || result?.message || "Failed to load bookmarks");
   }
 
-  return res.json();
+  return result;
 }
 
 export async function addBookmark(bookId) {
@@ -26,12 +28,13 @@ export async function addBookmark(bookId) {
     headers: auth(),
     body: JSON.stringify({ bookId }),
   });
-
+  const result = await res.json().catch(() => null);
   if (!res.ok) {
-    throw new Error("Failed to add bookmark");
+    if (res.status === 401) throw new Error("unauthorized");
+    throw new Error(result?.msg || result?.message || "Failed to add bookmark");
   }
 
-  return res.json();
+  return result;
 }
 
 export async function removeBookmark(bookId) {
@@ -39,10 +42,11 @@ export async function removeBookmark(bookId) {
     method: "DELETE",
     headers: auth(),
   });
-
+  const result = await res.json().catch(() => null);
   if (!res.ok) {
-    throw new Error("Failed to remove bookmark");
+    if (res.status === 401) throw new Error("unauthorized");
+    throw new Error(result?.msg || result?.message || "Failed to remove bookmark");
   }
 
-  return res.json();
+  return result;
 }

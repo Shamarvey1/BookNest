@@ -5,8 +5,12 @@ const API_URL = `${ENDPOINT}/api/books`;
 
 export const getDefaultBooksAPI = async (page = 1) => {
   const res = await fetch(`${API_URL}/default?page=${page}`);
-  if (!res.ok) throw new Error("Failed to fetch books");
-  return res.json();
+  const result = await res.json().catch(() => null);
+  if (!res.ok) {
+    if (res.status === 401) throw new Error("unauthorized");
+    throw new Error(result?.msg || result?.message || "Failed to fetch books");
+  }
+  return result;
 };
 
 
@@ -14,8 +18,12 @@ export const searchBooksAPI = async (query, page = 1) => {
   const res = await fetch(
     `${API_URL}/search?q=${encodeURIComponent(query)}&page=${page}`
   );
-  if (!res.ok) throw new Error("Failed to search books");
-  return res.json();
+  const result = await res.json().catch(() => null);
+  if (!res.ok) {
+    if (res.status === 401) throw new Error("unauthorized");
+    throw new Error(result?.msg || result?.message || "Failed to search books");
+  }
+  return result;
 };
 
 
@@ -27,9 +35,12 @@ export const saveBookAPI = async (gutenId) => {
       Authorization: "Bearer " + token,
     },
   });
-
-  if (!res.ok) throw new Error("Failed to save book");
-  return res.json();
+  const result = await res.json().catch(() => null);
+  if (!res.ok) {
+    if (res.status === 401) throw new Error("unauthorized");
+    throw new Error(result?.msg || result?.message || "Failed to save book");
+  }
+  return result;
 };
 
 
@@ -40,7 +51,10 @@ export const getBookByIdAPI = async (id) => {
       Authorization: "Bearer " + token,
     },
   });
-
-  if (!res.ok) throw new Error("Failed to load book");
-  return res.json();
+  const result = await res.json().catch(() => null);
+  if (!res.ok) {
+    if (res.status === 401) throw new Error("unauthorized");
+    throw new Error(result?.msg || result?.message || "Failed to load book");
+  }
+  return result;
 };

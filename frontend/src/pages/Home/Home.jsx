@@ -83,8 +83,9 @@ const Home = () => {
       </div>
 
       {total > PAGE_SIZE && (
-        <div style={{ marginTop: 32, display: "flex", justifyContent: "center" }}>
+        <div className="home-pagination-wrap">
           <Pagination
+            className="home-pagination"
             current={page}
             total={total}
             pageSize={PAGE_SIZE}

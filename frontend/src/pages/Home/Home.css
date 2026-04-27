@@ -20,14 +20,12 @@
   outline: none;
 }
 
-/* Books Grid */
 .books-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 22px;
 }
 
-/* No Results */
 .no-results {
   grid-column: 1 / -1;
   text-align: center;
@@ -72,4 +70,80 @@
   font-size: 14px;
   font-weight: 500;
   color: #374151;
+}
+
+.home-pagination-wrap {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.home-pagination {
+  padding: 8px 12px;
+  border-radius: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+}
+
+.home-pagination .ant-pagination-item,
+.home-pagination .ant-pagination-prev .ant-pagination-item-link,
+.home-pagination .ant-pagination-next .ant-pagination-item-link {
+  min-width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid #dbe5f2;
+  background: #ffffff;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.home-pagination .ant-pagination-item a {
+  color: inherit;
+  font-weight: 600;
+}
+
+.home-pagination .ant-pagination-item:hover,
+.home-pagination .ant-pagination-prev .ant-pagination-item-link:hover,
+.home-pagination .ant-pagination-next .ant-pagination-item-link:hover {
+  border-color: #3b82f6;
+  color: #2563eb;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.16);
+  transform: translateY(-1px);
+}
+
+.home-pagination .ant-pagination-item-active {
+  border-color: #2563eb;
+  background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.28);
+}
+
+.home-pagination .ant-pagination-item-active a {
+  color: #ffffff;
+}
+
+.home-pagination .ant-pagination-disabled .ant-pagination-item-link,
+.home-pagination .ant-pagination-disabled .ant-pagination-item-link:hover {
+  color: #9ca3af;
+  background: #f1f5f9;
+  border-color: #e5e7eb;
+  box-shadow: none;
+  transform: none;
+}
+
+@media (max-width: 640px) {
+  .home-pagination {
+    padding: 6px 8px;
+  }
+
+  .home-pagination .ant-pagination-item,
+  .home-pagination .ant-pagination-prev .ant-pagination-item-link,
+  .home-pagination .ant-pagination-next .ant-pagination-item-link {
+    min-width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
 }

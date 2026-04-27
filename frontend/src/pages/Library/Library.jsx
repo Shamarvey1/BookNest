@@ -1,14 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Library.css";
 
 import { useBookmarks } from "../../context/BookmarkContext";
 import { useFavorites } from "../../context/FavoriteContext";
+import { getAllProgress, deleteProgress } from "../../services/progressService";
 
 import BookCard from "../../components/BookCard/BookCard";
 import { FiBookOpen, FiBookmark, FiHeart } from "react-icons/fi";
 
 function Library() {
   const [activeTab, setActiveTab] = useState("all");
+  const [progressList, setProgressList] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadProgress = async () => {
+      try {
+        const data = await getAllProgress();
+        setProgressList(data || []);
+      } catch (err) {
+        console.error("Failed to load progress:", err);
+      }
+    };
+    loadProgress();
+  }, []);
+
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(location.search);
+      const tab = params.get("tab") || localStorage.getItem("defaultLibraryTab");
+      if (tab) {
+        setActiveTab(tab);
+        localStorage.removeItem("defaultLibraryTab");
+      }
+    } catch (e) {}
+  }, [location.search]);
 
   const { bookmarks, removeBookmark } = useBookmarks();
   const { favorites, removeFavorite } = useFavorites();
@@ -85,6 +113,14 @@ function Library() {
           Favorites
           <span className="count">{safeFavorites.length}</span>
         </button>
+
+        <button
+          className={`library-tab ${activeTab === "progress" ? "active" : ""}`}
+          onClick={() => setActiveTab("progress")}
+        >
+          <FiBookOpen />
+          Progress
+        </button>
       </div>
 
       {activeTab === "bookmarks" && safeBookmarks.length === 0 && (
@@ -105,6 +141,56 @@ function Library() {
 
 
       <div className="library-grid">
+        {activeTab === "progress" && (
+          <div className="progress-panel">
+            {progressList.length === 0 ? (
+              <div className="library-empty">
+                <FiBookOpen className="empty-icon" />
+                <h3>No active reading</h3>
+                <p>Start reading a book and it will appear here</p>
+              </div>
+            ) : (
+              progressList.map((progress) => (
+                <div key={progress.id} className="progress-card">
+                  <img
+                    src={progress.book?.coverUrl}
+                    alt={progress.book?.title}
+                    className="progress-cover"
+                  />
+                  <div className="progress-info">
+                    <h4>{progress.book?.title}</h4>
+                    <p>{Math.round(progress.percent)}% read</p>
+                    <div style={{ marginTop: 12 }}>
+                      <button
+                        className="btn-primary"
+                        onClick={() => {
+                          navigate(`/reader/${progress.bookId}`);
+                        }}
+                      >
+                        Resume
+                      </button>
+                      <button
+                        style={{ marginLeft: 8 }}
+                        onClick={async () => {
+                          try {
+                            await deleteProgress(progress.bookId);
+                            setProgressList(
+                              progressList.filter((p) => p.id !== progress.id)
+                            );
+                          } catch (err) {
+                            console.error("Failed to delete progress:", err);
+                          }
+                        }}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        )}
         {activeTab === "all" &&
           allBooks.map((book) => (
             <BookCard

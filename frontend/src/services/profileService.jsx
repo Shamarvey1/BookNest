@@ -11,7 +11,12 @@ function auth() {
 
 export async function getProfile() {
   const res = await fetch(API, { headers: auth() });
-  return res.json();
+  const result = await res.json().catch(() => null);
+  if (!res.ok) {
+    if (res.status === 401) throw new Error("unauthorized");
+    throw new Error(result?.msg || result?.message || "Failed to load profile");
+  }
+  return result;
 }
 
 export async function updateProfile(data) {
@@ -20,5 +25,10 @@ export async function updateProfile(data) {
     headers: auth(),
     body: JSON.stringify(data)
   });
-  return res.json();
+  const result = await res.json().catch(() => null);
+  if (!res.ok) {
+    if (res.status === 401) throw new Error("unauthorized");
+    throw new Error(result?.msg || result?.message || "Failed to update profile");
+  }
+  return result;
 }

@@ -13,11 +13,13 @@ export async function fetchFavorites() {
     headers: auth(),
   });
 
+  const result = await res.json().catch(() => null);
   if (!res.ok) {
-    throw new Error("Failed to load favorites");
+    if (res.status === 401) throw new Error("unauthorized");
+    throw new Error(result?.msg || result?.message || "Failed to load favorites");
   }
 
-  return res.json();
+  return result;
 }
 
 export async function addFavorite(bookId) {
@@ -26,12 +28,13 @@ export async function addFavorite(bookId) {
     headers: auth(),
     body: JSON.stringify({ bookId }),
   });
-
+  const result = await res.json().catch(() => null);
   if (!res.ok) {
-    throw new Error("Failed to add favorite");
+    if (res.status === 401) throw new Error("unauthorized");
+    throw new Error(result?.msg || result?.message || "Failed to add favorite");
   }
 
-  return res.json();
+  return result;
 }
 
 export async function removeFavorite(bookId) {
@@ -39,10 +42,11 @@ export async function removeFavorite(bookId) {
     method: "DELETE",
     headers: auth(),
   });
-
+  const result = await res.json().catch(() => null);
   if (!res.ok) {
-    throw new Error("Failed to remove favorite");
+    if (res.status === 401) throw new Error("unauthorized");
+    throw new Error(result?.msg || result?.message || "Failed to remove favorite");
   }
 
-  return res.json();
+  return result;
 }
