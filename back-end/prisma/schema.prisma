@@ -8,18 +8,21 @@ datasource db {
 }
 
 model User {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  email     String     @unique
-  password  String
-  isPremium Boolean    @default(false)
-  createdAt DateTime   @default(now())
-  avatarUrl String?
-  bio       String?
-  bookmarks Bookmark[]
-  favorites Favorite[]
-  userBooks UserBook[]   
-  readingProgresses ReadingProgress[]
+  id                    String     @id @default(auto()) @map("_id") @db.ObjectId
+  name                  String
+  email                 String     @unique
+  password              String
+  isPremium             Boolean    @default(false)
+  plan                  String?    @default("free")
+  validTill             DateTime?
+  stripeSubscriptionId  String?
+  createdAt             DateTime   @default(now())
+  avatarUrl             String?
+  bio                   String?
+  bookmarks             Bookmark[]
+  favorites             Favorite[]
+  userBooks             UserBook[]   
+  readingProgresses     ReadingProgress[]
 }
 
 model Book {

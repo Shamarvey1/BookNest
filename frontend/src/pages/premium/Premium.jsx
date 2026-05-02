@@ -1,40 +1,68 @@
 import React, { useEffect, useState } from "react";
 import { Crown, Check, Zap, Bookmark, BookOpen } from "lucide-react";
 import "./Premium.css";
+import { upgradePremium as serviceUpgrade, cancelPremium as serviceCancel } from "../../services/premiumService";
 
-function loadUser() {
+const API_URL = `${import.meta.env.VITE_API_URL}/api`;
+
+async function fetchProfile() {
+  const token = localStorage.getItem("token");
+  if (!token) return null;
+  
   try {
-    const raw = localStorage.getItem("booknest_user");
-    if (!raw) return { name: "You", isPremium: false };
-    return JSON.parse(raw);
+    const res = await fetch(`${API_URL}/profile`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (!res.ok) return null;
+    return await res.json();
   } catch (e) {
-    return { name: "You", isPremium: false };
+    console.error("Failed to fetch profile:", e);
+    return null;
   }
 }
 
-function saveUser(user) {
-  try {
-    localStorage.setItem("booknest_user", JSON.stringify(user));
-  } catch (e) {}
-}
+// upgrade/cancel handled by service file (premiumService)
 
 export default function Premium() {
-  const [user, setUser] = useState(loadUser());
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setUser(loadUser());
+    const loadProfile = async () => {
+      setLoading(true);
+      const profile = await fetchProfile();
+      setUser(profile || { name: "Guest", isPremium: false });
+      setLoading(false);
+    };
+    loadProfile();
   }, []);
 
-  const handleUpgrade = () => {
-    const updated = { ...user, isPremium: true, plan: "Premium", validTill: "2027-05-02" };
-    saveUser(updated);
-    setUser(updated);
+  if (loading) {
+    return (
+      <div className="premium-page" style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "500px" }}>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  const handleUpgrade = async () => {
+    const result = await serviceUpgrade();
+    if (result) {
+      setUser(result);
+      alert("Upgrade successful! Welcome to Premium.");
+    } else {
+      alert("Upgrade failed. Please try again.");
+    }
   };
 
-  const handleCancel = () => {
-    const updated = { ...user, isPremium: false };
-    saveUser(updated);
-    setUser(updated);
+  const handleCancel = async () => {
+    const result = await serviceCancel();
+    if (result) {
+      setUser(result);
+      alert("Premium subscription cancelled.");
+    } else {
+      alert("Cancellation failed. Please try again.");
+    }
   };
 
   if (user.isPremium) {
@@ -59,7 +87,7 @@ export default function Premium() {
             </div>
             <div className="kv">
               <span>Valid Until</span>
-              <strong>{user.validTill || "2027-05-02"}</strong>
+              <strong>{user.validTill ? new Date(user.validTill).toLocaleDateString() : "Forever"}</strong>
             </div>
             <div className="card-actions">
               <button className="btn-primary">Manage Subscription</button>

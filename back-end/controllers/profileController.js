@@ -9,7 +9,10 @@ const getProfile = async (req, res) => {
         email: true,
         avatarUrl: true,
         bio: true,
-        createdAt: true
+        createdAt: true,
+        isPremium: true,
+        plan: true,
+        validTill: true
       }
     });
     res.json(user);
@@ -35,7 +38,10 @@ const updateProfile = async (req, res) => {
         name: true,
         email: true,
         avatarUrl: true,
-        bio: true
+        bio: true,
+        isPremium: true,
+        plan: true,
+        validTill: true
       }
     });
 
@@ -45,6 +51,7 @@ const updateProfile = async (req, res) => {
     res.status(500).json({ msg: "Failed to update profile" });
   }
 };
+
 module.exports = {
   getProfile,
   updateProfile
