@@ -80,42 +80,9 @@
   gap: 20px;
 }
 
-.progress-panel {
-  padding: 20px 0;
-}
-
-.progress-card {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  background: #ffffff;
-  border: 1px solid #e6eefc;
-  padding: 16px;
-  border-radius: 10px;
-  box-shadow: 0 6px 18px rgba(37,99,235,0.04);
-}
-
-.progress-cover {
-  width: 96px;
-  height: 128px;
-  object-fit: cover;
-  border-radius: 6px;
-}
-
-.progress-info h4 {
-  margin: 0;
-  font-size: 16px;
-}
-
-.progress-info p {
-  margin: 6px 0 0;
-  color: #6b7280;
-}
-
-
 .library-empty {
   text-align: center;
-  margin-top: 80px;
+  padding: 60px 20px;
   color: #6b7280;
 }
 

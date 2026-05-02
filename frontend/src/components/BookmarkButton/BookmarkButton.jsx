@@ -7,16 +7,16 @@ function BookmarkButton({ book, getBookId, onStatusChange }) {
   const { bookmarks, toggleBookmark } = useBookmarks();
   const [loading, setLoading] = useState(false);
 
-  const realBookId = book.bookId || book.id || book._id;
+  const bookId = book.id || book.bookId;
 
-  const isBookmarked = bookmarks.some((b) => b.bookId === realBookId);
+  const isBookmarked = bookmarks.some((b) => b.bookId === bookId);
 
   async function handleClick() {
     if (loading) return;
     setLoading(true);
 
     try {
-      const finalId = realBookId || (await getBookId());
+      const finalId = bookId || (await getBookId());
       const result = await toggleBookmark(finalId);
       onStatusChange && onStatusChange(result);
     } catch {

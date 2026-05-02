@@ -9,10 +9,35 @@ const BookmarkContext = createContext();
 
 export function BookmarkProvider({ children }) {
   const [bookmarks, setBookmarks] = useState([]);
+  const [token, setToken] = useState(localStorage.getItem("token"));
 
   useEffect(() => {
-    load();
+
+    const handleStorageChange = () => {
+      const newToken = localStorage.getItem("token");
+      setToken(newToken);
+    };
+
+    const handleTokenChange = (e) => {
+      setToken(e.detail.token);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    window.addEventListener("tokenChanged", handleTokenChange);
+    
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("tokenChanged", handleTokenChange);
+    };
   }, []);
+
+  useEffect(() => {
+    if (token) {
+      load();
+    } else {
+      setBookmarks([]);
+    }
+  }, [token]);
 
   async function load() {
     try {
@@ -20,6 +45,7 @@ export function BookmarkProvider({ children }) {
       setBookmarks(data);
     } catch (err) {
       console.error("Failed to load bookmarks:", err);
+      setBookmarks([]);
     }
   }
 

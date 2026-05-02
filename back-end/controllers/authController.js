@@ -14,14 +14,16 @@ const signup = async (req, res) => {
     }
 
     const hashed = await bcrypt.hash(password, 10);
-    await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         name,
         email,
         password: hashed
       }
     });
-    res.json({ msg: "Signup successful" });
+    
+    const token = generateToken(user.id, user.email);
+    res.json({ token, msg: "Signup successful" });
   } catch (err) {
     console.error(" SIGNUP ERROR:", err);  
     res.status(500).json({ msg: "Server error" });

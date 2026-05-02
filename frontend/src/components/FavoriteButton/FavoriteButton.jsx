@@ -7,11 +7,10 @@ function FavoriteButton({ book, getBookId, onStatusChange }) {
   const { favorites, toggleFavorite } = useFavorites();
   const [loading, setLoading] = useState(false);
 
-  const normalizedId =
-    book.bookId || book.id || book._id || null;
+  const bookId = book.id || book.bookId;
 
   const isFavorite = favorites.some(
-    (f) => f.bookId === normalizedId
+    (f) => f.bookId === bookId
   );
 
   async function handleClick() {
@@ -20,7 +19,7 @@ function FavoriteButton({ book, getBookId, onStatusChange }) {
 
     try {
 
-      const realId = normalizedId || (await getBookId());
+      const realId = bookId || (await getBookId());
 
       const result = await toggleFavorite(realId);
 

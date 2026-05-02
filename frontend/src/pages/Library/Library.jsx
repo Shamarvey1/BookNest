@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "./Library.css";
 
 import { useBookmarks } from "../../context/BookmarkContext";
@@ -7,13 +7,35 @@ import { useFavorites } from "../../context/FavoriteContext";
 import { getAllProgress, deleteProgress } from "../../services/progressService";
 
 import BookCard from "../../components/BookCard/BookCard";
+import ProgressBookCard from "../../components/ProgressBookCard/ProgressBookCard";
 import { FiBookOpen, FiBookmark, FiHeart } from "react-icons/fi";
+
+const TABS = [
+  { id: "all", label: "All", icon: FiBookOpen },
+  { id: "bookmarks", label: "Bookmarks", icon: FiBookmark },
+  { id: "favorites", label: "Favorites", icon: FiHeart },
+  { id: "progress", label: "Progress", icon: FiBookOpen },
+];
+
+const normalizeBook = (book) => ({
+  ...book,
+  id: book.id || book.bookId,
+});
+
+const filterSafe = (items) => items.filter((item) => item?.book);
+
+const EmptyState = ({ icon: Icon, title, message }) => (
+  <div className="library-empty">
+    <Icon className="empty-icon" />
+    <h3>{title}</h3>
+    <p>{message}</p>
+  </div>
+);
 
 function Library() {
   const [activeTab, setActiveTab] = useState("all");
   const [progressList, setProgressList] = useState([]);
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const loadProgress = async () => {
@@ -41,191 +63,160 @@ function Library() {
   const { bookmarks, removeBookmark } = useBookmarks();
   const { favorites, removeFavorite } = useFavorites();
 
-  const safeBookmarks = bookmarks.filter((b) => b?.book);
-  const safeFavorites = favorites.filter((f) => f?.book);
-
-  function normalize(book) {
-    return {
-      ...book,
-      id: book.id || book._id || book.bookId,
-    };
-  }
+  const safeBookmarks = filterSafe(bookmarks);
+  const safeFavorites = filterSafe(favorites);
 
   const allBooks = [
-    ...safeBookmarks.map((b) => normalize(b.book)),
-    ...safeFavorites.map((f) => normalize(f.book)),
+    ...safeBookmarks.map((b) => normalizeBook(b.book)),
+    ...safeFavorites.map((f) => normalizeBook(f.book)),
   ].filter(
     (book, index, arr) =>
       book.id && arr.findIndex((x) => x.id === book.id) === index
   );
 
-  function handleRemoveFromBookmark(bookId) {
-    if (!bookId) return;
-    removeBookmark(bookId);
-  }
 
-  function handleRemoveFromFavorite(bookId) {
+  const handleRemove = (bookId, removeType = "all") => {
     if (!bookId) return;
-    removeFavorite(bookId);
-  }
 
-  function handleRemoveFromAll(bookId) {
-    if (!bookId) return;
-    removeBookmark(bookId);
-    removeFavorite(bookId);
-  }
+    if (removeType === "bookmarks" || removeType === "all") removeBookmark(bookId);
+    if (removeType === "favorites" || removeType === "all") removeFavorite(bookId);
+  };
+
+  const getTabCount = (tabId) => {
+    const counts = {
+      all: allBooks.length,
+      bookmarks: safeBookmarks.length,
+      favorites: safeFavorites.length,
+      progress: progressList.length,
+    };
+    return counts[tabId];
+  };
+
+  const renderTabButtons = () => (
+    <div className="library-tabs">
+      {TABS.map((tab) => {
+        const Icon = tab.icon;
+        return (
+          <button
+            key={tab.id}
+            className={`library-tab ${activeTab === tab.id ? "active" : ""}`}
+            onClick={() => setActiveTab(tab.id)}
+          >
+            <Icon />
+            {tab.label}
+            <span className="count">{getTabCount(tab.id)}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+
+  const renderEmptyStates = () => {
+    const emptyConfigs = {
+      bookmarks: {
+        icon: FiBookmark,
+        title: "No bookmarks yet",
+        message: "Books you bookmark will appear here for easy access",
+      },
+      favorites: {
+        icon: FiHeart,
+        title: "No favorites yet",
+        message: "Your favorite books will appear here",
+      },
+      progress: {
+        icon: FiBookOpen,
+        title: "No active reading",
+        message: "Start reading a book and it will appear here",
+      },
+    };
+
+    const config = emptyConfigs[activeTab];
+    if (!config) return null;
+
+    const hasContent = {
+      bookmarks: safeBookmarks.length > 0,
+      favorites: safeFavorites.length > 0,
+      progress: progressList.length > 0,
+    };
+
+    if (hasContent[activeTab]) return null;
+
+    return <EmptyState icon={config.icon} title={config.title} message={config.message} />;
+  };
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "progress":
+        return progressList.length === 0 ? (
+          <EmptyState
+            icon={FiBookOpen}
+            title="No active reading"
+            message="Start reading a book and it will appear here"
+          />
+        ) : (
+          progressList.map((progress) => (
+            <ProgressBookCard
+              key={progress.id}
+              progress={progress}
+              onRemove={async () => {
+                try {
+                  await deleteProgress(progress.bookId);
+                  setProgressList(progressList.filter((p) => p.id !== progress.id));
+                } catch (err) {
+                  console.error("Failed to delete progress:", err);
+                }
+              }}
+            />
+          ))
+        );
+
+      case "all":
+        return allBooks.map((book) => (
+          <BookCard
+            key={book.id}
+            book={book}
+            onRemove={() => handleRemove(book.id, "all")}
+          />
+        ));
+
+      case "bookmarks":
+        return safeBookmarks.map((b) => {
+          const book = normalizeBook(b.book);
+          return (
+            <BookCard
+              key={book.id}
+              book={book}
+              onRemove={() => handleRemove(book.id, "bookmarks")}
+            />
+          );
+        });
+
+      case "favorites":
+        return safeFavorites.map((f) => {
+          const book = normalizeBook(f.book);
+          return (
+            <BookCard
+              key={book.id}
+              book={book}
+              onRemove={() => handleRemove(book.id, "favorites")}
+            />
+          );
+        });
+
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="library-page">
       <h1 className="library-title">My Library</h1>
-      <p className="library-subtitle">
-        Your personal collection and reading progress
-      </p>
+      <p className="library-subtitle">Your personal collection and reading progress</p>
 
-      <div className="library-tabs">
-        <button
-          className={`library-tab ${activeTab === "all" ? "active" : ""}`}
-          onClick={() => setActiveTab("all")}
-        >
-          <FiBookOpen />
-          All
-          <span className="count">{allBooks.length}</span>
-        </button>
+      {renderTabButtons()}
+      {renderEmptyStates()}
 
-        <button
-          className={`library-tab ${
-            activeTab === "bookmarks" ? "active" : ""
-          }`}
-          onClick={() => setActiveTab("bookmarks")}
-        >
-          <FiBookmark />
-          Bookmarks
-          <span className="count">{safeBookmarks.length}</span>
-        </button>
-
-        <button
-          className={`library-tab ${
-            activeTab === "favorites" ? "active" : ""
-          }`}
-          onClick={() => setActiveTab("favorites")}
-        >
-          <FiHeart />
-          Favorites
-          <span className="count">{safeFavorites.length}</span>
-        </button>
-
-        <button
-          className={`library-tab ${activeTab === "progress" ? "active" : ""}`}
-          onClick={() => setActiveTab("progress")}
-        >
-          <FiBookOpen />
-          Progress
-          <span className="count">{progressList.length}</span>
-        </button>
-      </div>
-
-      {activeTab === "bookmarks" && safeBookmarks.length === 0 && (
-        <div className="library-empty">
-          <FiBookmark className="empty-icon" />
-          <h3>No bookmarks yet</h3>
-          <p>Books you bookmark will appear here for easy access</p>
-        </div>
-      )}
-
-      {activeTab === "favorites" && safeFavorites.length === 0 && (
-        <div className="library-empty">
-          <FiHeart className="empty-icon" />
-          <h3>No favorites yet</h3>
-          <p>Your favorite books will appear here</p>
-        </div>
-      )}
-
-
-      <div className="library-grid">
-        {activeTab === "progress" && (
-          <div className="progress-panel">
-            {progressList.length === 0 ? (
-              <div className="library-empty">
-                <FiBookOpen className="empty-icon" />
-                <h3>No active reading</h3>
-                <p>Start reading a book and it will appear here</p>
-              </div>
-            ) : (
-              progressList.map((progress) => (
-                <div key={progress.id} className="progress-card">
-                  <img
-                    src={progress.book?.coverUrl}
-                    alt={progress.book?.title}
-                    className="progress-cover"
-                  />
-                  <div className="progress-info">
-                    <h4>{progress.book?.title}</h4>
-                    <p>{Math.round(progress.percent)}% read</p>
-                    <div style={{ marginTop: 12 }}>
-                      <button
-                        className="btn-primary"
-                        onClick={() => {
-                          navigate(`/reader/${progress.bookId}`);
-                        }}
-                      >
-                        Resume
-                      </button>
-                      <button
-                        style={{ marginLeft: 8 }}
-                        onClick={async () => {
-                          try {
-                            await deleteProgress(progress.bookId);
-                            setProgressList(
-                              progressList.filter((p) => p.id !== progress.id)
-                            );
-                          } catch (err) {
-                            console.error("Failed to delete progress:", err);
-                          }
-                        }}
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        )}
-        {activeTab === "all" &&
-          allBooks.map((book) => (
-            <BookCard
-              key={book.id}
-              book={book}
-              onRemove={() => handleRemoveFromAll(book.id)}
-            />
-          ))}
-
-        {activeTab === "bookmarks" &&
-          safeBookmarks.map((b) => {
-            const book = normalize(b.book);
-            return (
-              <BookCard
-                key={book.id}
-                book={book}
-                onRemove={() => handleRemoveFromBookmark(book.id)}
-              />
-            );
-          })}
-
-        {activeTab === "favorites" &&
-          safeFavorites.map((f) => {
-            const book = normalize(f.book);
-            return (
-              <BookCard
-                key={book.id}
-                book={book}
-                onRemove={() => handleRemoveFromFavorite(book.id)}
-              />
-            );
-          })}
-      </div>
-      
+      <div className="library-grid">{renderTabContent()}</div>
     </div>
   );
 }

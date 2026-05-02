@@ -5,15 +5,9 @@ import "./BookCard.css";
 function BookCard({ book, onRemove }) {
   const navigate = useNavigate();
 
-  const realId = book.id || book._id || book.bookId;
-
-  if (!realId) {
-    console.error(" BookCard ERROR: Book has no valid ID:", book);
-  }
-
   function openDetails() {
-    if (!realId) return;
-    navigate(`/main/book/${realId}`, { state: { book } });
+    if (!book.id) return;
+    navigate(`/main/book/${book.id}`, { state: { book } });
   }
 
   return (
@@ -23,7 +17,7 @@ function BookCard({ book, onRemove }) {
           className="remove-btn"
           onClick={(e) => {
             e.stopPropagation(); 
-            onRemove(realId);
+            onRemove(book.id);
           }}
         >
           ✕

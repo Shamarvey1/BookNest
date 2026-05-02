@@ -10,10 +10,34 @@ const FavoriteContext = createContext();
 
 export function FavoriteProvider({ children }) {
   const [favorites, setFavorites] = useState([]);
+  const [token, setToken] = useState(localStorage.getItem("token"));
 
   useEffect(() => {
-    load();
+    const handleStorageChange = () => {
+      const newToken = localStorage.getItem("token");
+      setToken(newToken);
+    };
+
+    const handleTokenChange = (e) => {
+      setToken(e.detail.token);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    window.addEventListener("tokenChanged", handleTokenChange);
+    
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("tokenChanged", handleTokenChange);
+    };
   }, []);
+
+  useEffect(() => {
+    if (token) {
+      load();
+    } else {
+      setFavorites([]);
+    }
+  }, [token]);
 
   function normalizeFavorite(fav) {
     return {
@@ -30,6 +54,7 @@ export function FavoriteProvider({ children }) {
       setFavorites(normalized);
     } catch (err) {
       console.error("Failed to load favorites:", err);
+      setFavorites([]);
     }
   }
 

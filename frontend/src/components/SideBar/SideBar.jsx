@@ -8,6 +8,7 @@ function SideBar() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    window.dispatchEvent(new CustomEvent("tokenChanged", { detail: { token: null } }));
     navigate("/");
   };
   return (

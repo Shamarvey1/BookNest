@@ -71,11 +71,14 @@ const Landing = ({ mode }) => {
                 if (isLogin) {
                   const res = await loginAPI({ email, password });
                   localStorage.setItem("token", res.token);
+                  window.dispatchEvent(new CustomEvent("tokenChanged", { detail: { token: res.token } }));
                   navigate("/main");
                 } 
                 else {
-                  await signupAPI({ name, email, password });
-                  navigate("/");
+                  const res = await signupAPI({ name, email, password });
+                  localStorage.setItem("token", res.token);
+                  window.dispatchEvent(new CustomEvent("tokenChanged", { detail: { token: res.token } }));
+                  navigate("/main");
                 }
               } 
               catch (error) {

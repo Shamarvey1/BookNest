@@ -6,12 +6,11 @@ function BookCard({ book, onRemove }) {
   const navigate = useNavigate();
 
 
-  const realId = book.id || book._id || book.bookId || null;
-
   function openDetails() {
-    const targetId = realId || book.gutenId;
+    const bookId = book.id || book.gutenId;
+    if (!bookId) return;
 
-    navigate(`/main/book/${targetId}`, {
+    navigate(`/main/book/${bookId}`, {
       state: { book },
     });
   }
@@ -24,7 +23,7 @@ function BookCard({ book, onRemove }) {
           className="remove-btn"
           onClick={(e) => {
             e.stopPropagation(); 
-            onRemove(realId);
+            onRemove(book.id || book.gutenId);
           }}
         >
           ✕
