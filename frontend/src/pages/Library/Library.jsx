@@ -147,28 +147,20 @@ function Library() {
   const renderTabContent = () => {
     switch (activeTab) {
       case "progress":
-        return progressList.length === 0 ? (
-          <EmptyState
-            icon={FiBookOpen}
-            title="No active reading"
-            message="Start reading a book and it will appear here"
+        return progressList.map((progress) => (
+          <ProgressBookCard
+            key={progress.id}
+            progress={progress}
+            onRemove={async () => {
+              try {
+                await deleteProgress(progress.bookId);
+                setProgressList(progressList.filter((p) => p.id !== progress.id));
+              } catch (err) {
+                console.error("Failed to delete progress:", err);
+              }
+            }}
           />
-        ) : (
-          progressList.map((progress) => (
-            <ProgressBookCard
-              key={progress.id}
-              progress={progress}
-              onRemove={async () => {
-                try {
-                  await deleteProgress(progress.bookId);
-                  setProgressList(progressList.filter((p) => p.id !== progress.id));
-                } catch (err) {
-                  console.error("Failed to delete progress:", err);
-                }
-              }}
-            />
-          ))
-        );
+        ));
 
       case "all":
         return allBooks.map((book) => (
