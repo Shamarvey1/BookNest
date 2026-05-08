@@ -9,6 +9,7 @@ const bookmarkRoutes = require("./routes/bookmarkRoutes");
 const writingRoutes = require("./routes/writingRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const premiumRoutes = require("./routes/premiumRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
 const progressRoutes = require("./routes/progressRoutes");
 
 dotenv.config();
@@ -36,6 +37,7 @@ app.use("/api/favorites", favoriteRoutes);
 app.use("/api/writing", writingRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/premium", premiumRoutes);
+app.use("/api/payments", paymentRoutes);
 app.use("/api/progress", progressRoutes);
 
 app.get("/", (req, res) => {

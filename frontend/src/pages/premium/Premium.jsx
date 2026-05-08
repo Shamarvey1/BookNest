@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Crown, Check, Zap, Bookmark, BookOpen } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import "./Premium.css";
-import { upgradePremium as serviceUpgrade, cancelPremium as serviceCancel } from "../../services/premiumService";
+import { cancelPremium as serviceCancel } from "../../services/premiumService";
 
 const API_URL = `${import.meta.env.VITE_API_URL}/api`;
 
@@ -26,6 +27,7 @@ async function fetchProfile() {
 export default function Premium() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -46,13 +48,7 @@ export default function Premium() {
   }
 
   const handleUpgrade = async () => {
-    const result = await serviceUpgrade();
-    if (result) {
-      setUser(result);
-      alert("Upgrade successful! Welcome to Premium.");
-    } else {
-      alert("Upgrade failed. Please try again.");
-    }
+    navigate("/main/premium/checkout?plan=monthly");
   };
 
   const handleCancel = async () => {
@@ -79,7 +75,7 @@ export default function Premium() {
             <h3>Your Plan</h3>
             <div className="kv">
               <span>Plan Type</span>
-              <strong>Premium</strong>
+              <strong>{user.plan || "Premium"}</strong>
             </div>
             <div className="kv">
               <span>Status</span>

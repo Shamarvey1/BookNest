@@ -1,10 +1,12 @@
 import React from "react";
 import {createBrowserRouter,createRoutesFromElements,Route,RouterProvider} from "react-router-dom";
 
-import Landing from "./pages/Landing/Landing.jsx";
+import Login from "./pages/Login/Login.jsx";
+import Signup from "./pages/Signup/Signup.jsx";
 import MainLayout from "./components/layout/MainLayout.jsx";
 import Home from "./pages/Home/Home.jsx";
 import Premium from "./pages/premium/Premium.jsx";
+import Checkout from "./pages/premium/Checkout.jsx";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.jsx";
 import ReaderPage from "./pages/ReaderPage/ReaderPage.jsx";
 import { BookmarkProvider } from "./context/BookmarkContext.jsx";   
@@ -19,12 +21,13 @@ import Profile from "./pages/Profile/Profile.jsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<Landing mode="login" />} />
-      <Route path="/signup" element={<Landing mode="signup" />} />
+      <Route path="/" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
       <Route path="/main" element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
         <Route index element={<Home />} />
         <Route path="book/:id" element={<BookDetails />} />
         <Route path="premium" element={<Premium />} />
+        <Route path="premium/checkout" element={<Checkout />} />
         <Route path="library" element={<Library />} />
         <Route path="my-books" element={<MyBooks />} />
         <Route path="write-book" element={<WriteBook />} />

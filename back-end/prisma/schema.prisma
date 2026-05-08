@@ -16,6 +16,8 @@ model User {
   plan                  String?    @default("free")
   validTill             DateTime?
   stripeSubscriptionId  String?
+  razorpayOrderId       String?
+  razorpayPaymentId     String?
   createdAt             DateTime   @default(now())
   avatarUrl             String?
   bio                   String?
