@@ -25,3 +25,4 @@ pnpm-debug.log
 # Prisma
 prisma/dev.db
 prisma/migrations/
+frontend/.env.development
