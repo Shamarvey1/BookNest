@@ -1,5 +1,7 @@
 const prisma = require("../config/prisma");
 
+const FREE_FAVORITE_LIMIT = 5;
+
 exports.addFavorite = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -20,6 +22,13 @@ exports.addFavorite = async (req, res) => {
       });
       return res.json(existing);
     }
+    if (!req.user.isPremium) {
+      const favCount = await prisma.favorite.count({ where: { userId } });
+      if (favCount >= FREE_FAVORITE_LIMIT) {
+        return res.status(403).json({ message: `Free users can save up to ${FREE_FAVORITE_LIMIT} favorites. Upgrade to Premium for unlimited favorites.` });
+      }
+    }
+
     const fav = await prisma.favorite.create({
       data: { userId, bookId },
       include: { book: true }, 

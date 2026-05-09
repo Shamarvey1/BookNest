@@ -1,6 +1,6 @@
 const prisma = require("../config/prisma");
 
-const PREMIUM_BOOKMARK_LIMIT = 20;
+const FREE_BOOKMARK_LIMIT = 5;
 
 
 exports.addBookmark = async (req, res) => {
@@ -16,14 +16,14 @@ exports.addBookmark = async (req, res) => {
 
     if (exists) return res.json({ message: "Already bookmarked" });
 
-    if (req.user.isPremium) {
+    if (!req.user.isPremium) {
       const bookmarkCount = await prisma.bookmark.count({
         where: { userId },
       });
 
-      if (bookmarkCount >= PREMIUM_BOOKMARK_LIMIT) {
+      if (bookmarkCount >= FREE_BOOKMARK_LIMIT) {
         return res.status(403).json({
-          message: `Premium users can save up to ${PREMIUM_BOOKMARK_LIMIT} bookmarks.`,
+          message: `Free users can save up to ${FREE_BOOKMARK_LIMIT} bookmarks. Upgrade to Premium for unlimited bookmarks.`,
         });
       }
     }

@@ -7,6 +7,19 @@ exports.upsertProgress = async (req, res) => {
 
     if (!bookId) return res.status(400).json({ message: "bookId required" });
 
+    const FREE_PROGRESS_LIMIT = 5;
+
+    const existing = await prisma.readingProgress.findUnique({
+      where: { userId_bookId: { userId, bookId } },
+    });
+
+    if (!existing && !req.user.isPremium) {
+      const progCount = await prisma.readingProgress.count({ where: { userId } });
+      if (progCount >= FREE_PROGRESS_LIMIT) {
+        return res.status(403).json({ message: `Free users can save up to ${FREE_PROGRESS_LIMIT} reading progress entries. Upgrade to Premium for unlimited progress.` });
+      }
+    }
+
     const progress = await prisma.readingProgress.upsert({
       where: { userId_bookId: { userId, bookId } },
       update: { percent, position },
