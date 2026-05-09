@@ -1,5 +1,7 @@
 const prisma = require("../config/prisma");
 
+const PREMIUM_BOOKMARK_LIMIT = 20;
+
 
 exports.addBookmark = async (req, res) => {
   try {
@@ -14,12 +16,24 @@ exports.addBookmark = async (req, res) => {
 
     if (exists) return res.json({ message: "Already bookmarked" });
 
-    const bookmark = await prisma.bookmark.create({
-  data: { userId, bookId },
-  include: { book: true },   
-});
+    if (req.user.isPremium) {
+      const bookmarkCount = await prisma.bookmark.count({
+        where: { userId },
+      });
 
-res.json(bookmark);
+      if (bookmarkCount >= PREMIUM_BOOKMARK_LIMIT) {
+        return res.status(403).json({
+          message: `Premium users can save up to ${PREMIUM_BOOKMARK_LIMIT} bookmarks.`,
+        });
+      }
+    }
+
+    const bookmark = await prisma.bookmark.create({
+      data: { userId, bookId },
+      include: { book: true },
+    });
+
+    res.json(bookmark);
 
   } catch (err) {
     console.error("BOOKMARK ADD ERROR:", err);

@@ -7,22 +7,18 @@ A clean, modern full-stack web application for reading books, tracking progress,
 ![Status](https://img.shields.io/badge/Status-In_Development-blue)
 ![Version](https://img.shields.io/badge/Version-1.0.0-green)
 
-<!-- FRONTEND -->
 ![React](https://img.shields.io/badge/Frontend-React.js-61dafb?logo=react&logoColor=white)
 ![CSS3](https://img.shields.io/badge/Style-CSS3-264de4?logo=css3&logoColor=white)
 ![Vite](https://img.shields.io/badge/Bundler-Vite-646cff?logo=vite&logoColor=white)
 
-<!-- BACKEND -->
 ![Node](https://img.shields.io/badge/Backend-Node.js-3c873a?logo=node.js&logoColor=white)
 ![Express](https://img.shields.io/badge/Framework-Express.js-grey?logo=express)
 ![JWT](https://img.shields.io/badge/Auth-JWT-orange?logo=jsonwebtokens)
 ![Bcrypt](https://img.shields.io/badge/Security-Bcrypt-blue)
 
-<!-- DATABASE -->
 ![MongoDB](https://img.shields.io/badge/Database-MongoDB-4faa41?logo=mongodb&logoColor=white)
 ![Prisma](https://img.shields.io/badge/ORM-Prisma-black?logo=prisma)
 
-<!-- TOOLS -->
 ![Git](https://img.shields.io/badge/Version_Control-Git-orange?logo=git&logoColor=white)
 ![VSCode](https://img.shields.io/badge/Editor-VSCode-007ACC?logo=visual-studio-code)
 ![Postman](https://img.shields.io/badge/API_Testing-Postman-orange?logo=postman)

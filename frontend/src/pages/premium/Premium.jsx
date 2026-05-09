@@ -22,8 +22,6 @@ async function fetchProfile() {
   }
 }
 
-// upgrade/cancel handled by service file (premiumService)
-
 export default function Premium() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);

@@ -19,8 +19,8 @@ function BookmarkButton({ book, getBookId, onStatusChange }) {
       const finalId = bookId || (await getBookId());
       const result = await toggleBookmark(finalId);
       onStatusChange && onStatusChange(result);
-    } catch {
-      alert("Bookmark failed");
+    } catch (err) {
+      alert(err?.message || "Bookmark failed");
     }
 
     setLoading(false);
