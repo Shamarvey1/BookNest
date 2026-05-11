@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ArrowLeft, Crown, ShieldCheck, Wallet } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { createRazorpayOrder, loadRazorpayScript, verifyRazorpayPayment } from "../../services/paymentService";
+import "./Checkout.css";
 
 const PLANS = {
   monthly: {
@@ -97,58 +98,41 @@ export default function Checkout() {
   const plan = PLANS[selectedPlan] || PLANS.monthly;
 
   return (
-    <div style={{ minHeight: "100vh", background: "#eef2f7", padding: "24px" }}>
-      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+    <div className="checkout-page">
+      <div className="checkout-container">
         <button
           onClick={() => navigate("/main/premium")}
-          style={{
-            border: "none",
-            background: "transparent",
-            color: "#1e56ff",
-            fontWeight: 600,
-            cursor: "pointer",
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            marginBottom: "20px",
-          }}
+          className="checkout-back"
         >
           <ArrowLeft size={18} />
           Back to Premium
         </button>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: "24px" }}>
-          <div style={{ background: "#fff", borderRadius: "24px", padding: "28px", boxShadow: "0 12px 32px rgba(0,0,0,0.08)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "18px" }}>
+        <div className="checkout-grid">
+          <div className="checkout-card">
+            <div className="checkout-header">
               <Crown size={28} color="#1e56ff" />
-              <div>
-                <h1 style={{ margin: 0, fontSize: "28px" }}>Premium Checkout</h1>
-                <p style={{ margin: "4px 0 0", color: "#6b7280" }}>Choose a plan and complete payment through Razorpay.</p>
+              <div className="checkout-header-copy">
+                <h1>Premium Checkout</h1>
+                <p>Choose a plan and complete payment through Razorpay.</p>
               </div>
             </div>
 
-            <div style={{ display: "grid", gap: "16px" }}>
+            <div className="checkout-plan-list">
               {Object.entries(PLANS).map(([key, value]) => (
                 <button
                   key={key}
                   onClick={() => setSelectedPlan(key)}
-                  style={{
-                    textAlign: "left",
-                    border: selectedPlan === key ? "2px solid #1e56ff" : "1px solid #dbe3f0",
-                    background: selectedPlan === key ? "#f5f8ff" : "#fff",
-                    borderRadius: "18px",
-                    padding: "18px",
-                    cursor: "pointer",
-                  }}
+                  className={`checkout-plan ${selectedPlan === key ? "selected" : ""}`}
                 >
-                  <div style={{ display: "flex", justifyContent: "space-between", gap: "12px", alignItems: "center" }}>
+                  <div className="checkout-plan-inner">
                     <div>
-                      <div style={{ fontSize: "18px", fontWeight: 700 }}>{value.label}</div>
-                      <div style={{ color: "#6b7280", marginTop: "4px" }}>{value.description}</div>
+                      <div className="checkout-plan-label">{value.label}</div>
+                      <div className="checkout-plan-desc">{value.description}</div>
                     </div>
-                    <div style={{ textAlign: "right" }}>
-                      <div style={{ fontSize: "22px", fontWeight: 800, color: "#111827" }}>{value.price}</div>
-                      <div style={{ color: "#6b7280" }}>{value.duration}</div>
+                    <div className="checkout-plan-price">
+                      <div className="checkout-plan-amount">{value.price}</div>
+                      <div className="checkout-plan-duration">{value.duration}</div>
                     </div>
                   </div>
                 </button>
@@ -158,52 +142,37 @@ export default function Checkout() {
             <button
               onClick={openCheckout}
               disabled={loading}
-              style={{
-                width: "100%",
-                marginTop: "24px",
-                border: "none",
-                borderRadius: "16px",
-                padding: "16px 20px",
-                background: loading ? "#8fb0ff" : "#1e56ff",
-                color: "#fff",
-                fontSize: "16px",
-                fontWeight: 700,
-                cursor: loading ? "not-allowed" : "pointer",
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "10px",
-              }}
+              className="checkout-pay-btn"
             >
               <Wallet size={18} />
               {loading ? "Opening Razorpay..." : `Pay ${plan.price}`}
             </button>
           </div>
 
-          <div style={{ background: "#0f172a", color: "#fff", borderRadius: "24px", padding: "28px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
+          <div className="checkout-summary">
+            <div className="checkout-summary-header">
               <ShieldCheck size={22} color="#60a5fa" />
-              <h2 style={{ margin: 0 }}>Your Order</h2>
+              <h2>Your Order</h2>
             </div>
-            <div style={{ display: "grid", gap: "14px", fontSize: "15px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div className="checkout-order-rows">
+              <div className="checkout-order-row">
                 <span>Plan</span>
                 <strong>{plan.label}</strong>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div className="checkout-order-row">
                 <span>Duration</span>
                 <strong>{plan.duration}</strong>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div className="checkout-order-row">
                 <span>Price</span>
                 <strong>{plan.price}</strong>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div className="checkout-order-row">
                 <span>Payment Gateway</span>
                 <strong>Razorpay</strong>
               </div>
             </div>
-            <p style={{ color: "#cbd5e1", marginTop: "20px", lineHeight: 1.6 }}>
+            <p className="checkout-summary-note">
               After payment, your subscription is verified on the backend and premium access is activated immediately.
             </p>
           </div>

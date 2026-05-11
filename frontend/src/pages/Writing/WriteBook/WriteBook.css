@@ -91,4 +91,59 @@
     align-items: flex-start;
     gap: 14px;
   }
+
+  .write-book-page {
+    padding: 20px;
+  }
+
+  .write-book-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .cancel-btn,
+  .save-btn {
+    flex: 1;
+    min-width: 140px;
+  }
+
+  .write-card {
+    padding: 18px;
+  }
+
+  .cover-preview {
+    width: 100%;
+    max-width: 160px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .write-book-page {
+    padding: 14px;
+  }
+
+  .write-book-header h1 {
+    font-size: 22px;
+  }
+
+  .write-book-header p {
+    font-size: 13px;
+  }
+
+  .cancel-btn,
+  .save-btn {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .write-book-actions {
+    gap: 10px;
+  }
+
+  .details-form input,
+  .details-form select,
+  .details-form textarea {
+    font-size: 14px;
+  }
 }

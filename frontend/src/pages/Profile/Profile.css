@@ -35,6 +35,24 @@
   text-align: center;
 }
 
+@media (max-width: 640px) {
+  .profile-page {
+    padding: 14px;
+    align-items: flex-start;
+  }
+
+  .profile-card {
+    max-width: 100%;
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .profile-title {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+}
+
 
 
 

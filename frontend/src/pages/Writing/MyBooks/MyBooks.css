@@ -59,8 +59,32 @@
     gap: 16px;
   }
 
+  .my-books-page {
+    padding: 20px;
+  }
+
+  .my-books-title {
+    font-size: 24px;
+  }
+
+  .my-books-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+  }
+
   .new-book-btn {
     width: 100%;
     text-align: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .my-books-page {
+    padding: 14px;
+  }
+
+  .my-books-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
   }
 }

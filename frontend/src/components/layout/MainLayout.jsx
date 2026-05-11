@@ -9,6 +9,7 @@ const MainLayout = () => {
 
   const token = localStorage.getItem("token");
   const [user, setUser] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -43,12 +44,31 @@ const MainLayout = () => {
 
   return (
     <div className="layout-container">
-
-      <SideBar  />
+      <div className={`sidebar-wrapper ${sidebarOpen ? "open" : ""}`}>
+        <SideBar />
+      </div>
+      {sidebarOpen && (
+        <div
+          className="mobile-backdrop"
+          onClick={() => setSidebarOpen(false)}
+          aria-hidden
+        />
+      )}
 
       <div className="layout-content">
+        <div className="mobile-topbar">
+          <button
+            className="mobile-menu-btn"
+            aria-label="Toggle menu"
+            onClick={() => setSidebarOpen((s) => !s)}
+          >
+            ☰
+          </button>
+          <div />
+        </div>
+
         <div className="page-area">
-          <Outlet  />
+          <Outlet />
         </div>
 
       </div>

@@ -12,9 +12,18 @@ function ReaderPage() {
   const { id } = useParams();
   const [book, setBook] = useState(null);
   const [pages, setPages] = useState([]);
+  const [viewportWidth, setViewportWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 1200
+  );
   const currentPageRef = useRef(1);
   const lastSavedPageRef = useRef(1);
   const flipBookRef = useRef(null);
+
+  useEffect(() => {
+    const handleResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const loadBook = async () => {
@@ -91,6 +100,12 @@ function ReaderPage() {
     currentPageRef.current = e.data;
   };
 
+  const isMobile = viewportWidth <= 560;
+  const bookWidth = isMobile
+    ? Math.max(280, Math.min(viewportWidth - 32, 340))
+    : Math.min(viewportWidth - 120, 500);
+  const bookHeight = isMobile ? Math.round(bookWidth * 1.45) : 700;
+
   if(!book){
     return <BookNestLoader text="Loading your book..." />;
   }
@@ -101,10 +116,10 @@ function ReaderPage() {
 
       <HTMLFlipBook
         ref={flipBookRef}
-        width={500}
-        height={700}
-        size="fixed"
-        minWidth={315}
+        width={bookWidth}
+        height={bookHeight}
+        size="stretch"
+        minWidth={280}
         maxWidth={600}
         minHeight={400}
         maxHeight={900}

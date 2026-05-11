@@ -201,7 +201,7 @@ function Library() {
   };
 
   return (
-    <div className="library-page">
+    <div className="library-page container">
       <h1 className="library-title">My Library</h1>
       <p className="library-subtitle">Your personal collection and reading progress</p>
 

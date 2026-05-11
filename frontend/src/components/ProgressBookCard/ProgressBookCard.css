@@ -109,11 +109,12 @@
   display: flex;
   gap: 6px;
   margin-top: 10px;
+  flex-wrap: nowrap;
 }
 
 .btn-resume,
 .btn-remove {
-  flex: 1;
+  flex: 1 1 0;
   padding: 8px 12px;
   border: 1px solid #e5e7eb;
   background: white;
@@ -126,6 +127,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 0;
 }
 
 .btn-resume {
@@ -147,4 +149,26 @@
 .btn-remove:hover {
   background: #fef2f2;
   border-color: #ef4444;
+}
+
+/* Mobile tweaks to avoid wrapping and overflow */
+@media (max-width: 480px) {
+  .progress-book-cover {
+    height: 140px;
+  }
+
+  .progress-book-title {
+    font-size: 13px;
+    min-height: 34px;
+    max-height: 34px;
+  }
+
+  .progress-actions {
+    gap: 8px;
+  }
+
+  .btn-resume, .btn-remove {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
 }

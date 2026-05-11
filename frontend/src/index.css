@@ -9,3 +9,28 @@ body {
   background-color: #f9f9f9;
 }
 
+:root{
+  --container-max: 1100px;
+  --gap: 16px;
+  --radius: 10px;
+}
+
+.container{
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+img{max-width:100%;height:auto;display:block}
+
+/* Responsive typography tweaks */
+@media (max-width: 900px){
+  :root{ --gap: 12px; }
+  body{ font-size: 15px; }
+}
+
+@media (max-width: 480px){
+  body{ font-size: 14px; }
+}
+

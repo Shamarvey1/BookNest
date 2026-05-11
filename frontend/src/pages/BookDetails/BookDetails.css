@@ -103,6 +103,7 @@
   align-items: center;
   gap: 12px;
   margin-top: 6px;
+  flex-wrap: wrap;
 }
 
 .bd-primary-btn {
@@ -204,4 +205,65 @@
 .bd-archive-id code {
   font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono",
     "Courier New", monospace;
+}
+
+@media (max-width: 900px) {
+  .bookdetails-page {
+    padding: 18px 16px;
+  }
+
+  .bookdetails-main-card {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .bd-book-left {
+    justify-content: flex-start;
+  }
+
+  .bd-cover-image {
+    width: 180px;
+  }
+
+  .bd-title {
+    font-size: 22px;
+  }
+
+  .bd-toast {
+    right: 16px;
+    left: 16px;
+    width: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .bookdetails-page {
+    padding: 14px 12px;
+  }
+
+  .bookdetails-main-card {
+    padding: 16px;
+  }
+
+  .bd-actions-row {
+    gap: 8px;
+  }
+
+  .bd-primary-btn {
+    width: 100%;
+  }
+
+  .bd-cover-image {
+    width: 100%;
+    max-width: 220px;
+  }
+
+  .bd-tags-row {
+    gap: 6px;
+  }
+
+  .bd-tag {
+    font-size: 10px;
+  }
 }
