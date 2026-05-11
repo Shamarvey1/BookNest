@@ -39,10 +39,6 @@ const Home = () => {
     loadBooks();
   }, [page, query]);
 
-  const handleSearch = () => {
-    setPage(1);
-  };
-
   const handleAutoSearch = (text) => {
     setQuery(text);
     setPage(1);
@@ -58,7 +54,6 @@ const Home = () => {
       <SearchBar
         query={query}
         setQuery={setQuery}
-        onSearch={handleSearch}
         onAutoSearch={handleAutoSearch}
       />
 

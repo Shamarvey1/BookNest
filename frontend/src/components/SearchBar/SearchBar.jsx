@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import "./SearchBar.css";
 
-const SearchBar = ({ query, setQuery, onSearch, onAutoSearch }) => {
+const SearchBar = ({ query, setQuery, onAutoSearch }) => {
   const debounceRef = useRef(null);
 
 
@@ -22,7 +22,6 @@ const SearchBar = ({ query, setQuery, onSearch, onAutoSearch }) => {
     <div className="search-box">
         <input type="text" placeholder="Search for books..." value={query}
         onChange={handleChange}/>
-        <button onClick={onSearch}> Search </button>
     </div>
   );
 };

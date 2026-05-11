@@ -15,12 +15,27 @@ function ReaderPage() {
   const [viewportWidth, setViewportWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 1200
   );
+  const [viewportHeight, setViewportHeight] = useState(
+    typeof window !== "undefined" ? window.innerHeight : 800
+  );
   const currentPageRef = useRef(1);
   const lastSavedPageRef = useRef(1);
   const flipBookRef = useRef(null);
 
   useEffect(() => {
-    const handleResize = () => setViewportWidth(window.innerWidth);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+      setViewportHeight(window.innerHeight);
+    };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -101,10 +116,19 @@ function ReaderPage() {
   };
 
   const isMobile = viewportWidth <= 560;
-  const bookWidth = isMobile
-    ? Math.max(280, Math.min(viewportWidth - 32, 340))
-    : Math.min(viewportWidth - 120, 500);
-  const bookHeight = isMobile ? Math.round(bookWidth * 1.45) : 700;
+  const stagePaddingX = isMobile ? 16 : 48;
+  const stagePaddingY = isMobile ? 20 : 40;
+  const availableWidth = Math.max(280, viewportWidth - stagePaddingX * 2);
+  const availableHeight = Math.max(420, viewportHeight - stagePaddingY * 2 - 90);
+  const idealPageHeight = isMobile ? 1.42 : 1.36;
+  const bookWidth = Math.floor(
+    Math.min(
+      isMobile ? 340 : 540,
+      availableWidth,
+      Math.floor(availableHeight / idealPageHeight)
+    )
+  );
+  const bookHeight = Math.floor(Math.min(availableHeight, bookWidth * idealPageHeight));
 
   if(!book){
     return <BookNestLoader text="Loading your book..." />;
@@ -114,36 +138,38 @@ function ReaderPage() {
     <div className="reader-wrapper">
       <h1 className="reader-title">{book.title}</h1>
 
-      <HTMLFlipBook
-        ref={flipBookRef}
-        width={bookWidth}
-        height={bookHeight}
-        size="stretch"
-        minWidth={280}
-        maxWidth={600}
-        minHeight={400}
-        maxHeight={900}
-        showCover={true}
-        mobileScrollSupport={true}
-        onFlip={handlePageChange}
-        className="flip-book"
-      >
-        <div className="page cover-page">
-          <h2>{book.title}</h2>
-          <p className="author">{book.authors?.join(", ")}</p>
-        </div>
-
-        {pages.map((p, i) => (
-          <div key={i} className="page">
-            <div className="page-text">{p}</div>
-            <div className="page-number">{i + 1}</div>
+      <div className="reader-stage">
+        <HTMLFlipBook
+          ref={flipBookRef}
+          width={bookWidth}
+          height={bookHeight}
+          size="stretch"
+          minWidth={280}
+          maxWidth={600}
+          minHeight={400}
+          maxHeight={900}
+          showCover={true}
+          mobileScrollSupport={false}
+          onFlip={handlePageChange}
+          className="flip-book"
+        >
+          <div className="page cover-page">
+            <h2>{book.title}</h2>
+            <p className="author">{book.authors?.join(", ")}</p>
           </div>
-        ))}
 
-        <div className="page end-page">
-          <h2>THE END</h2>
-        </div>
-      </HTMLFlipBook>
+          {pages.map((p, i) => (
+            <div key={i} className="page">
+              <div className="page-text">{p}</div>
+              <div className="page-number">{i + 1}</div>
+            </div>
+          ))}
+
+          <div className="page end-page">
+            <h2>THE END</h2>
+          </div>
+        </HTMLFlipBook>
+      </div>
     </div>
   );
 }
