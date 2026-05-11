@@ -17,17 +17,12 @@
   color: #111;
   text-align: center;
   flex-shrink: 0;
-  margin-bottom: 28px;
-  color: #111;
-  text-align: center;
-  flex-shrink: 0;
 }
 
 .reader-stage {
   flex: 1;
   width: 100%;
   display: flex;
-  width: 100%;
   justify-content: center;
   align-items: center;
   min-height: 0;
@@ -65,8 +60,6 @@
   flex: 1;
   color: #1f1f1f;
   text-align: justify;
-  color: #1f1f1f;
-  text-align: justify;
   font-family: "Georgia", "Garamond", serif;
   font-size: 17px;
   line-height: 1.9;
@@ -81,8 +74,6 @@
   position: absolute;
   bottom: 24px;
   right: 28px;
-  font-size: 13px;
-  bottom: 24px;
   font-size: 13px;
   color: #888;
   opacity: 0.7;

@@ -22,12 +22,8 @@ function ReaderPage() {
   const flipBookRef = useRef(null);
 
   const isMobile = viewportWidth <= 768;
-
-  const getPageSize = (mobile) => {
-    return mobile ? 850 : 1100;
-  };
-
-  const PAGE_SIZE = getPageSize(isMobile);
+  const readerMode = isMobile ? "mobile" : "desktop";
+  const PAGE_SIZE = 1100;
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
@@ -68,7 +64,7 @@ function ReaderPage() {
     };
 
     loadBook();
-  }, [id, PAGE_SIZE]);
+  }, [id]);
 
   useEffect(() => {
     if (book && pages.length > 0 && flipBookRef.current) {
@@ -154,6 +150,7 @@ function ReaderPage() {
 
       <div className="reader-stage">
         <HTMLFlipBook
+          key={readerMode}
           ref={flipBookRef}
           width={bookWidth}
           height={bookHeight}
