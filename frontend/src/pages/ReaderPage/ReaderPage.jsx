@@ -6,10 +6,9 @@ import { getBookByIdAPI } from "../../services/bookService";
 import { upsertProgress, getProgress } from "../../services/progressService";
 import BookNestLoader from "../../components/Loader/BookNestLoader/BookNestLoader";
 
-const PAGE_SIZE = 1500;
-
 function ReaderPage() {
   const { id } = useParams();
+
   const [book, setBook] = useState(null);
   const [pages, setPages] = useState([]);
   const [viewportWidth, setViewportWidth] = useState(
@@ -22,8 +21,17 @@ function ReaderPage() {
   const lastSavedPageRef = useRef(1);
   const flipBookRef = useRef(null);
 
+  const isMobile = viewportWidth <= 768;
+
+  const getPageSize = (mobile) => {
+    return mobile ? 850 : 1100;
+  };
+
+  const PAGE_SIZE = getPageSize(isMobile);
+
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
+
     document.body.style.overflow = "hidden";
 
     return () => {
@@ -36,13 +44,16 @@ function ReaderPage() {
       setViewportWidth(window.innerWidth);
       setViewportHeight(window.innerHeight);
     };
+
     window.addEventListener("resize", handleResize);
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
     const loadBook = async () => {
       const data = await getBookByIdAPI(id);
+
       if (!data || !data.content) return;
 
       const text = data.content;
@@ -57,23 +68,24 @@ function ReaderPage() {
     };
 
     loadBook();
-  }, [id]);
-
+  }, [id, PAGE_SIZE]);
 
   useEffect(() => {
     if (book && pages.length > 0 && flipBookRef.current) {
       const restoreProgress = async () => {
         try {
           const progress = await getProgress(book.id);
+
           if (progress && progress.position) {
             setTimeout(() => {
               const savedPage = Math.min(Math.max(progress.position, 1), pages.length);
+
               try {
                 flipBookRef.current.pageFlip().turnToPage(savedPage);
                 currentPageRef.current = savedPage;
                 lastSavedPageRef.current = savedPage;
               } catch (e) {
-                console.error("Failed to turn to page:", e);
+                console.error("Failed to restore page:", e);
               }
             }, 500);
           }
@@ -81,6 +93,7 @@ function ReaderPage() {
           console.error("Failed to restore progress:", err);
         }
       };
+
       restoreProgress();
     }
   }, [book, pages.length]);
@@ -89,9 +102,11 @@ function ReaderPage() {
     const interval = setInterval(() => {
       if (book && currentPageRef.current !== lastSavedPageRef.current) {
         const percent = Math.round((currentPageRef.current / pages.length) * 100);
+
         upsertProgress(book.id, percent, currentPageRef.current).catch((err) => {
           console.error("Progress save failed:", err);
         });
+
         lastSavedPageRef.current = currentPageRef.current;
       }
     }, 5000);
@@ -103,11 +118,13 @@ function ReaderPage() {
     const handleUnload = () => {
       if (book && currentPageRef.current !== lastSavedPageRef.current) {
         const percent = Math.round((currentPageRef.current / pages.length) * 100);
+
         upsertProgress(book.id, percent, currentPageRef.current).catch(() => {});
       }
     };
 
     window.addEventListener("beforeunload", handleUnload);
+
     return () => window.removeEventListener("beforeunload", handleUnload);
   }, [book, pages.length]);
 
@@ -115,22 +132,19 @@ function ReaderPage() {
     currentPageRef.current = e.data;
   };
 
-  const isMobile = viewportWidth <= 560;
-  const stagePaddingX = isMobile ? 16 : 48;
-  const stagePaddingY = isMobile ? 20 : 40;
-  const availableWidth = Math.max(280, viewportWidth - stagePaddingX * 2);
-  const availableHeight = Math.max(420, viewportHeight - stagePaddingY * 2 - 90);
-  const idealPageHeight = isMobile ? 1.42 : 1.36;
-  const bookWidth = Math.floor(
-    Math.min(
-      isMobile ? 340 : 540,
-      availableWidth,
-      Math.floor(availableHeight / idealPageHeight)
-    )
-  );
-  const bookHeight = Math.floor(Math.min(availableHeight, bookWidth * idealPageHeight));
+  const stagePaddingX = isMobile ? 16 : 60;
 
-  if(!book){
+  const stagePaddingY = isMobile ? 20 : 40;
+
+  const availableWidth = viewportWidth - stagePaddingX * 2;
+
+  const availableHeight = viewportHeight - stagePaddingY * 2 - 100;
+
+  const bookWidth = isMobile ? Math.min(320, availableWidth - 20) : Math.min(500, availableWidth / 2.2);
+
+  const bookHeight = isMobile ? Math.min(520, availableHeight) : Math.min(720, availableHeight);
+
+  if (!book) {
     return <BookNestLoader text="Loading your book..." />;
   }
 
@@ -145,11 +159,13 @@ function ReaderPage() {
           height={bookHeight}
           size="stretch"
           minWidth={280}
-          maxWidth={600}
-          minHeight={400}
+          maxWidth={520}
+          minHeight={420}
           maxHeight={900}
+          maxShadowOpacity={0.25}
           showCover={true}
-          mobileScrollSupport={false}
+          mobileScrollSupport={true}
+          swipeDistance={10}
           onFlip={handlePageChange}
           className="flip-book"
         >
