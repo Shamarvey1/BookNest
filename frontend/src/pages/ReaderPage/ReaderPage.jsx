@@ -5,6 +5,7 @@ import "./ReaderPage.css";
 import { getBookByIdAPI } from "../../services/bookService";
 import { upsertProgress, getProgress } from "../../services/progressService";
 import BookNestLoader from "../../components/Loader/BookNestLoader/BookNestLoader";
+import AIChat from "../../components/AIChat/AIChat";
 
 function ReaderPage() {
   const { id } = useParams();
@@ -17,6 +18,8 @@ function ReaderPage() {
   const [viewportHeight, setViewportHeight] = useState(
     typeof window !== "undefined" ? window.innerHeight : 800
   );
+  const [currentPageText, setCurrentPageText] = useState("");
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const currentPageRef = useRef(1);
   const lastSavedPageRef = useRef(1);
   const flipBookRef = useRef(null);
@@ -24,6 +27,19 @@ function ReaderPage() {
   const isMobile = viewportWidth <= 768;
   const readerMode = isMobile ? "mobile" : "desktop";
   const PAGE_SIZE = 1100;
+
+  const buildContextFromFlipIndex = (flipIndex) => {
+    if (!pages.length) return "";
+
+    const contentIndex = Math.max(0, flipIndex - 1);
+    const contextParts = [
+      pages[contentIndex - 1],
+      pages[contentIndex],
+      pages[contentIndex + 1],
+    ].filter(Boolean);
+
+    return contextParts.join("\n\n");
+  };
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
@@ -68,6 +84,8 @@ function ReaderPage() {
 
   useEffect(() => {
     if (book && pages.length > 0 && flipBookRef.current) {
+      setCurrentPageText(buildContextFromFlipIndex(1));
+
       const restoreProgress = async () => {
         try {
           const progress = await getProgress(book.id);
@@ -80,6 +98,7 @@ function ReaderPage() {
                 flipBookRef.current.pageFlip().turnToPage(savedPage);
                 currentPageRef.current = savedPage;
                 lastSavedPageRef.current = savedPage;
+                setCurrentPageText(buildContextFromFlipIndex(savedPage));
               } catch (e) {
                 console.error("Failed to restore page:", e);
               }
@@ -92,7 +111,7 @@ function ReaderPage() {
 
       restoreProgress();
     }
-  }, [book, pages.length]);
+  }, [book, pages]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -126,6 +145,7 @@ function ReaderPage() {
 
   const handlePageChange = (e) => {
     currentPageRef.current = e.data;
+    setCurrentPageText(buildContextFromFlipIndex(e.data));
   };
 
   const stagePaddingX = isMobile ? 16 : 60;
@@ -149,40 +169,63 @@ function ReaderPage() {
       <h1 className="reader-title">{book.title}</h1>
 
       <div className="reader-stage">
-        <HTMLFlipBook
-          key={readerMode}
-          ref={flipBookRef}
-          width={bookWidth}
-          height={bookHeight}
-          size="stretch"
-          minWidth={280}
-          maxWidth={520}
-          minHeight={420}
-          maxHeight={900}
-          maxShadowOpacity={0.25}
-          showCover={true}
-          mobileScrollSupport={true}
-          swipeDistance={10}
-          onFlip={handlePageChange}
-          className="flip-book"
-        >
-          <div className="page cover-page">
-            <h2>{book.title}</h2>
-            <p className="author">{book.authors?.join(", ")}</p>
-          </div>
-
-          {pages.map((p, i) => (
-            <div key={i} className="page">
-              <div className="page-text">{p}</div>
-              <div className="page-number">{i + 1}</div>
+        <div className="reader-main">
+          <HTMLFlipBook
+            key={readerMode}
+            ref={flipBookRef}
+            width={bookWidth}
+            height={bookHeight}
+            size="stretch"
+            minWidth={280}
+            maxWidth={520}
+            minHeight={420}
+            maxHeight={900}
+            maxShadowOpacity={0.25}
+            showCover={true}
+            mobileScrollSupport={true}
+            swipeDistance={10}
+            onFlip={handlePageChange}
+            className="flip-book"
+          >
+            <div className="page cover-page">
+              <h2>{book.title}</h2>
+              <p className="author">{book.authors?.join(", ")}</p>
             </div>
-          ))}
 
-          <div className="page end-page">
-            <h2>THE END</h2>
-          </div>
-        </HTMLFlipBook>
+            {pages.map((p, i) => (
+              <div key={i} className="page">
+                <div className="page-text">{p}</div>
+                <div className="page-number">{i + 1}</div>
+              </div>
+            ))}
+
+            <div className="page end-page">
+              <h2>THE END</h2>
+            </div>
+          </HTMLFlipBook>
+        </div>
       </div>
+
+      <button
+        className="reader-ai-toggle"
+        onClick={() => setIsChatOpen(true)}
+        aria-label="Open AI Assistant"
+      >
+        ✨
+      </button>
+
+      {isChatOpen && (
+        <div className="reader-ai-overlay" role="dialog" aria-modal="true">
+          <button
+            className="reader-ai-backdrop"
+            onClick={() => setIsChatOpen(false)}
+            aria-label="Close AI Assistant"
+          />
+          <div className="reader-ai-panel">
+            <AIChat currentText={currentPageText} onClose={() => setIsChatOpen(false)} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

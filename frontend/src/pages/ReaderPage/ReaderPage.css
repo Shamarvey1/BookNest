@@ -25,7 +25,53 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 20px;
   min-height: 0;
+}
+
+.reader-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  min-height: 0;
+}
+
+.reader-ai-toggle {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 56px;
+  height: 56px;
+  border: none;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1100;
+  background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+  box-shadow: 0 12px 28px rgba(124, 58, 237, 0.35);
+}
+
+.reader-ai-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+}
+
+.reader-ai-backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: rgba(15, 23, 42, 0.28);
+}
+
+.reader-ai-panel {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  width: min(370px, calc(100vw - 32px));
+  height: min(58vh, 520px);
 }
 
 .flip-book {
@@ -116,6 +162,18 @@
     padding: 20px 16px;
   }
 
+  .reader-ai-toggle {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .reader-ai-panel {
+    right: 12px;
+    bottom: 12px;
+    width: calc(100vw - 24px);
+    height: 52vh;
+  }
+
   .reader-title {
     font-size: 22px;
     margin-bottom: 20px;
@@ -143,6 +201,10 @@
 @media (max-width: 480px) {
   .reader-wrapper {
     padding: 14px;
+  }
+
+  .reader-ai-panel {
+    height: 48vh;
   }
 
   .reader-title {
