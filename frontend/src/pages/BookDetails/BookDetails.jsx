@@ -79,7 +79,7 @@ function BookDetails() {
     <div className="bookdetails-page">
       {toast && (
         <div className="bd-toast">
-          <span className="bd-toast-icon">✔</span>
+          <span className="bd-toast-icon">✓</span>
           <span>{toast}</span>
         </div>
       )}

@@ -1,12 +1,17 @@
 .bd-icon-btn {
-  background: #eee;
+  background: #f3f4f6;
   padding: 10px;
   border-radius: 8px;
   font-size: 18px;
   border: none;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .bd-icon-btn:hover {
-  background: #ddd;
+  background: #e5e7eb;
+}
+
+.bd-icon-btn:active {
+  transform: scale(0.95);
 }
