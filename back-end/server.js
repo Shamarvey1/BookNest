@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
+dotenv.config();
+
 const authRoutes = require("./routes/authRoutes.js");
 const bookRoutes = require("./routes/bookRoutes");
 const favoriteRoutes = require("./routes/favoriteRoutes");
@@ -11,8 +13,7 @@ const profileRoutes = require("./routes/profileRoutes");
 const premiumRoutes = require("./routes/premiumRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const progressRoutes = require("./routes/progressRoutes");
-
-dotenv.config();
+const aiRoutes = require("./routes/aiRoutes");
 
 const app = express();
 app.use(express.json());
@@ -39,6 +40,7 @@ app.use("/api/profile", profileRoutes);
 app.use("/api/premium", premiumRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/progress", progressRoutes);
+app.use("/api/ai", aiRoutes);
 
 app.get("/", (req, res) => {
   res.send("BookNest API is running...");
