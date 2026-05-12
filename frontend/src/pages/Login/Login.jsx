@@ -9,6 +9,7 @@ const Login = () => {
 	const navigate = useNavigate();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		const token = localStorage.getItem("token");
@@ -19,6 +20,7 @@ const Login = () => {
 
 	const handleLogin = async (e) => {
 		e.preventDefault();
+		setLoading(true);
 		try {
 			const res = await loginAPI({ email, password });
 			localStorage.setItem("token", res.token);
@@ -26,6 +28,7 @@ const Login = () => {
 			navigate("/main");
 		} catch (error) {
 			alert(error.message);
+			setLoading(false);
 		}
 	};
 
@@ -79,8 +82,8 @@ const Login = () => {
 							</div>
 						</div>
 
-						<button type="submit" className="btn-primary">
-							Log In
+						<button type="submit" className="btn-primary" disabled={loading} aria-busy={loading}>
+							{loading ? "Logging in..." : "Log In"}
 						</button>
 						<p className="switch-text">
 							Don&apos;t have an account?
