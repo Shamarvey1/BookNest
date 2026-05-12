@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./AIChat.css";
 import { sendAIQuestion } from "../../services/aiService";
 
-function AIChat({ currentText, onClose }) {
+function AIChat({ currentText, bookTitle, bookAuthors, onClose }) {
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -42,6 +42,8 @@ function AIChat({ currentText, onClose }) {
       const response = await sendAIQuestion({
         question: input,
         context: currentText,
+        bookTitle,
+        bookAuthors,
       });
 
       const aiMessage = {

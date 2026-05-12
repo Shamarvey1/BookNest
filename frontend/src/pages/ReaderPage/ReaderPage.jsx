@@ -222,7 +222,12 @@ function ReaderPage() {
             aria-label="Close AI Assistant"
           />
           <div className="reader-ai-panel">
-            <AIChat currentText={currentPageText} onClose={() => setIsChatOpen(false)} />
+            <AIChat
+              currentText={currentPageText}
+              bookTitle={book.title}
+              bookAuthors={book.authors || []}
+              onClose={() => setIsChatOpen(false)}
+            />
           </div>
         </div>
       )}

@@ -1,6 +1,6 @@
 const OpenAI = require("openai");
 
-const getAIResponse = async (question, context) => {
+const getAIResponse = async (question, context, bookInfo = {}) => {
   if (!process.env.GROQ_API_KEY) {
     throw new Error("GROQ_API_KEY is missing");
   }
@@ -15,10 +15,18 @@ const getAIResponse = async (question, context) => {
   });
 
   const model = process.env.GROQ_MODEL || "openai/gpt-oss-20b";
+  const bookTitle = bookInfo.bookTitle || "Unknown title";
+  const bookAuthors = Array.isArray(bookInfo.bookAuthors)
+    ? bookInfo.bookAuthors.join(", ")
+    : bookInfo.bookAuthors || "Unknown author";
   const prompt = `You are an AI Reading Assistant.
 Use only the provided context to answer.
 If the question asks the meaning of a word and that word appears in context as a name/family/place, explain it from context.
 If the answer is not in context, say that clearly.
+If the user asks for the author, title, or book name, answer using the book metadata below.
+
+Book title: ${bookTitle}
+Book authors: ${bookAuthors}
 
 Context:
 ${context}
