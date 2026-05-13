@@ -10,6 +10,14 @@ A cutting-edge full-stack web application for discovering, reading, and managing
 
 ---
 
+## ✨ Recent Updates
+
+- Added the AI Reading Assistant for contextual book help inside the reader page.
+- Improved the reader layout for both desktop sidebar and mobile drawer use.
+- Expanded the README with extra showcase space for the chatbot screenshot.
+
+---
+
 ## 🏷️ Tech Stack
 
 ### Frontend
@@ -53,7 +61,7 @@ A cutting-edge full-stack web application for discovering, reading, and managing
 6. [🔐 API Endpoints](#-api-endpoints)
 7. [💾 Database Schema](#-database-schema)
 8. [📝 Environment Variables](#-environment-variables)
-9. [🔄 Contributing](#-contributing)
+9. [ Contributing](#-contributing)
 10. [🚀 Deployment](#-deployment)
 11. [📝 License](#-license)
 
@@ -498,7 +506,7 @@ POST /api/auth/signup
 
 {
   "name": "Ajit",
-  "email": "ajitlookfor@gmail.com",
+  "email": "ajitlookforbest@gmail.com",
   "password": "123456"
 }
 
@@ -507,7 +515,7 @@ Login
 POST /api/auth/login
 
 {
-  "email": "ajitlookfor@gmail.com",
+  "email": "ajitlookforbest@gmail.com",
   "password": "123456"
 }
 
@@ -529,6 +537,9 @@ Response:
 
 ![alt text](image.png)
 
+🤖 AI Chatbot
+
+![alt text](<Screenshot 2026-05-13 at 9.43.03 AM.png>)
 🚀 Future Enhancements
 
 AI Book Summary Generator
