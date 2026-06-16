@@ -1,0 +1,47 @@
+.premium-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: linear-gradient(180deg, rgba(155, 89, 255, 0.08), rgba(108, 43, 217, 0.03));
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(108, 43, 217, 0.12);
+  max-width: 420px;
+}
+
+.premium-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.premium-title {
+  font-weight: 700;
+  color: #2b0b6b;
+  font-size: 14px;
+}
+
+.premium-subtitle {
+  font-size: 12px;
+  color: #5a4a86;
+  margin-top: 4px;
+}
+
+.premium-visual {
+  width: 64px;
+  height: 64px;
+  position: relative;
+}
+
+.premium-lock-img {
+  width: 64px;
+  height: 64px;
+  display: block;
+  border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
