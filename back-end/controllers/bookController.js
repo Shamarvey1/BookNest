@@ -33,7 +33,7 @@ const defaultBooks = async (req, res) => {
     const page = Number(req.query.page) || 1;
 
     const response = await axios.get(
-      `https://gutendex.com/books?page=${page}`
+      `https://gutendex.com/books/?page=${page}`
     );
 
     const data = response.data;
@@ -58,7 +58,7 @@ const searchBooks = async (req, res) => {
     const page = Number(req.query.page) || 1;
 
     const response = await axios.get(
-      `https://gutendex.com/books?search=${encodeURIComponent(q)}&page=${page}`
+      `https://gutendex.com/books/?search=${encodeURIComponent(q)}&page=${page}`
     );
 
     const data = response.data;
@@ -91,7 +91,7 @@ const saveBook = async (req, res) => {
     if (existing) return res.json(existing);
 
     const metaRes = await axios.get(
-      `https://gutendex.com/books/${gutenId}`
+      `https://gutendex.com/books/${gutenId}/`
     );
     const meta = metaRes.data;
 
