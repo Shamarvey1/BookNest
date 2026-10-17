@@ -3,6 +3,22 @@ const axios = require("axios");
 const { htmlToText } = require("html-to-text");
 const { getCache, setCache } = require("../utils/cache");
 
+const path = require("path");
+const fs = require("fs");
+
+let genreSnapshots = {};
+try {
+  const snapshotPath = path.join(__dirname, "../data/genreSnapshots.json");
+  if (fs.existsSync(snapshotPath)) {
+    genreSnapshots = JSON.parse(fs.readFileSync(snapshotPath, "utf8"));
+    for (const [key, val] of Object.entries(genreSnapshots)) {
+      setCache(key, val, 24 * 60 * 60 * 1000);
+    }
+  }
+} catch (e) {
+  console.log("Failed to load genreSnapshots:", e.message);
+}
+
 const mapGutendexBook = (b) => ({
   gutenId: b.id,
   title: b.title,
@@ -33,13 +49,11 @@ const defaultBooks = async (req, res) => {
     const page = Number(req.query.page) || 1;
     const cacheKey = `default_books_page_${page}`;
 
-    const cachedData = getCache(cacheKey);
+    const cachedData = getCache(cacheKey) || (page === 1 ? genreSnapshots[cacheKey] : null);
     if (cachedData) {
-      console.log(`⚡ [Cache HIT] Serving default books (page ${page}) from cache`);
       return res.json({ ...cachedData, fromCache: true });
     }
 
-    console.log(`🌐 [Cache MISS] Fetching default books (page ${page}) from Gutendex API`);
     const response = await axios.get(
       `https://gutendex.com/books/?page=${page}`
     );
@@ -58,6 +72,10 @@ const defaultBooks = async (req, res) => {
     res.json(result);
   } catch (err) {
     console.error("DEFAULT BOOKS ERROR:", err.message);
+    const fallback = page === 1 ? genreSnapshots["default_books_page_1"] : null;
+    if (fallback) {
+      return res.json({ ...fallback, fromCache: true });
+    }
     res.json({ books: [], total: 0, hasNext: false });
   }
 };
@@ -69,13 +87,11 @@ const searchBooks = async (req, res) => {
     const cleanQ = q.trim().toLowerCase();
     const cacheKey = `search_${cleanQ}_page_${page}`;
 
-    const cachedData = getCache(cacheKey);
+    const cachedData = getCache(cacheKey) || (page === 1 ? genreSnapshots[cacheKey] : null);
     if (cachedData) {
-      console.log(`⚡ [Cache HIT] Serving search '${cleanQ}' (page ${page}) from cache`);
       return res.json({ ...cachedData, fromCache: true });
     }
 
-    console.log(`🌐 [Cache MISS] Fetching search '${cleanQ}' (page ${page}) from Gutendex API`);
     const response = await axios.get(
       `https://gutendex.com/books/?search=${encodeURIComponent(q)}&page=${page}`
     );
@@ -94,27 +110,38 @@ const searchBooks = async (req, res) => {
     res.json(result);
   } catch (err) {
     console.error("SEARCH BOOKS ERROR:", err.message);
+    const fallback = page === 1 ? genreSnapshots[`search_${cleanQ}_page_1`] : null;
+    if (fallback) {
+      return res.json({ ...fallback, fromCache: true });
+    }
     res.json({ books: [], total: 0, hasNext: false });
   }
 };
 
 (async function preWarmCache() {
-  try {
-    const cacheKey = "default_books_page_1";
-    if (!getCache(cacheKey)) {
-      console.log("🔥 Pre-warming Discover cache (page 1)...");
-      const response = await axios.get("https://gutendex.com/books/?page=1");
-      const data = response.data;
-      const books = (data.results || []).map(mapGutendexBook);
-      setCache(cacheKey, {
-        books,
-        total: Number(data.count) || 0,
-        hasNext: Boolean(data.next)
-      }, 30 * 60 * 1000);
-      console.log("✅ Discover cache (page 1) ready!");
+  const PRE_WARM_GENRES = [
+    { key: "default_books_page_1", url: "https://gutendex.com/books/?page=1" },
+    { key: "search_mystery_page_1", url: "https://gutendex.com/books/?search=mystery&page=1" },
+    { key: "search_adventure_page_1", url: "https://gutendex.com/books/?search=adventure&page=1" },
+    { key: "search_romance_page_1", url: "https://gutendex.com/books/?search=romance&page=1" },
+    { key: "search_philosophy_page_1", url: "https://gutendex.com/books/?search=philosophy&page=1" }
+  ];
+
+  for (const genre of PRE_WARM_GENRES) {
+    try {
+      if (!getCache(genre.key)) {
+        const response = await axios.get(genre.url, { timeout: 10000 });
+        const data = response.data;
+        const books = (data.results || []).map(mapGutendexBook);
+        setCache(genre.key, {
+          books,
+          total: Number(data.count) || 0,
+          hasNext: Boolean(data.next)
+        }, 24 * 60 * 60 * 1000);
+      }
+    } catch (err) {
+      // Continue next genre gracefully
     }
-  } catch (err) {
-    console.log("Pre-warm cache skipped:", err.message);
   }
 })();
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiMail, FiLock } from "react-icons/fi";
 import { loginAPI } from "../../services/authService";
-import { getDefaultBooksAPI } from "../../services/bookService";
+import { getDefaultBooksAPI, preWarmAllGenresAPI } from "../../services/bookService";
 import openBook from "../../assets/icons/open-book.png";
 import "./Login.css";
 
@@ -32,7 +32,7 @@ const Login = () => {
 			localStorage.setItem("token", res.token);
 			window.dispatchEvent(new CustomEvent("tokenChanged", { detail: { token: res.token } }));
 
-			getDefaultBooksAPI(1).catch(() => {});
+			preWarmAllGenresAPI();
 			navigate("/main");
 		} catch (error) {
 			alert(error.message);

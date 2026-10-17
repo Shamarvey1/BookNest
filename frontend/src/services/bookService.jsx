@@ -87,7 +87,8 @@ export const getDefaultBooksAPI = async (page = 1) => {
   );
 
   if (result && (result.books?.length > 0 || result.total > 0)) {
-    setClientCache(cacheKey, result);
+    const ttl = page === 1 ? 24 * 60 * 60 * 1000 : 30 * 60 * 1000;
+    setClientCache(cacheKey, result, ttl);
   }
 
   return result;
@@ -107,10 +108,25 @@ export const searchBooksAPI = async (query, page = 1) => {
   );
 
   if (result && (result.books?.length > 0 || result.total > 0)) {
-    setClientCache(cacheKey, result, 15 * 60 * 1000);
+    const ttl = page === 1 ? 24 * 60 * 60 * 1000 : 15 * 60 * 1000;
+    setClientCache(cacheKey, result, ttl);
   }
 
   return result;
+};
+
+export const preWarmAllGenresAPI = async () => {
+  try {
+    await Promise.all([
+      getDefaultBooksAPI(1),
+      searchBooksAPI("mystery", 1),
+      searchBooksAPI("adventure", 1),
+      searchBooksAPI("romance", 1),
+      searchBooksAPI("philosophy", 1),
+    ]);
+  } catch {
+    // Graceful fallback
+  }
 };
 
 export const saveBookAPI = async (gutenId) => {

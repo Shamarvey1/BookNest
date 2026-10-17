@@ -1,0 +1,1299 @@
+{
+  "default_books_page_1": {
+    "books": [
+      {
+        "gutenId": 1342,
+        "title": "Pride and Prejudice",
+        "authors": [
+          "Austen, Jane"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/1342/pg1342.cover.medium.jpg"
+      },
+      {
+        "gutenId": 2701,
+        "title": "Moby Dick; Or, The Whale",
+        "authors": [
+          "Melville, Herman"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/2701/pg2701.cover.medium.jpg"
+      },
+      {
+        "gutenId": 84,
+        "title": "Frankenstein; or, the modern prometheus",
+        "authors": [
+          "Shelley, Mary Wollstonecraft"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/84/pg84.cover.medium.jpg"
+      },
+      {
+        "gutenId": 11,
+        "title": "Alice's Adventures in Wonderland",
+        "authors": [
+          "Carroll, Lewis"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/11/pg11.cover.medium.jpg"
+      },
+      {
+        "gutenId": 1661,
+        "title": "The Adventures of Sherlock Holmes",
+        "authors": [
+          "Doyle, Arthur Conan"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/1661/pg1661.cover.medium.jpg"
+      },
+      {
+        "gutenId": 37683,
+        "title": "Chambers's Twentieth Century Dictionary (part 1 of 4: A-D)",
+        "authors": [],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/37683/pg37683.cover.medium.jpg"
+      },
+      {
+        "gutenId": 1513,
+        "title": "Romeo and Juliet",
+        "authors": [
+          "Shakespeare, William"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/1513/pg1513.cover.medium.jpg"
+      },
+      {
+        "gutenId": 345,
+        "title": "Dracula",
+        "authors": [
+          "Stoker, Bram"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/345/pg345.cover.medium.jpg"
+      },
+      {
+        "gutenId": 100,
+        "title": "The Complete Works of William Shakespeare",
+        "authors": [
+          "Shakespeare, William"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/100/pg100.cover.medium.jpg"
+      },
+      {
+        "gutenId": 2554,
+        "title": "Crime and Punishment",
+        "authors": [
+          "Dostoyevsky, Fyodor"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/2554/pg2554.cover.medium.jpg"
+      },
+      {
+        "gutenId": 43,
+        "title": "The strange case of Dr. Jekyll and Mr. Hyde",
+        "authors": [
+          "Stevenson, Robert Louis"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/43/pg43.cover.medium.jpg"
+      },
+      {
+        "gutenId": 2641,
+        "title": "A Room with a View",
+        "authors": [
+          "Forster, E. M. (Edward Morgan)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/2641/pg2641.cover.medium.jpg"
+      },
+      {
+        "gutenId": 145,
+        "title": "Middlemarch",
+        "authors": [
+          "Eliot, George"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/145/pg145.cover.medium.jpg"
+      },
+      {
+        "gutenId": 1727,
+        "title": "The Odyssey: Rendered into English prose for the use of those who cannot read the original",
+        "authors": [
+          "Homer"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/1727/pg1727.cover.medium.jpg"
+      },
+      {
+        "gutenId": 67979,
+        "title": "The Blue Castle: a novel",
+        "authors": [
+          "Montgomery, L. M. (Lucy Maud)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/67979/pg67979.cover.medium.jpg"
+      },
+      {
+        "gutenId": 1260,
+        "title": "Jane Eyre: An Autobiography",
+        "authors": [
+          "Brontë, Charlotte"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/1260/pg1260.cover.medium.jpg"
+      },
+      {
+        "gutenId": 37106,
+        "title": "Little Women; Or, Meg, Jo, Beth, and Amy",
+        "authors": [
+          "Alcott, Louisa May"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/37106/pg37106.cover.medium.jpg"
+      },
+      {
+        "gutenId": 174,
+        "title": "The Picture of Dorian Gray",
+        "authors": [
+          "Wilde, Oscar"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/174/pg174.cover.medium.jpg"
+      },
+      {
+        "gutenId": 1184,
+        "title": "The Count of Monte Cristo",
+        "authors": [
+          "Dumas, Alexandre",
+          "Maquet, Auguste"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/1184/pg1184.cover.medium.jpg"
+      },
+      {
+        "gutenId": 98,
+        "title": "A Tale of Two Cities",
+        "authors": [
+          "Dickens, Charles"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/98/pg98.cover.medium.jpg"
+      },
+      {
+        "gutenId": 64317,
+        "title": "The Great Gatsby",
+        "authors": [
+          "Fitzgerald, F. Scott (Francis Scott)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/64317/pg64317.cover.medium.jpg"
+      },
+      {
+        "gutenId": 2680,
+        "title": "Meditations",
+        "authors": [
+          "Marcus Aurelius, Emperor of Rome"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/2680/pg2680.cover.medium.jpg"
+      },
+      {
+        "gutenId": 16328,
+        "title": "Beowulf: An Anglo-Saxon Epic Poem",
+        "authors": [],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/16328/pg16328.cover.medium.jpg"
+      },
+      {
+        "gutenId": 65238,
+        "title": "The Secret of Chimneys",
+        "authors": [
+          "Christie, Agatha"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/65238/pg65238.cover.medium.jpg"
+      },
+      {
+        "gutenId": 5197,
+        "title": "My Life — Volume 1",
+        "authors": [
+          "Wagner, Richard"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/5197/pg5197.cover.medium.jpg"
+      },
+      {
+        "gutenId": 5200,
+        "title": "Metamorphosis",
+        "authors": [
+          "Kafka, Franz"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/5200/pg5200.cover.medium.jpg"
+      },
+      {
+        "gutenId": 16389,
+        "title": "The Enchanted April",
+        "authors": [
+          "Von Arnim, Elizabeth"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/16389/pg16389.cover.medium.jpg"
+      },
+      {
+        "gutenId": 62383,
+        "title": "A Biblia Sagrada, Contendo o Velho e o Novo Testamento",
+        "authors": [],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/62383/pg62383.cover.medium.jpg"
+      },
+      {
+        "gutenId": 78027,
+        "title": "Les enchantements de la forêt",
+        "authors": [
+          "Theuriet, André"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/78027/pg78027.cover.medium.jpg"
+      },
+      {
+        "gutenId": 1952,
+        "title": "The Yellow Wallpaper",
+        "authors": [
+          "Gilman, Charlotte Perkins"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/1952/pg1952.cover.medium.jpg"
+      },
+      {
+        "gutenId": 1259,
+        "title": "Twenty years after",
+        "authors": [
+          "Dumas, Alexandre",
+          "Maquet, Auguste"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/1259/pg1259.cover.medium.jpg"
+      },
+      {
+        "gutenId": 1232,
+        "title": "The Prince",
+        "authors": [
+          "Machiavelli, Niccolò"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/1232/pg1232.cover.medium.jpg"
+      }
+    ],
+    "total": 79623,
+    "hasNext": true
+  },
+  "search_mystery_page_1": {
+    "books": [
+      {
+        "gutenId": 564,
+        "title": "The Mystery of Edwin Drood",
+        "authors": [
+          "Dickens, Charles"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/564/pg564.cover.medium.jpg"
+      },
+      {
+        "gutenId": 72824,
+        "title": "The mystery of the Blue Train",
+        "authors": [
+          "Christie, Agatha"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/72824/pg72824.cover.medium.jpg"
+      },
+      {
+        "gutenId": 75288,
+        "title": "The Seven Dials mystery",
+        "authors": [
+          "Christie, Agatha"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/75288/pg75288.cover.medium.jpg"
+      },
+      {
+        "gutenId": 537,
+        "title": "Tales of Terror and Mystery",
+        "authors": [
+          "Doyle, Arthur Conan"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/537/pg537.cover.medium.jpg"
+      },
+      {
+        "gutenId": 1685,
+        "title": "The Mystery of the Yellow Room",
+        "authors": [
+          "Leroux, Gaston"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/1685/pg1685.cover.medium.jpg"
+      },
+      {
+        "gutenId": 2038,
+        "title": "The Lock and Key Library: Classic Mystery and Detective Stories: Modern English",
+        "authors": [],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/2038/pg2038.cover.medium.jpg"
+      },
+      {
+        "gutenId": 1872,
+        "title": "The Red House Mystery",
+        "authors": [
+          "Milne, A. A. (Alan Alexander)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/1872/pg1872.cover.medium.jpg"
+      },
+      {
+        "gutenId": 12758,
+        "title": "Library of the World's Best Mystery and Detective Stories",
+        "authors": [],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/12758/pg12758.cover.medium.jpg"
+      },
+      {
+        "gutenId": 10102,
+        "title": "The Czar's Spy: The Mystery of a Silent Love",
+        "authors": [
+          "Le Queux, William"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/10102/pg10102.cover.medium.jpg"
+      },
+      {
+        "gutenId": 28780,
+        "title": "Peter the Brazen: A Mystery Story of Modern China",
+        "authors": [
+          "Worts, George F. (George Frank)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/28780/pg28780.cover.medium.jpg"
+      },
+      {
+        "gutenId": 38983,
+        "title": "The Camp Fire Girls Solve a Mystery; Or, The Christmas Adventure at Carver House",
+        "authors": [
+          "Frey, Hildegard G."
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/38983/pg38983.cover.medium.jpg"
+      },
+      {
+        "gutenId": 76521,
+        "title": "The Hunniwell boys and the platinum mystery",
+        "authors": [
+          "Wyman, L. P. (Levi Parker)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/76521/pg76521.cover.medium.jpg"
+      },
+      {
+        "gutenId": 76339,
+        "title": "The Roman hat mystery : $b A problem in deduction",
+        "authors": [
+          "Queen, Ellery"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/76339/pg76339.cover.medium.jpg"
+      },
+      {
+        "gutenId": 75967,
+        "title": "Dr. Mabuse, master of mystery : $b a novel",
+        "authors": [
+          "Jacques, Norbert"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/75967/pg75967.cover.medium.jpg"
+      },
+      {
+        "gutenId": 76072,
+        "title": "The mystery of Angelina Frood",
+        "authors": [
+          "Freeman, R. Austin (Richard Austin)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/76072/pg76072.cover.medium.jpg"
+      },
+      {
+        "gutenId": 76914,
+        "title": "The mystery of the missing eyebrows",
+        "authors": [
+          "Rudd, Stephen"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/76914/pg76914.cover.medium.jpg"
+      },
+      {
+        "gutenId": 76634,
+        "title": "Lillian's vow : $b or, The mystery of Raleigh House",
+        "authors": [
+          "Collins, E. Burke, Mrs."
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/76634/pg76634.cover.medium.jpg"
+      },
+      {
+        "gutenId": 25656,
+        "title": "The Mystery of a Turkish Bath",
+        "authors": [
+          "Rita"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/25656/pg25656.cover.medium.jpg"
+      },
+      {
+        "gutenId": 26587,
+        "title": "The Paradise Mystery",
+        "authors": [
+          "Fletcher, J. S. (Joseph Smith)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/26587/pg26587.cover.medium.jpg"
+      },
+      {
+        "gutenId": 26470,
+        "title": "The Red House Mystery",
+        "authors": [
+          "Milne, A. A. (Alan Alexander)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/26470/pg26470.cover.medium.jpg"
+      },
+      {
+        "gutenId": 23489,
+        "title": "Godfrey Morgan: A Californian Mystery",
+        "authors": [
+          "Verne, Jules"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/23489/pg23489.cover.medium.jpg"
+      },
+      {
+        "gutenId": 27209,
+        "title": "The La Chance Mine Mystery",
+        "authors": [
+          "Jones, Susan Morrow"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/27209/pg27209.cover.medium.jpg"
+      },
+      {
+        "gutenId": 20985,
+        "title": "The Banner Boy Scouts on a Tour; or, The Mystery of Rattlesnake Mountain",
+        "authors": [
+          "Warren, George A."
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/20985/pg20985.cover.medium.jpg"
+      },
+      {
+        "gutenId": 22790,
+        "title": "The accomplisht cook: or, The art & mystery of cookery",
+        "authors": [
+          "May, Robert"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/22790/pg22790.cover.medium.jpg"
+      },
+      {
+        "gutenId": 27523,
+        "title": "Masterpieces of Mystery in Four Volumes: Detective Stories",
+        "authors": [],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/27523/pg27523.cover.medium.jpg"
+      },
+      {
+        "gutenId": 25799,
+        "title": "The Girl and the Bill: An American Story of Mystery, Romance and Adventure",
+        "authors": [
+          "Merwin, Bannister"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/25799/pg25799.cover.medium.jpg"
+      },
+      {
+        "gutenId": 170,
+        "title": "The Haunted Hotel: A Mystery of Modern Venice",
+        "authors": [
+          "Collins, Wilkie"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/170/pg170.cover.medium.jpg"
+      },
+      {
+        "gutenId": 5164,
+        "title": "The Beetle: A Mystery",
+        "authors": [
+          "Marsh, Richard"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/5164/pg5164.cover.medium.jpg"
+      },
+      {
+        "gutenId": 40725,
+        "title": "The Orchard Secret: Arden Blake Mystery Series #1",
+        "authors": [
+          "Garis, Cleo F."
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/40725/pg40725.cover.medium.jpg"
+      },
+      {
+        "gutenId": 23286,
+        "title": "The Rover Boys Under Canvas; Or, The Mystery of the Wrecked Submarine",
+        "authors": [
+          "Stratemeyer, Edward"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/23286/pg23286.cover.medium.jpg"
+      },
+      {
+        "gutenId": 26637,
+        "title": "The Mystery of the Green Ray",
+        "authors": [
+          "Le Queux, William"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/26637/pg26637.cover.medium.jpg"
+      },
+      {
+        "gutenId": 46016,
+        "title": "Studies in the Scriptures, Volume 7: The Finished Mystery",
+        "authors": [
+          "Russell, C. T. (Charles Taze)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/46016/pg46016.cover.medium.jpg"
+      }
+    ],
+    "total": 403,
+    "hasNext": true
+  },
+  "search_adventure_page_1": {
+    "books": [
+      {
+        "gutenId": 11,
+        "title": "Alice's Adventures in Wonderland",
+        "authors": [
+          "Carroll, Lewis"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/11/pg11.cover.medium.jpg"
+      },
+      {
+        "gutenId": 1661,
+        "title": "The Adventures of Sherlock Holmes",
+        "authors": [
+          "Doyle, Arthur Conan"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/1661/pg1661.cover.medium.jpg"
+      },
+      {
+        "gutenId": 6761,
+        "title": "The Adventures of Ferdinand Count Fathom — Complete",
+        "authors": [
+          "Smollett, T. (Tobias)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/6761/pg6761.cover.medium.jpg"
+      },
+      {
+        "gutenId": 74,
+        "title": "The Adventures of Tom Sawyer, Complete",
+        "authors": [
+          "Twain, Mark"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/74/pg74.cover.medium.jpg"
+      },
+      {
+        "gutenId": 4085,
+        "title": "The Adventures of Roderick Random",
+        "authors": [
+          "Smollett, T. (Tobias)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/4085/pg4085.cover.medium.jpg"
+      },
+      {
+        "gutenId": 76,
+        "title": "Adventures of Huckleberry Finn",
+        "authors": [
+          "Twain, Mark"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/76/pg76.cover.medium.jpg"
+      },
+      {
+        "gutenId": 48320,
+        "title": "Adventures of Sherlock Holmes: Illustrated",
+        "authors": [
+          "Doyle, Arthur Conan"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/48320/pg48320.cover.medium.jpg"
+      },
+      {
+        "gutenId": 46276,
+        "title": "The Treasure of Pearls: A Romance of Adventures in California",
+        "authors": [
+          "Aimard, Gustave"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/46276/pg46276.cover.medium.jpg"
+      },
+      {
+        "gutenId": 78078,
+        "title": "The adventures of an ensign",
+        "authors": [
+          "Williams, Valentine"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/78078/pg78078.cover.medium.jpg"
+      },
+      {
+        "gutenId": 6133,
+        "title": "The Extraordinary Adventures of Arsène Lupin, Gentleman-Burglar",
+        "authors": [
+          "Leblanc, Maurice"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/6133/pg6133.cover.medium.jpg"
+      },
+      {
+        "gutenId": 521,
+        "title": "The Life and Adventures of Robinson Crusoe",
+        "authors": [
+          "Defoe, Daniel"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/521/pg521.cover.medium.jpg"
+      },
+      {
+        "gutenId": 7326,
+        "title": "The Yeoman Adventurer",
+        "authors": [
+          "Gough, George W."
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/7326/pg7326.cover.medium.jpg"
+      },
+      {
+        "gutenId": 500,
+        "title": "The Adventures of Pinocchio",
+        "authors": [
+          "Collodi, Carlo"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/500/pg500.cover.medium.jpg"
+      },
+      {
+        "gutenId": 10148,
+        "title": "The Merry Adventures of Robin Hood",
+        "authors": [
+          "Pyle, Howard"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/10148/pg10148.cover.medium.jpg"
+      },
+      {
+        "gutenId": 15384,
+        "title": "The Real Adventure",
+        "authors": [
+          "Webster, Henry Kitchell"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/15384/pg15384.cover.medium.jpg"
+      },
+      {
+        "gutenId": 19033,
+        "title": "Alice's Adventures in Wonderland",
+        "authors": [
+          "Carroll, Lewis"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/19033/pg19033.cover.medium.jpg"
+      },
+      {
+        "gutenId": 33823,
+        "title": "The Gay Adventure: A Romance",
+        "authors": [
+          "Bird, Richard"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/33823/pg33823.cover.medium.jpg"
+      },
+      {
+        "gutenId": 19640,
+        "title": "Adventures of Huckleberry Finn",
+        "authors": [
+          "Twain, Mark"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/19640/pg19640.cover.medium.jpg"
+      },
+      {
+        "gutenId": 55822,
+        "title": "Argonauts of the Western Pacific: An Account of Native Enterprise and Adventure in the Archipelagoes of Melanesian New Guinea",
+        "authors": [
+          "Malinowski, Bronislaw"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/55822/pg55822.cover.medium.jpg"
+      },
+      {
+        "gutenId": 38983,
+        "title": "The Camp Fire Girls Solve a Mystery; Or, The Christmas Adventure at Carver House",
+        "authors": [
+          "Frey, Hildegard G."
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/38983/pg38983.cover.medium.jpg"
+      },
+      {
+        "gutenId": 28152,
+        "title": "Sword and Pen: Ventures and Adventures of Willard Glazier",
+        "authors": [
+          "Owens, John Algernon"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/28152/pg28152.cover.medium.jpg"
+      },
+      {
+        "gutenId": 76462,
+        "title": "The adventures of Heine",
+        "authors": [
+          "Wallace, Edgar"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/76462/pg76462.cover.medium.jpg"
+      },
+      {
+        "gutenId": 75922,
+        "title": "The amazing adventures of Letitia Carberry",
+        "authors": [
+          "Rinehart, Mary Roberts"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/75922/pg75922.cover.medium.jpg"
+      },
+      {
+        "gutenId": 19516,
+        "title": "The Adventures of Pinocchio",
+        "authors": [
+          "Collodi, Carlo"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/19516/pg19516.cover.medium.jpg"
+      },
+      {
+        "gutenId": 26154,
+        "title": "The Joyous Adventures of Aristide Pujol",
+        "authors": [
+          "Locke, William John"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/26154/pg26154.cover.medium.jpg"
+      },
+      {
+        "gutenId": 28885,
+        "title": "Alice's Adventures in Wonderland: Illustrated by Arthur Rackham. With a Proem by Austin Dobson",
+        "authors": [
+          "Carroll, Lewis"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/28885/pg28885.cover.medium.jpg"
+      },
+      {
+        "gutenId": 76737,
+        "title": "The sociable ghost : $b Being the adventures of a reporter who was invited by the sociable ghost to a grand banquet, ball, and convention under the ground of old Trinity churchyard. A true tale of the things he saw and did not see while he was not there.",
+        "authors": [
+          "Harper, Olive"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/76737/pg76737.cover.medium.jpg"
+      },
+      {
+        "gutenId": 11703,
+        "title": "The Swiss Family Robinson; or Adventures in a Desert Island",
+        "authors": [
+          "Wyss, Johann David"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/11703/pg11703.cover.medium.jpg"
+      },
+      {
+        "gutenId": 26203,
+        "title": "The Adventures of Tom Sawyer",
+        "authors": [
+          "Twain, Mark"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/26203/pg26203.cover.medium.jpg"
+      },
+      {
+        "gutenId": 56347,
+        "title": "The General Historie of Virginia, New England & the Summer Isles  (Vol. I): Together with the True Travels, Adventures and Observations, and a Sea Grammar",
+        "authors": [
+          "Smith, John"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/56347/pg56347.cover.medium.jpg"
+      },
+      {
+        "gutenId": 20131,
+        "title": "The Mask: A Story of Love and Adventure",
+        "authors": [
+          "Hornblow, Arthur"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/20131/pg20131.cover.medium.jpg"
+      },
+      {
+        "gutenId": 26467,
+        "title": "The Merry Adventures of Robin Hood",
+        "authors": [
+          "Pyle, Howard"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/26467/pg26467.cover.medium.jpg"
+      }
+    ],
+    "total": 1115,
+    "hasNext": true
+  },
+  "search_romance_page_1": {
+    "books": [
+      {
+        "gutenId": 59828,
+        "title": "The String of Pearls; Or, The Barber of Fleet Street. A Domestic Romance.",
+        "authors": [
+          "Prest, Thomas Peckett",
+          "Rymer, James Malcolm"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/59828/pg59828.cover.medium.jpg"
+      },
+      {
+        "gutenId": 42681,
+        "title": "The Hero of the People: A Historical Romance of Love, Liberty and Loyalty",
+        "authors": [
+          "Dumas, Alexandre"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/42681/pg42681.cover.medium.jpg"
+      },
+      {
+        "gutenId": 46276,
+        "title": "The Treasure of Pearls: A Romance of Adventures in California",
+        "authors": [
+          "Aimard, Gustave"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/46276/pg46276.cover.medium.jpg"
+      },
+      {
+        "gutenId": 78040,
+        "title": "Kate Mulhall : $b A romance of the Oregon Trail",
+        "authors": [
+          "Meeker, Ezra"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/78040/pg78040.cover.medium.jpg"
+      },
+      {
+        "gutenId": 47221,
+        "title": "Quintus Claudius: A Romance of Imperial Rome. Volume 1",
+        "authors": [
+          "Eckstein, Ernst"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/47221/pg47221.cover.medium.jpg"
+      },
+      {
+        "gutenId": 78043,
+        "title": "Bushy : $b a romance founded on fact",
+        "authors": [
+          "Alden, Cynthia May Westover"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/78043/pg78043.cover.medium.jpg"
+      },
+      {
+        "gutenId": 49987,
+        "title": "Forest Days: A Romance of Old Times",
+        "authors": [
+          "James, G. P. R. (George Payne Rainsford)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/49987/pg49987.cover.medium.jpg"
+      },
+      {
+        "gutenId": 48296,
+        "title": "Linnet: A Romance",
+        "authors": [
+          "Allen, Grant"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/48296/pg48296.cover.medium.jpg"
+      },
+      {
+        "gutenId": 601,
+        "title": "The Monk: A Romance",
+        "authors": [
+          "Lewis, M. G. (Matthew Gregory)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/601/pg601.cover.medium.jpg"
+      },
+      {
+        "gutenId": 831,
+        "title": "Four Arthurian Romances",
+        "authors": [
+          "Chrétien, de Troyes, active 12th century"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/831/pg831.cover.medium.jpg"
+      },
+      {
+        "gutenId": 57641,
+        "title": "One Woman: Being the Second Part of a Romance of Sussex",
+        "authors": [
+          "Ollivant, Alfred"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/57641/pg57641.cover.medium.jpg"
+      },
+      {
+        "gutenId": 393,
+        "title": "The Blue Lagoon: A Romance",
+        "authors": [
+          "Stacpoole, H. De Vere (Henry De Vere)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/393/pg393.cover.medium.jpg"
+      },
+      {
+        "gutenId": 60316,
+        "title": "The Bakhtyār Nāma: A Persian Romance",
+        "authors": [],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/60316/pg60316.cover.medium.jpg"
+      },
+      {
+        "gutenId": 57763,
+        "title": "Daughters of Nijo: A Romance of Japan",
+        "authors": [
+          "Watanna, Onoto"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/57763/pg57763.cover.medium.jpg"
+      },
+      {
+        "gutenId": 30254,
+        "title": "The Romance of Lust: A classic Victorian erotic novel",
+        "authors": [
+          "Anonymous"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/30254/pg30254.cover.medium.jpg"
+      },
+      {
+        "gutenId": 45451,
+        "title": "The Man Who Did the Right Thing: A Romance",
+        "authors": [
+          "Johnston, Harry"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/45451/pg45451.cover.medium.jpg"
+      },
+      {
+        "gutenId": 4712,
+        "title": "The Landloper: The Romance of a Man on Foot",
+        "authors": [
+          "Day, Holman"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/4712/pg4712.cover.medium.jpg"
+      },
+      {
+        "gutenId": 48963,
+        "title": "The Viper of Milan: A Romance of Lombardy",
+        "authors": [
+          "Bowen, Marjorie"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/48963/pg48963.cover.medium.jpg"
+      },
+      {
+        "gutenId": 6635,
+        "title": "A Romance of Billy-Goat Hill",
+        "authors": [
+          "Rice, Alice Caldwell Hegan"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/6635/pg6635.cover.medium.jpg"
+      },
+      {
+        "gutenId": 14244,
+        "title": "The Romance of Tristan and Iseult",
+        "authors": [
+          "Bédier, Joseph"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/14244/pg14244.cover.medium.jpg"
+      },
+      {
+        "gutenId": 52734,
+        "title": "The Scourge of God: A Romance of Religious Persecution",
+        "authors": [
+          "Bloundelle-Burton, John"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/52734/pg52734.cover.medium.jpg"
+      },
+      {
+        "gutenId": 23784,
+        "title": "The History of Sir Richard Calmady: A Romance",
+        "authors": [
+          "Malet, Lucas"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/23784/pg23784.cover.medium.jpg"
+      },
+      {
+        "gutenId": 17460,
+        "title": "Lorna Doone: A Romance of Exmoor",
+        "authors": [
+          "Blackmore, R. D. (Richard Doddridge)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/17460/pg17460.cover.medium.jpg"
+      },
+      {
+        "gutenId": 4693,
+        "title": "Famous Affinities of History: The Romance of Devotion. Vol 1-4, Complete",
+        "authors": [
+          "Orr, Lyndon"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/4693/pg4693.cover.medium.jpg"
+      },
+      {
+        "gutenId": 64836,
+        "title": "Jane Seton; or, The King's Advocate: A Scottish Historical Romance",
+        "authors": [
+          "Grant, James"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/64836/pg64836.cover.medium.jpg"
+      },
+      {
+        "gutenId": 24793,
+        "title": "Blow The Man Down: A Romance Of The Coast",
+        "authors": [
+          "Day, Holman"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/24793/pg24793.cover.medium.jpg"
+      },
+      {
+        "gutenId": 77092,
+        "title": "She who sleeps : $b A romance of New York and the Nile",
+        "authors": [
+          "Rohmer, Sax"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/77092/pg77092.cover.medium.jpg"
+      },
+      {
+        "gutenId": 5230,
+        "title": "The Invisible Man: A Grotesque Romance",
+        "authors": [
+          "Wells, H. G. (Herbert George)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/5230/pg5230.cover.medium.jpg"
+      },
+      {
+        "gutenId": 9473,
+        "title": "The Knights of the Cross, or, Krzyzacy: Historical Romance",
+        "authors": [
+          "Sienkiewicz, Henryk"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/9473/pg9473.cover.medium.jpg"
+      },
+      {
+        "gutenId": 33823,
+        "title": "The Gay Adventure: A Romance",
+        "authors": [
+          "Bird, Richard"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/33823/pg33823.cover.medium.jpg"
+      },
+      {
+        "gutenId": 36725,
+        "title": "On the Cross: A Romance of the Passion Play at Oberammergau",
+        "authors": [
+          "Hillern, Wilhelmine von"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/36725/pg36725.cover.medium.jpg"
+      },
+      {
+        "gutenId": 6235,
+        "title": "The Battle of the Strong: A Romance of Two Kingdoms — Volume 6",
+        "authors": [
+          "Parker, Gilbert"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/6235/pg6235.cover.medium.jpg"
+      }
+    ],
+    "total": 866,
+    "hasNext": true
+  },
+  "search_philosophy_page_1": {
+    "books": [
+      {
+        "gutenId": 5827,
+        "title": "The Problems of Philosophy",
+        "authors": [
+          "Russell, Bertrand"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/5827/pg5827.cover.medium.jpg"
+      },
+      {
+        "gutenId": 26659,
+        "title": "The Will to Believe, and Other Essays in Popular Philosophy",
+        "authors": [
+          "James, William"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/26659/pg26659.cover.medium.jpg"
+      },
+      {
+        "gutenId": 852,
+        "title": "Democracy and Education: An Introduction to the Philosophy of Education",
+        "authors": [
+          "Dewey, John"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/852/pg852.cover.medium.jpg"
+      },
+      {
+        "gutenId": 14328,
+        "title": "The Consolation of Philosophy",
+        "authors": [
+          "Boethius"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/14328/pg14328.cover.medium.jpg"
+      },
+      {
+        "gutenId": 23082,
+        "title": "The Consolation of Philosophy",
+        "authors": [
+          "Boethius"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/23082/pg23082.cover.medium.jpg"
+      },
+      {
+        "gutenId": 64488,
+        "title": "Roman Stoicism: being lectures on the history of the Stoic philosophy with special reference to its development within the Roman Empire",
+        "authors": [
+          "Arnold, Edward Vernon"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/64488/pg64488.cover.medium.jpg"
+      },
+      {
+        "gutenId": 14209,
+        "title": "The Kybalion: A Study of The Hermetic Philosophy of Ancient Egypt and Greece",
+        "authors": [
+          "Three Initiates"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/14209/pg14209.cover.medium.jpg"
+      },
+      {
+        "gutenId": 54824,
+        "title": "The Secret Doctrine, Vol. 1 of 4: The Synthesis of Science, Religion, and Philosophy",
+        "authors": [
+          "Blavatsky, H. P. (Helena Petrovna)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/54824/pg54824.cover.medium.jpg"
+      },
+      {
+        "gutenId": 25009,
+        "title": "The World's Greatest Books — Volume 14 — Philosophy and Economics",
+        "authors": [],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/25009/pg25009.cover.medium.jpg"
+      },
+      {
+        "gutenId": 54488,
+        "title": "The Secret Doctrine, Vol. 2 of 4: The Synthesis of Science, Religion, and Philosophy",
+        "authors": [
+          "Blavatsky, H. P. (Helena Petrovna)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/54488/pg54488.cover.medium.jpg"
+      },
+      {
+        "gutenId": 3328,
+        "title": "Man and Superman: A Comedy and a Philosophy",
+        "authors": [
+          "Shaw, Bernard"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/3328/pg3328.cover.medium.jpg"
+      },
+      {
+        "gutenId": 70458,
+        "title": "Primitive culture, vol. 1 (of 2) : $b Researches into the development of mythology, philosophy, religion, language, art, and custom",
+        "authors": [
+          "Tylor, Edward B. (Edward Burnett)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/70458/pg70458.cover.medium.jpg"
+      },
+      {
+        "gutenId": 56880,
+        "title": "The Secret Doctrine, Vol. 3 of 4: The Synthesis of Science, Religion, and Philosophy",
+        "authors": [
+          "Blavatsky, H. P. (Helena Petrovna)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/56880/pg56880.cover.medium.jpg"
+      },
+      {
+        "gutenId": 11937,
+        "title": "The symbolism of Freemasonry : $b Illustrating and explaining its science and philosophy, its legends, myths and symbols",
+        "authors": [
+          "Mackey, Albert Gallatin"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/11937/pg11937.cover.medium.jpg"
+      },
+      {
+        "gutenId": 76404,
+        "title": "Newton's Principia : $b The mathematical principles of natural philosophy",
+        "authors": [
+          "Newton, Isaac"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/76404/pg76404.cover.medium.jpg"
+      },
+      {
+        "gutenId": 21154,
+        "title": "Philosophy and Fun of Algebra",
+        "authors": [
+          "Boole, Mary Everest"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/21154/pg21154.cover.medium.jpg"
+      },
+      {
+        "gutenId": 39064,
+        "title": "Hegel's Philosophy of Mind",
+        "authors": [
+          "Hegel, Georg Wilhelm Friedrich"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/39064/pg39064.cover.medium.jpg"
+      },
+      {
+        "gutenId": 67097,
+        "title": "Early Greek philosophy",
+        "authors": [
+          "Burnet, John"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/67097/pg67097.cover.medium.jpg"
+      },
+      {
+        "gutenId": 51635,
+        "title": "Hegel's Lectures on the History of Philosophy: Volume 1 (of 3)",
+        "authors": [
+          "Hegel, Georg Wilhelm Friedrich"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/51635/pg51635.cover.medium.jpg"
+      },
+      {
+        "gutenId": 25110,
+        "title": "The Approach to Philosophy",
+        "authors": [
+          "Perry, Ralph Barton"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/25110/pg25110.cover.medium.jpg"
+      },
+      {
+        "gutenId": 58169,
+        "title": "Hegel's Lectures on the History of Philosophy: Volume 3 (of 3)",
+        "authors": [
+          "Hegel, Georg Wilhelm Friedrich"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/58169/pg58169.cover.medium.jpg"
+      },
+      {
+        "gutenId": 55334,
+        "title": "The Philosophy of Fine Art, volume 1 (of 4): Hegel's Aesthetik",
+        "authors": [
+          "Hegel, Georg Wilhelm Friedrich"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/55334/pg55334.cover.medium.jpg"
+      },
+      {
+        "gutenId": 37090,
+        "title": "Our Knowledge of the External World as a Field for Scientific Method in Philosophy",
+        "authors": [
+          "Russell, Bertrand"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/37090/pg37090.cover.medium.jpg"
+      },
+      {
+        "gutenId": 55623,
+        "title": "The Philosophy of Fine Art, volume 3 (of 4): Hegel's Aesthetik",
+        "authors": [
+          "Hegel, Georg Wilhelm Friedrich"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/55623/pg55623.cover.medium.jpg"
+      },
+      {
+        "gutenId": 66369,
+        "title": "An Essay Towards a Philosophy of Education: A Liberal Education for All",
+        "authors": [
+          "Mason, Charlotte M. (Charlotte Maria)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/66369/pg66369.cover.medium.jpg"
+      },
+      {
+        "gutenId": 55618,
+        "title": "The Key to Theosophy: Being a Clear Exposition, in the Form of Question and Answer, of the Ethics, Science and Philosophy for the Study of Which the Theosophical Society Has Been Founded",
+        "authors": [
+          "Blavatsky, H. P. (Helena Petrovna)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/55618/pg55618.cover.medium.jpg"
+      },
+      {
+        "gutenId": 49316,
+        "title": "The Philosophy of Friedrich Nietzsche",
+        "authors": [
+          "Mencken, H. L. (Henry Louis)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/49316/pg49316.cover.medium.jpg"
+      },
+      {
+        "gutenId": 55445,
+        "title": "The Philosophy of Fine Art, volume 2 (of 4): Hegel's Aesthetik",
+        "authors": [
+          "Hegel, Georg Wilhelm Friedrich"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/55445/pg55445.cover.medium.jpg"
+      },
+      {
+        "gutenId": 27531,
+        "title": "A Manual of Moral Philosophy",
+        "authors": [
+          "Peabody, Andrew P. (Andrew Preston)"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/27531/pg27531.cover.medium.jpg"
+      },
+      {
+        "gutenId": 51548,
+        "title": "Early Greek Philosophy & Other Essays: Collected Works, Volume Two",
+        "authors": [
+          "Nietzsche, Friedrich Wilhelm"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/51548/pg51548.cover.medium.jpg"
+      },
+      {
+        "gutenId": 51636,
+        "title": "Hegel's Lectures on the History of Philosophy: Volume 2 (of 3)",
+        "authors": [
+          "Hegel, Georg Wilhelm Friedrich"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/51636/pg51636.cover.medium.jpg"
+      },
+      {
+        "gutenId": 14058,
+        "title": "Readings on Fascism and National Socialism: Selected by members of the department of philosophy, University of Colorado",
+        "authors": [
+          "Various"
+        ],
+        "coverUrl": "https://www.gutenberg.org/cache/epub/14058/pg14058.cover.medium.jpg"
+      }
+    ],
+    "total": 220,
+    "hasNext": true
+  }
+}
