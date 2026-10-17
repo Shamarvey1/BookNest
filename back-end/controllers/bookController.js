@@ -1,7 +1,7 @@
 const prisma = require("../config/prisma");
 const axios = require("axios");
 const { htmlToText } = require("html-to-text");
-
+const { getCache, setCache } = require("../utils/cache");
 
 const mapGutendexBook = (b) => ({
   gutenId: b.id,
@@ -31,51 +31,92 @@ const pickReadableFormat = (formats = {}) => {
 const defaultBooks = async (req, res) => {
   try {
     const page = Number(req.query.page) || 1;
+    const cacheKey = `default_books_page_${page}`;
 
+    const cachedData = getCache(cacheKey);
+    if (cachedData) {
+      console.log(`⚡ [Cache HIT] Serving default books (page ${page}) from cache`);
+      return res.json({ ...cachedData, fromCache: true });
+    }
+
+    console.log(`🌐 [Cache MISS] Fetching default books (page ${page}) from Gutendex API`);
     const response = await axios.get(
       `https://gutendex.com/books/?page=${page}`
     );
 
     const data = response.data;
-
     const books = (data.results || []).map(mapGutendexBook);
 
-    res.json({
+    const result = {
       books,
       total: Number(data.count) || 0,
       hasNext: Boolean(data.next)
-    });
+    };
+
+    setCache(cacheKey, result, 30 * 60 * 1000);
+
+    res.json(result);
   } catch (err) {
     console.error("DEFAULT BOOKS ERROR:", err.message);
     res.json({ books: [], total: 0, hasNext: false });
   }
 };
 
-
 const searchBooks = async (req, res) => {
   try {
     const q = req.query.q || "";
     const page = Number(req.query.page) || 1;
+    const cleanQ = q.trim().toLowerCase();
+    const cacheKey = `search_${cleanQ}_page_${page}`;
 
+    const cachedData = getCache(cacheKey);
+    if (cachedData) {
+      console.log(`⚡ [Cache HIT] Serving search '${cleanQ}' (page ${page}) from cache`);
+      return res.json({ ...cachedData, fromCache: true });
+    }
+
+    console.log(`🌐 [Cache MISS] Fetching search '${cleanQ}' (page ${page}) from Gutendex API`);
     const response = await axios.get(
       `https://gutendex.com/books/?search=${encodeURIComponent(q)}&page=${page}`
     );
 
     const data = response.data;
-
     const books = (data.results || []).map(mapGutendexBook);
 
-    res.json({
+    const result = {
       books,
       total: Number(data.count) || 0,
       hasNext: Boolean(data.next)
-    });
+    };
+
+    setCache(cacheKey, result, 15 * 60 * 1000);
+
+    res.json(result);
   } catch (err) {
     console.error("SEARCH BOOKS ERROR:", err.message);
     res.json({ books: [], total: 0, hasNext: false });
   }
 };
 
+(async function preWarmCache() {
+  try {
+    const cacheKey = "default_books_page_1";
+    if (!getCache(cacheKey)) {
+      console.log("🔥 Pre-warming Discover cache (page 1)...");
+      const response = await axios.get("https://gutendex.com/books/?page=1");
+      const data = response.data;
+      const books = (data.results || []).map(mapGutendexBook);
+      setCache(cacheKey, {
+        books,
+        total: Number(data.count) || 0,
+        hasNext: Boolean(data.next)
+      }, 30 * 60 * 1000);
+      console.log("✅ Discover cache (page 1) ready!");
+    }
+  } catch (err) {
+    console.log("Pre-warm cache skipped:", err.message);
+  }
+})();
 
 const saveBook = async (req, res) => {
   try {
@@ -129,7 +170,6 @@ const saveBook = async (req, res) => {
   }
 };
 
-
 const getBook = async (req, res) => {
   try {
     const id = req.params.id;
@@ -153,3 +193,4 @@ module.exports = {
   saveBook,
   getBook,
 };
+

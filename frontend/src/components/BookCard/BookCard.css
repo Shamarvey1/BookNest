@@ -2,46 +2,166 @@
   position: relative;
   padding: 10px;
   background: white;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  transition: 0.2s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .book-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+}
+
+.book-cover-container {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f1f5f9;
 }
 
 .book-cover {
   width: 100%;
-  height: 200px;
-  border-radius: 10px;
+  height: 100%;
   object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
-.book-title {
-  margin-top: 8px;
-  font-weight: 600;
+.book-card:hover .book-cover {
+  transform: scale(1.03);
 }
 
-.book-author {
-  font-size: 14px;
-  color: #777;
-}
-.remove-btn {
+
+.card-top-actions {
   position: absolute;
-  top: 6px;
-  right: 6px;
-  background: rgba(255, 0, 0, 0.8);
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 3;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+
+.book-card:hover .card-top-actions {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+
+.card-action-btn {
+  background: transparent;
   border: none;
-  border-radius: 6px;
-  color: white;
-  font-size: 14px;
-  width: 22px;
-  height: 22px;
+  outline: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.85));
+  transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), filter 0.18s ease;
+}
+
+.card-action-btn:hover {
+  transform: scale(1.22);
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 1));
+}
+
+.card-action-btn:active {
+  transform: scale(0.95);
+}
+
+
+.bookmark-btn.active {
+  filter: drop-shadow(0 2px 6px rgba(37, 99, 235, 0.85)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
+}
+
+
+.favorite-btn.active {
+  filter: drop-shadow(0 2px 6px rgba(220, 38, 38, 0.9)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
+}
+
+
+.remove-btn {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .remove-btn:hover {
-  background: red;
+  color: #ef4444;
 }
+
+
+.card-opening-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(3px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 10px;
+  z-index: 5;
+  animation: fadeIn 0.2s ease;
+}
+
+.card-spinner {
+  width: 26px;
+  height: 26px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.book-title {
+  margin-top: 10px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.book-author {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

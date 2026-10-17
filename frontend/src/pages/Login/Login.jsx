@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiMail, FiLock, FiShield, FiZap } from "react-icons/fi";
+import { FiMail, FiLock } from "react-icons/fi";
 import { loginAPI } from "../../services/authService";
+import { getDefaultBooksAPI } from "../../services/bookService";
 import openBook from "../../assets/icons/open-book.png";
 import "./Login.css";
-
-const ADMIN_EMAIL = "ajitlookforbest@gmail.com";
-const ADMIN_PASSWORD = "123456";
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -21,6 +19,11 @@ const Login = () => {
 		}
 	}, [navigate]);
 
+	const fillAdminCredentials = () => {
+		setEmail("ajitlookforbest@gmail.com");
+		setPassword("123456");
+	};
+
 	const handleLogin = async (e) => {
 		e.preventDefault();
 		setLoading(true);
@@ -28,31 +31,13 @@ const Login = () => {
 			const res = await loginAPI({ email, password });
 			localStorage.setItem("token", res.token);
 			window.dispatchEvent(new CustomEvent("tokenChanged", { detail: { token: res.token } }));
+
+			getDefaultBooksAPI(1).catch(() => {});
 			navigate("/main");
 		} catch (error) {
 			alert(error.message);
 			setLoading(false);
 		}
-	};
-
-	const handleAdminLogin = async () => {
-		setEmail(ADMIN_EMAIL);
-		setPassword(ADMIN_PASSWORD);
-		setLoading(true);
-		try {
-			const res = await loginAPI({ email: ADMIN_EMAIL, password: ADMIN_PASSWORD });
-			localStorage.setItem("token", res.token);
-			window.dispatchEvent(new CustomEvent("tokenChanged", { detail: { token: res.token } }));
-			navigate("/main");
-		} catch (error) {
-			alert(error.message);
-			setLoading(false);
-		}
-	};
-
-	const fillAdminCredentials = () => {
-		setEmail(ADMIN_EMAIL);
-		setPassword(ADMIN_PASSWORD);
 	};
 
 	return (
@@ -70,40 +55,27 @@ const Login = () => {
 			<div className="landing-right">
 				<div className="form-card">
 					<h2>Welcome Back</h2>
-					<p className="form-subtitle">Log in to continue reading</p>
+					<p>Log in to continue reading</p>
 
-					{/* Admin Quick Login Box */}
-					<div className="admin-access-card">
-						<div className="admin-access-header">
-							<span className="admin-badge">
-								<FiShield className="admin-badge-icon" /> Admin / Demo Account
-							</span>
+					<div className="demo-credentials-card">
+						<div className="demo-credentials-header">
+							<span className="demo-badge">Demo Access</span>
 							<button
 								type="button"
-								className="btn-admin-fill"
+								className="demo-autofill-btn"
 								onClick={fillAdminCredentials}
-								title="Fill fields with admin credentials"
 							>
-								Auto Fill
+								Auto-fill
 							</button>
 						</div>
-						<div className="admin-credentials">
-							<div><span>Email:</span> <code>{ADMIN_EMAIL}</code></div>
-							<div><span>Password:</span> <code>{ADMIN_PASSWORD}</code></div>
+						<div className="demo-credential-row">
+							<span className="demo-label">Email:</span>
+							<span className="demo-value">ajitlookforbest@gmail.com</span>
 						</div>
-						<button
-							type="button"
-							className="btn-admin-login"
-							onClick={handleAdminLogin}
-							disabled={loading}
-							aria-busy={loading}
-						>
-							<FiZap /> 1-Click Admin Login
-						</button>
-					</div>
-
-					<div className="divider-or">
-						<span>OR SIGN IN MANUALLY</span>
+						<div className="demo-credential-row">
+							<span className="demo-label">Password:</span>
+							<span className="demo-value">123456</span>
+						</div>
 					</div>
 
 					<form onSubmit={handleLogin}>
@@ -154,3 +126,4 @@ const Login = () => {
 };
 
 export default Login;
+

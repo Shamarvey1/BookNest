@@ -1,61 +1,650 @@
-.profile-page {
+
+
+.netflix-profile-page {
   min-height: 100vh;
-  background: #ffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 24px;
+  background-color: #f3f3f3;
+  color: #333333;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-.profile-card {
-  width: 100%;
-  max-width: 420px;
-  background: #280808;
-  border-radius: 16px;
-  padding: 24px;
-  color: #fff;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+.netflix-profile-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 24px 100px 24px;
+}
+
+
+.netflix-profile-loading {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: #737373;
+  font-size: 14px;
+}
+
+.profile-spin {
+  width: 38px;
+  height: 38px;
+  border: 3px solid #dcdcdc;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: netflixSpin 0.75s linear infinite;
+}
+
+@keyframes netflixSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .profile-title {
-  text-align: center;
-  font-size: 22px;
+  font-size: 34px;
+  font-weight: 700;
+  color: #222222;
+  letter-spacing: -0.6px;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.profile-subtitle {
+  font-size: 14px;
+  color: #737373;
+  margin: 6px 0 0 0;
+}
+
+.profile-status-pill {
+  flex-shrink: 0;
+}
+
+.badge-sub {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  padding: 5px 12px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.badge-sub.active {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+}
+
+.badge-sub.free {
+  background: #e5e5e5;
+  color: #555555;
+  border: 1px solid #d4d4d4;
+}
+
+
+.profile-toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
   margin-bottom: 20px;
+  font-size: 13.5px;
+  font-weight: 500;
+  border-radius: 2px;
+  animation: slideIn 0.2s ease-out;
 }
 
-.profile-loading {
-  color: white;
-  text-align: center;
-  padding: 40px;
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.profile-error {
+.profile-toast.success {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.profile-toast.error {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+
+
+.profile-section {
+  display: flex;
+  gap: 32px;
+  padding: 24px 0 28px 0;
+  border-top: 1px solid #999999;
+}
+
+.section-col-label {
+  width: 250px;
+  flex-shrink: 0;
+}
+
+.col-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #737373;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.section-col-content {
+  flex: 1;
+  min-width: 0;
+}
+
+
+
+.avatar-identity-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+}
+
+.netflix-avatar-box {
+  width: 100px;
+  height: 100px;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  background: #2563eb;
+  color: #ffffff;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.avatar-img-square {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.avatar-initials-square {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+}
+
+.avatar-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.netflix-avatar-box:hover .avatar-hover-overlay {
+  opacity: 1;
+}
+
+.avatar-loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-spin {
+  width: 24px;
+  height: 24px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: netflixSpin 0.7s linear infinite;
+}
+
+.identity-fields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333333;
+}
+
+.netflix-text-input {
+  background: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
+  padding: 11px 14px;
+  font-size: 14.5px;
+  color: #111111;
+  transition: border-color 0.15s ease;
+  width: 100%;
+  max-width: 440px;
+}
+
+.netflix-text-input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px #2563eb;
+}
+
+.readonly-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.email-val {
+  font-size: 14.5px;
+  color: #222222;
+  font-weight: 600;
+}
+
+.verified-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #059669;
+  background: #ecfdf5;
+  padding: 3px 8px;
+  border-radius: 2px;
+  border: 1px solid #a7f3d0;
+}
+
+.field-hint {
+  font-size: 12px;
+  color: #888888;
+}
+
+.bio-group {
+  margin-top: 14px;
+}
+
+.netflix-textarea {
+  background: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
+  padding: 12px 14px;
+  font-size: 14px;
+  color: #111111;
+  font-family: inherit;
+  resize: vertical;
+  line-height: 1.5;
+  width: 100%;
+  max-width: 580px;
+}
+
+.netflix-textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px #2563eb;
+}
+
+.char-indicator {
+  font-size: 11.5px;
+  color: #888888;
+  margin-top: 4px;
+}
+
+
+
+.metrics-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-row-clickable,
+.metric-row-static {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.metric-row-clickable {
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.metric-row-clickable:hover .metric-label {
+  color: #2563eb;
+}
+
+.metric-row-clickable:hover .metric-action svg {
+  color: #2563eb;
+  transform: translateX(3px);
+}
+
+.metric-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.metric-label {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #222222;
+  transition: color 0.15s ease;
+}
+
+.metric-sub {
+  font-size: 12.5px;
+  color: #737373;
+}
+
+.metric-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.metric-number {
+  font-size: 17px;
+  font-weight: 700;
+  color: #111111;
+}
+
+.metric-date {
+  font-size: 13.5px;
+  color: #555555;
+  font-weight: 500;
+}
+
+.metric-action svg {
+  color: #999999;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+
+
+.plan-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.plan-tier-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: #111111;
+}
+
+.status-pill {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 2px;
+}
+
+.status-pill.active {
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+}
+
+.status-pill.free {
+  background: #e5e5e5;
+  color: #666666;
+}
+
+.plan-summary-desc {
+  font-size: 13px;
+  color: #737373;
+  margin: 6px 0 0 0;
+  max-width: 480px;
+  line-height: 1.4;
+}
+
+
+
+.author-studio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.author-copy {
+  font-size: 13.5px;
+  color: #555555;
+  font-weight: 500;
+}
+
+.btn-create-inline {
+  background: none;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
+  color: #222222;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-create-inline:hover {
+  background: #ffffff;
+  border-color: #999999;
+}
+
+.author-empty-note {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #fafafa;
+  border: 1px solid #e6e6e6;
+  border-radius: 2px;
+  font-size: 13px;
+  color: #737373;
+}
+
+.empty-icon {
+  color: #999999;
+  flex-shrink: 0;
+}
+
+.author-empty-note p {
+  margin: 0;
+}
+
+.authored-clean-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.authored-clean-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e6e6e6;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.authored-clean-item:hover strong {
+  color: #2563eb;
+}
+
+.item-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.item-title-wrap strong {
+  font-size: 14px;
+  color: #222222;
+  transition: color 0.15s ease;
+}
+
+.item-genre {
+  font-size: 12px;
+  color: #737373;
+}
+
+.authored-clean-item svg {
+  color: #999999;
+  transition: transform 0.15s ease;
+}
+
+.authored-clean-item:hover svg {
+  transform: translateX(3px);
+  color: #2563eb;
+}
+
+.link-view-all {
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 0 0 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.link-view-all:hover {
+  text-decoration: underline;
+}
+
+
+
+.profile-form-footer {
+  display: flex;
+  gap: 14px;
+  padding-top: 32px;
+  border-top: 1px solid #999999;
   margin-top: 12px;
-  color: #ff6b6b;
-  text-align: center;
 }
 
-@media (max-width: 640px) {
-  .profile-page {
-    padding: 14px;
+.btn-netflix-primary {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+  letter-spacing: 0.1px;
+}
+
+.btn-netflix-primary:hover {
+  background: #1d4ed8;
+}
+
+.btn-netflix-primary:disabled {
+  background: #93c5fd;
+  cursor: not-allowed;
+}
+
+.btn-netflix-secondary {
+  background: #e6e6e6;
+  color: #000000;
+  border: none;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  letter-spacing: 0.1px;
+}
+
+.btn-netflix-secondary:hover {
+  background: #dcdcdc;
+}
+
+
+
+@media (max-width: 768px) {
+  .netflix-profile-container {
+    padding: 24px 16px 80px 16px;
+  }
+
+  .profile-section {
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px 0;
+  }
+
+  .section-col-label {
+    width: 100%;
+  }
+
+  .avatar-identity-row {
+    flex-direction: column;
     align-items: flex-start;
   }
 
-  .profile-card {
+  .netflix-text-input,
+  .netflix-textarea {
     max-width: 100%;
-    padding: 18px;
-    border-radius: 14px;
   }
 
-  .profile-title {
-    font-size: 20px;
-    margin-bottom: 16px;
+  .profile-form-footer {
+    flex-direction: column;
+  }
+
+  .profile-form-footer button {
+    width: 100%;
   }
 }
-
-
-
-
-
-
 

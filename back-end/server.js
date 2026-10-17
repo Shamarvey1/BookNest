@@ -30,7 +30,6 @@ app.use(
   })
 );
 
-
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api/bookmarks", bookmarkRoutes);
@@ -46,11 +45,8 @@ app.get("/", (req, res) => {
   res.send("BookNest API is running...");
 });
 
-
-const { initAdminUser } = require("./utils/seedAdmin.js");
-
 const PORT = process.env.PORT || 5001;
-app.listen(PORT, async () => {
+app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  await initAdminUser();
 });
+

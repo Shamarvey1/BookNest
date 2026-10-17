@@ -151,7 +151,6 @@
   border-color: #ef4444;
 }
 
-/* Mobile tweaks to avoid wrapping and overflow */
 @media (max-width: 480px) {
   .progress-book-cover {
     height: 140px;

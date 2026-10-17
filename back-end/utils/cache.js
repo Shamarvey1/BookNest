@@ -1,7 +1,7 @@
 
 const cache = {};
 
-function setCache(key, value, ttlMs = 5 * 60 * 1000) {
+function setCache(key, value, ttlMs = 30 * 60 * 1000) {
   cache[key] = {
     value,
     expiry: Date.now() + ttlMs,
@@ -19,3 +19,4 @@ function getCache(key) {
 }
 
 module.exports = { setCache, getCache };
+

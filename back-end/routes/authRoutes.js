@@ -11,7 +11,12 @@ router.get("/main", protect, (req, res) => {
     id: req.user.id,
     name: req.user.name,
     email: req.user.email,
+    avatarUrl: req.user.avatarUrl,
+    isPremium: req.user.isPremium,
+    plan: req.user.plan,
+    bio: req.user.bio,
   });
 });
 
 module.exports = router;
+

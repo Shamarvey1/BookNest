@@ -46,22 +46,72 @@ const fetchBooksWithFallback = async (primaryUrl, fallbackUrl) => {
   return normalizeBooksResponse(fallbackResult);
 };
 
+const CACHE_PREFIX = "booknest_cache_";
+
+const getClientCache = (key) => {
+  try {
+    const raw = sessionStorage.getItem(CACHE_PREFIX + key);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (Date.now() > parsed.expiry) {
+      sessionStorage.removeItem(CACHE_PREFIX + key);
+      return null;
+    }
+    return parsed.data;
+  } catch {
+    return null;
+  }
+};
+
+const setClientCache = (key, data, ttlMs = 30 * 60 * 1000) => {
+  try {
+    sessionStorage.setItem(
+      CACHE_PREFIX + key,
+      JSON.stringify({ data, expiry: Date.now() + ttlMs })
+    );
+  } catch {
+
+  }
+};
 
 export const getDefaultBooksAPI = async (page = 1) => {
-  return fetchBooksWithFallback(
+  const cacheKey = `default_page_${page}`;
+  const cached = getClientCache(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  const result = await fetchBooksWithFallback(
     `${API_URL}/default?page=${page}`,
     `${GUTENDEX_URL}?page=${page}`
   );
+
+  if (result && (result.books?.length > 0 || result.total > 0)) {
+    setClientCache(cacheKey, result);
+  }
+
+  return result;
 };
 
-
 export const searchBooksAPI = async (query, page = 1) => {
-  return fetchBooksWithFallback(
+  const cleanQ = query.trim().toLowerCase();
+  const cacheKey = `search_${cleanQ}_page_${page}`;
+  const cached = getClientCache(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  const result = await fetchBooksWithFallback(
     `${API_URL}/search?q=${encodeURIComponent(query)}&page=${page}`,
     `${GUTENDEX_URL}?search=${encodeURIComponent(query)}&page=${page}`
   );
-};
 
+  if (result && (result.books?.length > 0 || result.total > 0)) {
+    setClientCache(cacheKey, result, 15 * 60 * 1000);
+  }
+
+  return result;
+};
 
 export const saveBookAPI = async (gutenId) => {
   const token = localStorage.getItem("token");
@@ -79,7 +129,6 @@ export const saveBookAPI = async (gutenId) => {
   return result;
 };
 
-
 export const getBookByIdAPI = async (id) => {
   const token = localStorage.getItem("token");
   const res = await fetch(`${API_URL}/${id}`, {
@@ -94,3 +143,4 @@ export const getBookByIdAPI = async (id) => {
   }
   return result;
 };
+

@@ -9,14 +9,13 @@ import Premium from "./pages/premium/Premium.jsx";
 import Checkout from "./pages/premium/Checkout.jsx";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.jsx";
 import ReaderPage from "./pages/ReaderPage/ReaderPage.jsx";
-import { BookmarkProvider } from "./context/BookmarkContext.jsx";   
-import { FavoriteProvider } from "./context/FavoriteContext.jsx";   
-import Library from "./pages/Library/Library.jsx";   
-import BookDetails from "./pages/BookDetails/BookDetails.jsx";    
+import { BookmarkProvider } from "./context/BookmarkContext.jsx";
+import { FavoriteProvider } from "./context/FavoriteContext.jsx";
+import Library from "./pages/Library/Library.jsx";
 import MyBooks from "./pages/Writing/MyBooks/MyBooks.jsx";
-import WriteBook from "./pages/Writing/WriteBook/WriteBook.jsx";  
+import WriteBook from "./pages/Writing/WriteBook/WriteBook.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
-
+import { Navigate } from "react-router-dom";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,7 +24,7 @@ const router = createBrowserRouter(
       <Route path="/signup" element={<Signup />} />
       <Route path="/main" element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
         <Route index element={<Home />} />
-        <Route path="book/:id" element={<BookDetails />} />
+        <Route path="book/:id" element={<Navigate to="/main" replace />} />
         <Route path="premium" element={<Premium />} />
         <Route path="premium/checkout" element={<Checkout />} />
         <Route path="library" element={<Library />} />
@@ -35,7 +34,7 @@ const router = createBrowserRouter(
         <Route path="profile" element={<Profile />} />
       </Route>
       <Route path="/reader/:id" element={<ReaderPage />} />
-      
+
       <Route path="*" element={<div>404 Not Found</div>} />
     </>
   )
@@ -50,3 +49,4 @@ function App() {
 }
 
 export default App;
+

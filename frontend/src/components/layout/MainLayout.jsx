@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import SideBar from "../SideBar/SideBar";
+import Navbar from "../Navbar/Navbar";
 import "./MainLayout.css";
 import { ENDPOINT } from "../../config/endpoint";
 
 const MainLayout = () => {
   const navigate = useNavigate();
-
   const token = localStorage.getItem("token");
   const [user, setUser] = useState(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -36,44 +34,28 @@ const MainLayout = () => {
     };
 
     if (token) fetchUser();
-  }, [token]);
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-  };
+
+    const handleProfileUpdate = (e) => {
+      if (e.detail) {
+        setUser((prev) => ({ ...prev, ...e.detail }));
+      }
+    };
+
+    window.addEventListener("userProfileUpdated", handleProfileUpdate);
+    return () => window.removeEventListener("userProfileUpdated", handleProfileUpdate);
+  }, [token, navigate]);
 
   return (
-    <div className="layout-container">
-      <div className={`sidebar-wrapper ${sidebarOpen ? "open" : ""}`}>
-        <SideBar />
-      </div>
-      {sidebarOpen && (
-        <div
-          className="mobile-backdrop"
-          onClick={() => setSidebarOpen(false)}
-          aria-hidden
-        />
-      )}
+    <div className="main-app-layout">
 
-      <div className="layout-content">
-        <div className="mobile-topbar">
-          <button
-            className="mobile-menu-btn"
-            aria-label="Toggle menu"
-            onClick={() => setSidebarOpen((s) => !s)}
-          >
-            ☰
-          </button>
-          <div />
-        </div>
+      <Navbar user={user} />
 
-        <div className="page-area">
-          <Outlet />
-        </div>
-
-      </div>
+      <main className="main-viewport">
+        <Outlet />
+      </main>
     </div>
   );
 };
 
 export default MainLayout;
+

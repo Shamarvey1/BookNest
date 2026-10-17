@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Crown, Check, Zap, Bookmark, BookOpen } from "lucide-react";
+import {
+  Crown,
+  Check,
+  ShieldCheck,
+  CreditCard,
+  ChevronRight,
+  AlertCircle,
+  HelpCircle,
+  ExternalLink,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import "./Premium.css";
 import { cancelPremium as serviceCancel } from "../../services/premiumService";
@@ -9,10 +18,10 @@ const API_URL = `${import.meta.env.VITE_API_URL}/api`;
 async function fetchProfile() {
   const token = localStorage.getItem("token");
   if (!token) return null;
-  
+
   try {
     const res = await fetch(`${API_URL}/profile`, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` },
     });
     if (!res.ok) return null;
     return await res.json();
@@ -25,185 +34,411 @@ async function fetchProfile() {
 export default function Premium() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedPlan, setSelectedPlan] = useState("yearly");
+  const [showPlanSelector, setShowPlanSelector] = useState(false);
+  const [cancelling, setCancelling] = useState(false);
+  const [cancelModalOpen, setCancelModalOpen] = useState(false);
+  const [toast, setToast] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const loadProfile = async () => {
       setLoading(true);
       const profile = await fetchProfile();
-      setUser(profile || { name: "Guest", isPremium: false });
+      setUser(profile || { name: "Reader", isPremium: false, email: "" });
       setLoading(false);
     };
     loadProfile();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="premium-page" style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "500px" }}>
-        <p>Loading...</p>
-      </div>
-    );
-  }
-
-  const handleUpgrade = async () => {
-    navigate("/main/premium/checkout?plan=monthly");
+  const handleCheckout = () => {
+    navigate(`/main/premium/checkout?plan=${selectedPlan}`);
   };
 
-  const handleCancel = async () => {
-    const result = await serviceCancel();
-    if (result) {
-      setUser(result);
-      alert("Premium subscription cancelled.");
-    } else {
-      alert("Cancellation failed. Please try again.");
+  const handleCancelSubscription = async () => {
+    setCancelling(true);
+    try {
+      const result = await serviceCancel();
+      if (result) {
+        setUser((prev) => ({ ...prev, isPremium: false, plan: "free" }));
+        setCancelModalOpen(false);
+        setToast({
+          type: "success",
+          msg: "Your membership has been cancelled. You will remain on Free Reader tier.",
+        });
+      } else {
+        setToast({
+          type: "error",
+          msg: "Failed to cancel membership. Please try again.",
+        });
+      }
+    } catch (err) {
+      setToast({
+        type: "error",
+        msg: "Error connecting to billing server.",
+      });
+    } finally {
+      setCancelling(false);
+      setTimeout(() => setToast(null), 4000);
     }
   };
 
-  if (user.isPremium) {
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.dispatchEvent(new CustomEvent("tokenChanged", { detail: { token: null } }));
+    navigate("/");
+  };
+
+  if (loading) {
     return (
-      <div className="premium-page">
-        <div className="premium-banner">
-          <Crown size={32} style={{ marginBottom: "12px", margin: "0 auto 12px" }} />
-          <h2>Welcome to Premium!</h2>
-          <p>You're unlocking the full BookNest experience. Enjoy unlimited reading!</p>
-        </div>
-
-        <div className="premium-grid">
-          <div className="card plan-card">
-            <h3>Your Plan</h3>
-            <div className="kv">
-              <span>Plan Type</span>
-              <strong>{user.plan || "Premium"}</strong>
-            </div>
-            <div className="kv">
-              <span>Status</span>
-              <strong style={{ color: "#10b981" }}>Active</strong>
-            </div>
-            <div className="kv">
-              <span>Valid Until</span>
-              <strong>{user.validTill ? new Date(user.validTill).toLocaleDateString() : "Forever"}</strong>
-            </div>
-            <div className="card-actions">
-              <button className="btn-primary">Manage Subscription</button>
-              <button className="btn-ghost" onClick={handleCancel}>Cancel</button>
-            </div>
-          </div>
-
-          <div className="card features-card">
-            <h3>Unlocked Features</h3>
-            <ul>
-              <li>Dark Mode</li>
-              <li>Unlimited Bookmarks</li>
-              <li>Priority Support</li>
-              <li>Offline Reading (Coming Soon)</li>
-            </ul>
-
-            <h4>Your Reading Stats</h4>
-            <div className="stats">
-              <div className="stat">
-                <div className="num">12</div>
-                <div className="label">Books Read</div>
-              </div>
-              <div className="stat">
-                <div className="num">42h</div>
-                <div className="label">Time Spent</div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="netflix-account-loading">
+        <div className="account-spinner" />
+        <span>Loading account details...</span>
       </div>
     );
   }
 
+  const memberSince = user?.createdAt
+    ? new Date(user.createdAt).toLocaleDateString("en-US", {
+        month: "long",
+        year: "numeric",
+      })
+    : "Recently Joined";
+
+  const nextBillingDate = user?.validTill
+    ? new Date(user.validTill).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      })
+    : "Active (Lifetime Access)";
+
   return (
-    <div className="premium-page">
-      <div className="hero">
-        <div>
-          <h1>Unlock BookNest Premium</h1>
-          <p>Experience unlimited reading with advanced features. Get access to dark mode, unlimited bookmarks, faster performance, and more!</p>
-          
-          <div className="pricing">
-            <div className="price">
-              <div className="amount">₹99</div>
-              <div className="period">per month</div>
-            </div>
-            <div className="price">
-              <div className="amount">₹499</div>
-              <div className="period">per year</div>
+    <div className="netflix-account-page">
+      <div className="netflix-account-container">
+
+        <header className="account-header">
+          <div className="account-header-left">
+            <h1 className="account-title">Account</h1>
+            <div className="account-member-since">
+              <span className="since-text">Member Since {memberSince}</span>
             </div>
           </div>
-          
-          <button className="btn-primary" onClick={handleUpgrade}>
-            <Crown size={18} style={{ marginRight: "8px", display: "inline" }} />
-            Upgrade to Premium
-          </button>
-        </div>
+          <div className="account-header-badge">
+            {user?.isPremium ? (
+              <span className="account-badge active">
+                <Crown size={14} /> ACTIVE SUBSCRIBER
+              </span>
+            ) : (
+              <span className="account-badge free">FREE READER</span>
+            )}
+          </div>
+        </header>
 
-        <div className="features">
-          <div className="feature-card">
-            <Zap size={24} style={{ color: "#2563eb", marginBottom: "8px" }} />
-            <div className="title">Lightning Fast</div>
+        {toast && (
+          <div className={`account-toast ${toast.type}`}>
+            <span>{toast.msg}</span>
           </div>
-          <div className="feature-card">
-            <Bookmark size={24} style={{ color: "#2563eb", marginBottom: "8px" }} />
-            <div className="title">Unlimited Bookmarks</div>
+        )}
+
+        <section className="account-section">
+          <div className="section-sidebar">
+            <h2 className="section-label">MEMBERSHIP & BILLING</h2>
+            {user?.isPremium ? (
+              <button
+                type="button"
+                className="btn-netflix-secondary"
+                onClick={() => setCancelModalOpen(true)}
+              >
+                Cancel Membership
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="btn-netflix-primary"
+                onClick={() => {
+                  setShowPlanSelector(true);
+                  setTimeout(() => {
+                    document.getElementById("plan-selection-anchor")?.scrollIntoView({ behavior: "smooth" });
+                  }, 50);
+                }}
+              >
+                Upgrade Plan
+              </button>
+            )}
           </div>
-          <div className="feature-card coming">
-            <BookOpen size={24} style={{ color: "#9ca3af", marginBottom: "8px" }} />
-            <div className="title">AI Reading Assistant</div>
-            <div className="meta">Coming Soon</div>
+
+          <div className="section-content">
+
+            <div className="account-row">
+              <div className="account-row-details">
+                <div className="primary-text">{user?.email || "No email on record"}</div>
+                <div className="secondary-text">Password: ••••••••</div>
+              </div>
+              <div className="account-row-action">
+                <button
+                  type="button"
+                  className="link-action"
+                  onClick={() => navigate("/main/profile")}
+                >
+                  Edit profile
+                </button>
+              </div>
+            </div>
+
+            <div className="account-divider" />
+
+            <div className="account-row">
+              <div className="account-row-details">
+                <div className="billing-method-pill">
+                  <CreditCard size={15} />
+                  <span>Razorpay Auto-Billing (UPI / Visa / MC)</span>
+                </div>
+                <div className="secondary-text">
+                  {user?.isPremium ? (
+                    <>Next billing cycle: <strong>{nextBillingDate}</strong></>
+                  ) : (
+                    "No active billing plan. Using standard free tier."
+                  )}
+                </div>
+              </div>
+              <div className="account-row-action">
+                <span className="secure-badge">
+                  <ShieldCheck size={14} /> PCI-DSS Verified
+                </span>
+              </div>
+            </div>
           </div>
-          <div className="feature-card">
-            <Check size={24} style={{ color: "#2563eb", marginBottom: "8px" }} />
-            <div className="title">Priority Support</div>
+        </section>
+
+        <section className="account-section">
+          <div className="section-sidebar">
+            <h2 className="section-label">PLAN DETAILS</h2>
           </div>
-        </div>
+
+          <div className="section-content">
+            <div className="account-row">
+              <div className="account-row-details">
+                <div className="plan-name-display">
+                  <strong>{user?.isPremium ? `BookNest Unlimited (${user.plan || "Annual"})` : "Free Reader Tier"}</strong>
+                  {user?.isPremium && <span className="quality-pill">PREMIUM CLOUD</span>}
+                </div>
+                <div className="secondary-text">
+                  {user?.isPremium
+                    ? "Full catalog access • Unlimited bookmarks • Instant cloud sync • AI reader assistant"
+                    : "Standard catalog reading • Up to 50 bookmarks • Basic progress sync"}
+                </div>
+              </div>
+              <div className="account-row-action">
+                <button
+                  type="button"
+                  className="link-action"
+                  onClick={() => setShowPlanSelector((prev) => !prev)}
+                >
+                  {showPlanSelector ? "Hide plans" : "Change plan"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {(showPlanSelector || !user?.isPremium) && (
+          <section className="account-section plan-form-section" id="plan-selection-anchor">
+            <div className="section-sidebar">
+              <h2 className="section-label">CHOOSE PLAN</h2>
+            </div>
+
+            <div className="section-content">
+              <div className="plan-selection-intro">
+                <h3>Select the plan that fits your reading habits</h3>
+                <p>Downgrade, pause, or cancel online anytime with no hidden charges.</p>
+              </div>
+
+              <div className="plan-selector-cards">
+                <div
+                  className={`plan-selector-box ${selectedPlan === "monthly" ? "selected" : ""}`}
+                  onClick={() => setSelectedPlan("monthly")}
+                >
+                  <div className="plan-box-badge">MONTHLY</div>
+                  <div className="plan-box-title">Monthly Reader</div>
+                  <div className="plan-box-price">
+                    <span className="curr">₹</span>
+                    <span className="amount">99</span>
+                    <span className="dur">/mo</span>
+                  </div>
+                  <div className="plan-box-sub">Billed monthly</div>
+                </div>
+
+                <div
+                  className={`plan-selector-box ${selectedPlan === "yearly" ? "selected" : ""}`}
+                  onClick={() => setSelectedPlan("yearly")}
+                >
+                  <div className="plan-box-badge popular">SAVE 58% • RECOMMENDED</div>
+                  <div className="plan-box-title">Annual Reader</div>
+                  <div className="plan-box-price">
+                    <span className="curr">₹</span>
+                    <span className="amount">499</span>
+                    <span className="dur">/yr</span>
+                  </div>
+                  <div className="plan-box-sub">Just ₹41 / month (Billed yearly)</div>
+                </div>
+              </div>
+
+              <table className="plan-matrix-table">
+                <tbody>
+                  <tr>
+                    <td className="matrix-label">Price</td>
+                    <td className={`matrix-val ${selectedPlan === "monthly" ? "active-col" : ""}`}>
+                      ₹99 / month
+                    </td>
+                    <td className={`matrix-val ${selectedPlan === "yearly" ? "active-col" : ""}`}>
+                      ₹499 / year
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="matrix-label">Gutenberg Catalog (60,000+ Books)</td>
+                    <td className={`matrix-val ${selectedPlan === "monthly" ? "active-col" : ""}`}>
+                      <Check size={16} className="text-netflix-blue" />
+                    </td>
+                    <td className={`matrix-val ${selectedPlan === "yearly" ? "active-col" : ""}`}>
+                      <Check size={16} className="text-netflix-blue" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="matrix-label">Saved Bookmarks & Highlights</td>
+                    <td className={`matrix-val ${selectedPlan === "monthly" ? "active-col" : ""}`}>
+                      <strong>Unlimited</strong>
+                    </td>
+                    <td className={`matrix-val ${selectedPlan === "yearly" ? "active-col" : ""}`}>
+                      <strong>Unlimited</strong>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="matrix-label">Favorites Shelf</td>
+                    <td className={`matrix-val ${selectedPlan === "monthly" ? "active-col" : ""}`}>
+                      <strong>Unlimited</strong>
+                    </td>
+                    <td className={`matrix-val ${selectedPlan === "yearly" ? "active-col" : ""}`}>
+                      <strong>Unlimited</strong>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="matrix-label">AI Reading Assistant</td>
+                    <td className={`matrix-val ${selectedPlan === "monthly" ? "active-col" : ""}`}>
+                      Included
+                    </td>
+                    <td className={`matrix-val ${selectedPlan === "yearly" ? "active-col" : ""}`}>
+                      Included
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="matrix-label">Multi-device Cloud Sync</td>
+                    <td className={`matrix-val ${selectedPlan === "monthly" ? "active-col" : ""}`}>
+                      Mobile, Tablet, Desktop
+                    </td>
+                    <td className={`matrix-val ${selectedPlan === "yearly" ? "active-col" : ""}`}>
+                      Mobile, Tablet, Desktop
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="matrix-label">Ad-free Reading Environment</td>
+                    <td className={`matrix-val ${selectedPlan === "monthly" ? "active-col" : ""}`}>
+                      <Check size={16} className="text-netflix-blue" />
+                    </td>
+                    <td className={`matrix-val ${selectedPlan === "yearly" ? "active-col" : ""}`}>
+                      <Check size={16} className="text-netflix-blue" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div className="plan-checkout-footer">
+                <p className="plan-legal-note">
+                  HD and Ultra reading capabilities subject to internet service and device capabilities. Cancel anytime online.
+                </p>
+                <button
+                  type="button"
+                  className="btn-netflix-cta"
+                  onClick={handleCheckout}
+                >
+                  Continue to Checkout ({selectedPlan === "yearly" ? "₹499/yr" : "₹99/mo"})
+                </button>
+              </div>
+            </div>
+          </section>
+        )}
+
+        <section className="account-section">
+          <div className="section-sidebar">
+            <h2 className="section-label">SETTINGS</h2>
+          </div>
+
+          <div className="section-content">
+            <div className="settings-links-list">
+              <div
+                className="settings-link-row"
+                onClick={() => navigate("/main/library")}
+              >
+                <span>Manage Reading Library & Bookmarks</span>
+                <ChevronRight size={17} />
+              </div>
+
+              <div
+                className="settings-link-row"
+                onClick={() => navigate("/main/my-books")}
+              >
+                <span>Self-Writing & Author Studio</span>
+                <ChevronRight size={17} />
+              </div>
+
+              <div
+                className="settings-link-row"
+                onClick={() => navigate("/main/profile")}
+              >
+                <span>Edit Profile Information & Bio</span>
+                <ChevronRight size={17} />
+              </div>
+
+              <div
+                className="settings-link-row text-danger"
+                onClick={handleLogout}
+              >
+                <span>Sign out of BookNest</span>
+                <ChevronRight size={17} />
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
 
-      <div className="compare">
-        <h3>Plan Comparison</h3>
-        <table className="compare-table">
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th>Free</th>
-              <th>Premium</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Dark Mode</td>
-              <td>Limited</td>
-              <td>✓ Full Access</td>
-            </tr>
-            <tr>
-              <td>Bookmarks</td>
-              <td>Limited (50)</td>
-              <td>✓ Unlimited</td>
-            </tr>
-            <tr>
-              <td>Reading Speed</td>
-              <td>Standard</td>
-              <td>✓ Lightning Fast</td>
-            </tr>
-            <tr>
-              <td>Offline Reading</td>
-              <td>No</td>
-              <td>✓ Coming Soon</td>
-            </tr>
-            <tr>
-              <td>Priority Support</td>
-              <td>No</td>
-              <td>✓ Yes</td>
-            </tr>
-            <tr>
-              <td>AI Assistant</td>
-              <td>No</td>
-              <td>✓ Coming Soon</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      {cancelModalOpen && (
+        <div className="netflix-modal-overlay" onClick={() => setCancelModalOpen(false)}>
+          <div className="netflix-modal-box" onClick={(e) => e.stopPropagation()}>
+            <h3 className="modal-title">Cancel BookNest Membership?</h3>
+            <p className="modal-copy">
+              Cancellation is effective at the end of your current billing period (<strong>{nextBillingDate}</strong>). After this date, you will lose unlimited bookmarks, favorites, and AI reader privileges.
+            </p>
+            <div className="modal-button-row">
+              <button
+                type="button"
+                className="btn-modal-cancel"
+                onClick={handleCancelSubscription}
+                disabled={cancelling}
+              >
+                {cancelling ? "Processing..." : "Finish Cancellation"}
+              </button>
+              <button
+                type="button"
+                className="btn-modal-keep"
+                onClick={() => setCancelModalOpen(false)}
+                disabled={cancelling}
+              >
+                Keep Membership
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

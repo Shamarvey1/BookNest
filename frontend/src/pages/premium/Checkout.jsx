@@ -105,7 +105,7 @@ export default function Checkout() {
           className="checkout-back"
         >
           <ArrowLeft size={18} />
-          Back to Premium
+          Back to Membership & Billing
         </button>
 
         <div className="checkout-grid">
@@ -113,8 +113,8 @@ export default function Checkout() {
             <div className="checkout-header">
               <Crown size={28} color="#1e56ff" />
               <div className="checkout-header-copy">
-                <h1>Premium Checkout</h1>
-                <p>Choose a plan and complete payment through Razorpay.</p>
+                <h1>Membership Checkout</h1>
+                <p>Choose a plan and complete payment securely through Razorpay.</p>
               </div>
             </div>
 
