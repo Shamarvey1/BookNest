@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiMail, FiLock } from "react-icons/fi";
+import { FiMail, FiLock, FiShield, FiZap } from "react-icons/fi";
 import { loginAPI } from "../../services/authService";
 import openBook from "../../assets/icons/open-book.png";
 import "./Login.css";
+
+const ADMIN_EMAIL = "ajitlookforbest@gmail.com";
+const ADMIN_PASSWORD = "123456";
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -32,6 +35,26 @@ const Login = () => {
 		}
 	};
 
+	const handleAdminLogin = async () => {
+		setEmail(ADMIN_EMAIL);
+		setPassword(ADMIN_PASSWORD);
+		setLoading(true);
+		try {
+			const res = await loginAPI({ email: ADMIN_EMAIL, password: ADMIN_PASSWORD });
+			localStorage.setItem("token", res.token);
+			window.dispatchEvent(new CustomEvent("tokenChanged", { detail: { token: res.token } }));
+			navigate("/main");
+		} catch (error) {
+			alert(error.message);
+			setLoading(false);
+		}
+	};
+
+	const fillAdminCredentials = () => {
+		setEmail(ADMIN_EMAIL);
+		setPassword(ADMIN_PASSWORD);
+	};
+
 	return (
 		<div className="landing-container">
 			<div className="landing-left">
@@ -47,7 +70,41 @@ const Login = () => {
 			<div className="landing-right">
 				<div className="form-card">
 					<h2>Welcome Back</h2>
-					<p>Log in to continue reading</p>
+					<p className="form-subtitle">Log in to continue reading</p>
+
+					{/* Admin Quick Login Box */}
+					<div className="admin-access-card">
+						<div className="admin-access-header">
+							<span className="admin-badge">
+								<FiShield className="admin-badge-icon" /> Admin / Demo Account
+							</span>
+							<button
+								type="button"
+								className="btn-admin-fill"
+								onClick={fillAdminCredentials}
+								title="Fill fields with admin credentials"
+							>
+								Auto Fill
+							</button>
+						</div>
+						<div className="admin-credentials">
+							<div><span>Email:</span> <code>{ADMIN_EMAIL}</code></div>
+							<div><span>Password:</span> <code>{ADMIN_PASSWORD}</code></div>
+						</div>
+						<button
+							type="button"
+							className="btn-admin-login"
+							onClick={handleAdminLogin}
+							disabled={loading}
+							aria-busy={loading}
+						>
+							<FiZap /> 1-Click Admin Login
+						</button>
+					</div>
+
+					<div className="divider-or">
+						<span>OR SIGN IN MANUALLY</span>
+					</div>
 
 					<form onSubmit={handleLogin}>
 						<div className="input-group">

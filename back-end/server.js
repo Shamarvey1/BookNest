@@ -47,7 +47,10 @@ app.get("/", (req, res) => {
 });
 
 
+const { initAdminUser } = require("./utils/seedAdmin.js");
+
 const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Server running on port ${PORT}`);
+  await initAdminUser();
 });
