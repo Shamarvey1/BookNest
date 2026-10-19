@@ -2,7 +2,7 @@ const { getAIResponse } = require("../utils/groqService");
 
 const chatWithAI = async (req, res) => {
   try {
-    const { question, context, bookTitle, bookAuthors } = req.body;
+    const { question, context, bookTitle, bookAuthors, history } = req.body;
 
     if (!question || !question.trim()) {
       return res.status(400).json({
@@ -21,6 +21,7 @@ const chatWithAI = async (req, res) => {
     const response = await getAIResponse(question.trim(), context.trim(), {
       bookTitle,
       bookAuthors,
+      history: Array.isArray(history) ? history : [],
     });
 
     res.status(200).json({

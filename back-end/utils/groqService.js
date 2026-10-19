@@ -1,12 +1,18 @@
 const OpenAI = require("openai");
 
+const CANDIDATE_MODELS = [
+  process.env.GROQ_MODEL || "qwen/qwen3.8-27b",
+  "openai/gpt-oss-120b",
+  "openai/gpt-oss-20b",
+];
+
 const getAIResponse = async (question, context, bookInfo = {}) => {
   if (!process.env.GROQ_API_KEY) {
-    throw new Error("GROQ_API_KEY is missing");
+    throw new Error("GROQ_API_KEY is missing in backend configuration.");
   }
 
   if (!question?.trim() || !context?.trim()) {
-    throw new Error("Question and context are required");
+    throw new Error("Question and context are required.");
   }
 
   const client = new OpenAI({
@@ -14,51 +20,66 @@ const getAIResponse = async (question, context, bookInfo = {}) => {
     baseURL: "https://api.groq.com/openai/v1",
   });
 
-  const model = process.env.GROQ_MODEL || "openai/gpt-oss-20b";
-  const bookTitle = bookInfo.bookTitle || "Unknown title";
+  const bookTitle = bookInfo.bookTitle || "this book";
   const bookAuthors = Array.isArray(bookInfo.bookAuthors)
     ? bookInfo.bookAuthors.join(", ")
-    : bookInfo.bookAuthors || "Unknown author";
-  const prompt = `You are an AI Reading Assistant.
-Use only the provided context to answer.
-If the question asks the meaning of a word and that word appears in context as a name/family/place, explain it from context.
-If the answer is not in context, say that clearly.
-If the user asks for the author, title, or book name, answer using the book metadata below.
+    : bookInfo.bookAuthors || "the author";
 
-Book title: ${bookTitle}
-Book authors: ${bookAuthors}
+  const systemPrompt = `You are an AI Reading Assistant for the book "${bookTitle}" by ${bookAuthors}.
 
-Context:
-${context}
+Your job is to assist the reader with whatever they ask about the active page spread and this book.
 
-Question:
-${question}`;
+GUIDELINES:
+1. ACTIVE SPREAD CONTEXT:
+   - Ground your answer in the reader's current page text below when discussing what is happening, who is speaking, or analyzing dialogues, actions, and period words.
+2. BOOK CONTEXT & HELPFULNESS:
+   - If the user asks about character backgrounds, overarching plot, or historical context, answer informatively and clearly.
+   - Avoid spoilers for future chapters unless explicitly requested.
+3. CONCISE & READABLE:
+   - Provide clear, well-structured, easy-to-read answers.`;
 
-  const response = await client.responses.create({
-    model,
-    input: prompt,
-    max_output_tokens: 400,
+
+  const messages = [{ role: "system", content: systemPrompt }];
+
+  if (Array.isArray(bookInfo.history) && bookInfo.history.length > 0) {
+    for (const item of bookInfo.history.slice(-6)) {
+      if (item && item.content && (item.role === "user" || item.role === "assistant")) {
+        messages.push({
+          role: item.role,
+          content: item.content.trim(),
+        });
+      }
+    }
+  }
+
+  messages.push({
+    role: "user",
+    content: `[Current Reading Context (Active Pages)]:\n"""\n${context}\n"""\n\nReader's Question: ${question}`,
   });
 
-  const aiText = response?.output_text?.trim();
+  const candidateModels = CANDIDATE_MODELS;
+  let lastError = null;
 
-  if (!aiText) {
-    throw new Error("Empty response from AI");
+  for (const model of candidateModels) {
+    try {
+      const completion = await client.chat.completions.create({
+        model,
+        messages,
+        temperature: 0.4,
+        max_tokens: 800,
+      });
+
+      const reply = completion.choices?.[0]?.message?.content?.trim();
+      if (reply) {
+        return reply;
+      }
+    } catch (err) {
+      console.warn(`Groq model ${model} failed: ${err.message}. Trying next candidate...`);
+      lastError = err;
+    }
   }
 
-  const meaningMatch = question.match(/what does\s+['"]?([a-z][a-z'-]{1,})['"]?\s+mean|['"]?([a-z][a-z'-]{1,})['"]?\s+means?/i);
-  const meaningWord = (meaningMatch?.[1] || meaningMatch?.[2] || "").toLowerCase();
-  const contextLower = context.toLowerCase();
-  const wordInContext =
-    meaningWord &&
-    (contextLower.includes(meaningWord) || contextLower.includes(`${meaningWord}s`) || contextLower.includes(`${meaningWord}'s`));
-  const refusal = /not in context|not included|does not explain|doesn't explain|cannot answer|can't answer/i.test(aiText);
-
-  if (meaningWord && wordInContext && refusal) {
-    return `In this page, "${meaningWord}" is used as a proper noun (name/family/place) in the story context.`;
-  }
-
-  return aiText;
+  throw new Error(lastError?.message || "Failed to generate AI response");
 };
 
 module.exports = {

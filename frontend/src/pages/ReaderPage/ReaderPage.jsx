@@ -51,9 +51,8 @@ function sanitizeGutenbergText(rawText) {
     }
   }
 
-  // Fix Gutenberg drop caps like "M [images/i_035_b.png]R." -> "MR."
   text = text.replace(/([A-Za-z])\s*\[images\/[^\]]+\]([A-Za-z])/g, "$1$2");
-  // Remove remaining Gutenberg image/illustration/footnote artifacts and curly page tags
+
   text = text.replace(/\[images\/[^\]]+\]/gi, "");
   text = text.replace(/\[illustration[^\]]*\]/gi, "");
   text = text.replace(/\[footnote[^\]]*\]/gi, "");
@@ -340,7 +339,6 @@ function ReaderPage() {
     }
   };
 
-  // Dimensions for open two-page book spread:
   const availableStageHeight = Math.max(viewportHeight - 136, 400);
   const availableStageWidth = Math.max(viewportWidth - 140, 320);
 
@@ -545,9 +543,11 @@ function ReaderPage() {
       </footer>
 
       <button
+        type="button"
         className="reader-ai-toggle"
         onClick={() => setIsChatOpen(true)}
         aria-label="Open AI Assistant"
+        title="Open AI Assistant"
       >
         <Sparkles size={20} />
       </button>

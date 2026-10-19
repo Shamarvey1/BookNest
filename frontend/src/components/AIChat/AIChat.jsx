@@ -22,17 +22,27 @@ function AIChat({ currentText, bookTitle, bookAuthors, onClose }) {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, loading]);
 
   const handleSendMessage = async () => {
-    if (!input.trim() || !currentText || loading) return;
+    const textToSend = input.trim();
+    if (!textToSend || !currentText || loading) return;
 
     const userMessage = {
-      id: messages.length + 1,
+      id: Date.now(),
       type: "user",
-      content: input,
+      content: textToSend,
       timestamp: new Date(),
     };
+
+    const history = messages
+      .slice(1)
+      .filter((m) => m.content)
+      .slice(-6)
+      .map((m) => ({
+        role: m.type === "ai" ? "assistant" : "user",
+        content: m.content,
+      }));
 
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
@@ -40,14 +50,15 @@ function AIChat({ currentText, bookTitle, bookAuthors, onClose }) {
 
     try {
       const response = await sendAIQuestion({
-        question: input,
+        question: textToSend,
         context: currentText,
         bookTitle,
         bookAuthors,
+        history,
       });
 
       const aiMessage = {
-        id: messages.length + 2,
+        id: Date.now() + 1,
         type: "ai",
         content: response,
         timestamp: new Date(),
@@ -56,7 +67,7 @@ function AIChat({ currentText, bookTitle, bookAuthors, onClose }) {
       setMessages((prev) => [...prev, aiMessage]);
     } catch (error) {
       const errorMessage = {
-        id: messages.length + 2,
+        id: Date.now() + 1,
         type: "ai",
         content: error?.message || "AI request failed.",
         timestamp: new Date(),
@@ -65,6 +76,7 @@ function AIChat({ currentText, bookTitle, bookAuthors, onClose }) {
       console.error("AI Error:", error);
     } finally {
       setLoading(false);
+      setTimeout(() => inputRef.current?.focus(), 100);
     }
   };
 
@@ -77,6 +89,7 @@ function AIChat({ currentText, bookTitle, bookAuthors, onClose }) {
 
   return (
     <div className="ai-chat-container">
+      {/* Header */}
       <div className="ai-chat-header">
         <div className="ai-chat-title">
           <span className="ai-icon">✨</span>
@@ -84,6 +97,7 @@ function AIChat({ currentText, bookTitle, bookAuthors, onClose }) {
         </div>
         {onClose && (
           <button
+            type="button"
             className="ai-close-btn"
             onClick={onClose}
             aria-label="Close AI Assistant"
@@ -93,6 +107,7 @@ function AIChat({ currentText, bookTitle, bookAuthors, onClose }) {
         )}
       </div>
 
+      {/* Messages */}
       <div className="ai-chat-messages">
         {messages.map((msg) => (
           <div key={msg.id} className={`ai-message-wrapper ${msg.type}`}>
@@ -106,9 +121,9 @@ function AIChat({ currentText, bookTitle, bookAuthors, onClose }) {
           <div className="ai-message-wrapper ai">
             <div className="ai-message ai loading">
               <div className="typing-indicator">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span />
+                <span />
+                <span />
               </div>
             </div>
           </div>
@@ -118,17 +133,18 @@ function AIChat({ currentText, bookTitle, bookAuthors, onClose }) {
       </div>
 
       <div className="ai-chat-input-section">
-        <textarea
+        <input
           ref={inputRef}
+          type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyPress}
           placeholder="Ask about the page..."
           className="ai-input"
-          rows="1"
           disabled={loading || !currentText}
         />
         <button
+          type="button"
           onClick={handleSendMessage}
           className="ai-send-btn"
           disabled={!input.trim() || loading || !currentText}

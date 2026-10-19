@@ -555,23 +555,21 @@
   background: #93c5fd;
 }
 
-/* ==========================================================================
-   7. AI Chat Overlay
-   ========================================================================== */
+
 
 .reader-ai-toggle {
   position: fixed;
   right: 24px;
-  bottom: 60px;
-  width: 48px;
-  height: 48px;
+  bottom: 50px;
+  width: 46px;
+  height: 46px;
   border: none;
   border-radius: 50%;
   color: #ffffff;
   cursor: pointer;
   z-index: 1100;
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -580,7 +578,7 @@
 
 .reader-ai-toggle:hover {
   transform: scale(1.08);
-  box-shadow: 0 10px 28px rgba(37, 99, 235, 0.45);
+  box-shadow: 0 10px 28px rgba(37, 99, 235, 0.5);
 }
 
 .reader-ai-overlay {
@@ -593,20 +591,18 @@
   position: absolute;
   inset: 0;
   border: none;
-  background: rgba(15, 23, 42, 0.3);
+  background: transparent;
 }
 
 .reader-ai-panel {
   position: absolute;
   right: 24px;
-  bottom: 64px;
-  width: min(380px, calc(100vw - 32px));
-  height: min(60vh, 520px);
+  bottom: 36px;
+  width: 350px;
+  height: 440px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 80px);
 }
-
-/* ==========================================================================
-   Responsive Breakpoints
-   ========================================================================== */
 
 @media (max-width: 768px) {
   .reader-top-bar {
@@ -631,15 +627,15 @@
   }
 
   .reader-ai-toggle {
-    right: 16px;
-    bottom: 54px;
+    right: 14px;
+    bottom: 50px;
     width: 42px;
     height: 42px;
   }
 
   .reader-ai-panel {
     right: 12px;
-    bottom: 54px;
+    bottom: 30px;
     width: calc(100vw - 24px);
     height: 52vh;
   }
