@@ -4,7 +4,7 @@ import "./Library.css";
 
 import { useBookmarks } from "../../context/BookmarkContext";
 import { useFavorites } from "../../context/FavoriteContext";
-import { getAllProgress, deleteProgress } from "../../services/progressService";
+import { useProgress } from "../../context/ProgressContext";
 
 import BookCard from "../../components/BookCard/BookCard";
 import ProgressBookCard from "../../components/ProgressBookCard/ProgressBookCard";
@@ -34,20 +34,8 @@ const EmptyState = ({ icon: Icon, title, message }) => (
 
 function Library() {
   const [activeTab, setActiveTab] = useState("all");
-  const [progressList, setProgressList] = useState([]);
+  const { progressList, removeProgress } = useProgress();
   const location = useLocation();
-
-  useEffect(() => {
-    const loadProgress = async () => {
-      try {
-        const data = await getAllProgress();
-        setProgressList(data || []);
-      } catch (err) {
-        console.error("Failed to load progress:", err);
-      }
-    };
-    loadProgress();
-  }, []);
 
   useEffect(() => {
     try {
@@ -149,16 +137,9 @@ function Library() {
       case "progress":
         return progressList.map((progress) => (
           <ProgressBookCard
-            key={progress.id}
+            key={progress.id || progress.bookId}
             progress={progress}
-            onRemove={async () => {
-              try {
-                await deleteProgress(progress.bookId);
-                setProgressList(progressList.filter((p) => p.id !== progress.id));
-              } catch (err) {
-                console.error("Failed to delete progress:", err);
-              }
-            }}
+            onRemove={() => removeProgress(progress.bookId || progress.book?.id)}
           />
         ));
 

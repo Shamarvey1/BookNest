@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.jsx";
 import ReaderPage from "./pages/ReaderPage/ReaderPage.jsx";
 import { BookmarkProvider } from "./context/BookmarkContext.jsx";
 import { FavoriteProvider } from "./context/FavoriteContext.jsx";
+import { ProgressProvider } from "./context/ProgressContext.jsx";
 import Library from "./pages/Library/Library.jsx";
 import MyBooks from "./pages/Writing/MyBooks/MyBooks.jsx";
 import WriteBook from "./pages/Writing/WriteBook/WriteBook.jsx";
@@ -41,11 +42,15 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return <BookmarkProvider>
+  return (
+    <BookmarkProvider>
       <FavoriteProvider>
-        <RouterProvider router={router} />
+        <ProgressProvider>
+          <RouterProvider router={router} />
+        </ProgressProvider>
       </FavoriteProvider>
     </BookmarkProvider>
+  );
 }
 
 export default App;

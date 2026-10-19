@@ -12,7 +12,8 @@ import {
 } from "lucide-react";
 import "./ReaderPage.css";
 import { getBookByIdAPI } from "../../services/bookService";
-import { upsertProgress, getProgress } from "../../services/progressService";
+import { getProgress } from "../../services/progressService";
+import { useProgress } from "../../context/ProgressContext";
 import BookNestLoader from "../../components/Loader/BookNestLoader/BookNestLoader";
 import AIChat from "../../components/AIChat/AIChat";
 
@@ -116,6 +117,7 @@ function ReaderPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const { updateProgress } = useProgress();
 
   const [book, setBook] = useState(null);
   const [pages, setPages] = useState([]);
@@ -247,21 +249,19 @@ function ReaderPage() {
     const interval = setInterval(() => {
       if (book && currentPageRef.current !== lastSavedPageRef.current) {
         const percent = Math.round((currentPageRef.current / pages.length) * 100);
-        upsertProgress(book.id, percent, currentPageRef.current).catch((err) => {
-          console.error("Progress save failed:", err);
-        });
+        updateProgress(book.id, percent, currentPageRef.current);
         lastSavedPageRef.current = currentPageRef.current;
       }
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [book, pages.length]);
+  }, [book, pages.length, updateProgress]);
 
   useEffect(() => {
     const handleUnload = () => {
       if (book && currentPageRef.current !== lastSavedPageRef.current) {
         const percent = Math.round((currentPageRef.current / pages.length) * 100);
-        upsertProgress(book.id, percent, currentPageRef.current).catch(() => {});
+        updateProgress(book.id, percent, currentPageRef.current);
       }
     };
     window.addEventListener("beforeunload", handleUnload);
