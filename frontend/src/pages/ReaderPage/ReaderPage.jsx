@@ -67,12 +67,13 @@ function sanitizeGutenbergText(rawText) {
 
 const CHAPTER_REGEX = /^(?:chapter\s+[0-9ivxlcdm]+|book\s+[0-9ivxlcdm]+|act\s+[0-9ivxlcdm]+|stave\s+[0-9ivxlcdm]+|prologue|epilogue)\b/i;
 
-function paginateBookText(cleanText, targetChars = 720) {
+function paginateBookText(cleanText, targetChars = 1600) {
   if (!cleanText) return [];
 
   const rawParagraphs = cleanText.split(/\n\s*\n/);
   const pages = [];
   let currentPage = "";
+  const minFill = Math.floor(targetChars * 0.72);
 
   for (let para of rawParagraphs) {
     para = para.trim().replace(/[ \t]+/g, " ");
@@ -80,13 +81,13 @@ function paginateBookText(cleanText, targetChars = 720) {
 
     const isChapter = CHAPTER_REGEX.test(para.substring(0, 45).trim());
 
-    if (isChapter && currentPage.trim().length > 250) {
+    if (isChapter && currentPage.trim().length > 350) {
       pages.push(currentPage.trim());
       currentPage = "";
     }
 
     if (currentPage.length + para.length > targetChars) {
-      if (currentPage.length >= 500) {
+      if (currentPage.length >= minFill) {
         pages.push(currentPage.trim());
         currentPage = "";
       }
@@ -95,7 +96,7 @@ function paginateBookText(cleanText, targetChars = 720) {
     if (currentPage.length + para.length > targetChars) {
       const sentences = para.match(/[^.!?]+[.!?]+(?:\s+|$)|[^.!?]+$/g) || [para];
       for (const sentence of sentences) {
-        if (currentPage.length + sentence.length > targetChars && currentPage.length >= 500) {
+        if (currentPage.length + sentence.length > targetChars && currentPage.length >= minFill) {
           pages.push(currentPage.trim());
           currentPage = "";
         }
@@ -112,6 +113,44 @@ function paginateBookText(cleanText, targetChars = 720) {
 
   return pages;
 }
+
+const ContentPage = React.forwardRef(({ bookTitle, pageContent, pageNumber, isLeft }, ref) => (
+  <div
+    ref={ref}
+    className={`page content-page ${isLeft ? "left-page" : "right-page"}`}
+  >
+    <div className="page-inner">
+      <div className="page-header-running-head">
+        <span className="running-title">{bookTitle}</span>
+      </div>
+
+      <div className="page-text">
+        {pageContent.split("\n\n").map((paragraph, pIdx) => {
+          const isChapter = CHAPTER_REGEX.test(paragraph.substring(0, 45).trim());
+          if (isChapter) {
+            return (
+              <div key={pIdx} className="chapter-heading-block">
+                <div className="chapter-ornament">✦ ✦ ✦</div>
+                <h3 className="chapter-title">{paragraph}</h3>
+              </div>
+            );
+          }
+          return (
+            <p key={pIdx} className="book-paragraph">
+              {paragraph}
+            </p>
+          );
+        })}
+      </div>
+
+      <div className="page-footer">
+        <span className="page-number">{pageNumber}</span>
+      </div>
+    </div>
+  </div>
+));
+
+const MemoizedContentPage = React.memo(ContentPage);
 
 function ReaderPage() {
   const { id } = useParams();
@@ -205,7 +244,7 @@ function ReaderPage() {
       if (!data || !data.content) return;
 
       const cleanText = sanitizeGutenbergText(data.content);
-      const targetSize = isMobile ? 520 : 720;
+      const targetSize = isMobile ? 850 : 1600;
       const paginatedPages = paginateBookText(cleanText, targetSize);
 
       setBook(data);
@@ -437,14 +476,14 @@ function ReaderPage() {
             maxWidth={750}
             minHeight={420}
             maxHeight={1000}
-            maxShadowOpacity={0.35}
+            maxShadowOpacity={0.2}
             showCover={true}
             usePortrait={isMobile}
             drawShadow={true}
-            flippingTime={700}
+            flippingTime={450}
             useMouseEvents={true}
             mobileScrollSupport={true}
-            swipeDistance={15}
+            swipeDistance={25}
             onFlip={handlePageChange}
             className="flip-book"
           >
@@ -468,39 +507,13 @@ function ReaderPage() {
             </div>
 
             {pages.map((pageContent, i) => (
-              <div
+              <MemoizedContentPage
                 key={i}
-                className={`page content-page ${i % 2 === 0 ? "left-page" : "right-page"}`}
-              >
-                <div className="page-inner">
-                  <div className="page-header-running-head">
-                    <span className="running-title">{book.title}</span>
-                  </div>
-
-                  <div className="page-text">
-                    {pageContent.split("\n\n").map((paragraph, pIdx) => {
-                      const isChapter = CHAPTER_REGEX.test(paragraph.substring(0, 45).trim());
-                      if (isChapter) {
-                        return (
-                          <div key={pIdx} className="chapter-heading-block">
-                            <div className="chapter-ornament">✦ ✦ ✦</div>
-                            <h3 className="chapter-title">{paragraph}</h3>
-                          </div>
-                        );
-                      }
-                      return (
-                        <p key={pIdx} className="book-paragraph">
-                          {paragraph}
-                        </p>
-                      );
-                    })}
-                  </div>
-
-                  <div className="page-footer">
-                    <span className="page-number">{i + 1}</span>
-                  </div>
-                </div>
-              </div>
+                bookTitle={book.title}
+                pageContent={pageContent}
+                pageNumber={i + 1}
+                isLeft={i % 2 === 0}
+              />
             ))}
 
             <div className="page end-page">
