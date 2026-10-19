@@ -87,6 +87,8 @@
 .row-card-item {
   flex: 0 0 185px;
   width: 185px;
+  display: flex;
+  align-items: stretch;
   transition: transform 0.2s ease;
 }
 

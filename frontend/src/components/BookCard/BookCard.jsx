@@ -177,11 +177,15 @@ function BookCard({ book, onRemove, onRead }) {
         )}
       </div>
 
-      <h4 className="book-title">{book.title}</h4>
+      <h4 className="book-title" title={book.title}>{book.title}</h4>
 
-      {book.authors && book.authors.length > 0 && (
-        <p className="book-author">{book.authors.join(", ")}</p>
-      )}
+      <p className="book-author">
+        {book.authors && (Array.isArray(book.authors) ? book.authors.length > 0 : Boolean(book.authors))
+          ? Array.isArray(book.authors)
+            ? book.authors.join(", ")
+            : book.authors
+          : "\u00A0"}
+      </p>
     </div>
   );
 }

@@ -25,13 +25,15 @@ function ProgressBookCard({ progress, onRemove }) {
         className="progress-book-cover"
       />
 
-      <h4 className="progress-book-title">{book.title}</h4>
+      <h4 className="progress-book-title" title={book.title}>{book.title}</h4>
 
-      {book.authors && (
-        <p className="progress-book-author">
-          {book.authors.join(", ")}
-        </p>
-      )}
+      <p className="progress-book-author">
+        {book.authors && (Array.isArray(book.authors) ? book.authors.length > 0 : Boolean(book.authors))
+          ? Array.isArray(book.authors)
+            ? book.authors.join(", ")
+            : book.authors
+          : "\u00A0"}
+      </p>
 
       <div className="progress-bar-container">
         <div className="progress-bar">
