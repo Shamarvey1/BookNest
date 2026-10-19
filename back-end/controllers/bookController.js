@@ -180,6 +180,17 @@ const saveBook = async (req, res) => {
       });
     }
 
+    // Strip Gutenberg header and footer
+    const startMatch = content.match(/\*\*\* START OF (THE|THIS) PROJECT GUTENBERG[^*]*\*\*\*/i);
+    if (startMatch && startMatch.index !== undefined) {
+      content = content.substring(startMatch.index + startMatch[0].length);
+    }
+    const endMatch = content.match(/\*\*\* END OF (THE|THIS) PROJECT GUTENBERG[^*]*\*\*\*/i);
+    if (endMatch && endMatch.index !== undefined) {
+      content = content.substring(0, endMatch.index);
+    }
+    content = content.replace(/\r\n/g, "\n").replace(/\r/g, "\n").trim();
+
     const savedBook = await prisma.book.create({
       data: {
         gutenId,
