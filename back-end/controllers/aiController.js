@@ -1,4 +1,4 @@
-const { getAIResponse } = require("../utils/groqService");
+const { getAIResponse, getAIWritingAssistance } = require("../utils/groqService");
 
 const chatWithAI = async (req, res) => {
   try {
@@ -38,6 +38,39 @@ const chatWithAI = async (req, res) => {
   }
 };
 
+const assistWriting = async (req, res) => {
+  try {
+    const { action, text, title, genre } = req.body;
+
+    if (!action) {
+      return res.status(400).json({
+        success: false,
+        message: "Writing action is required (continue, polish, describe, or brainstorm)",
+      });
+    }
+
+    const suggestion = await getAIWritingAssistance({
+      action,
+      text: text || "",
+      title: title || "Untitled Book",
+      genre: genre || "Fiction",
+    });
+
+    res.status(200).json({
+      success: true,
+      suggestion,
+    });
+  } catch (error) {
+    console.error("AI Writing Assist Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message || "Failed to generate writing assistance",
+    });
+  }
+};
+
 module.exports = {
   chatWithAI,
+  assistWriting,
 };

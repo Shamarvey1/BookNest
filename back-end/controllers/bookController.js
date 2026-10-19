@@ -279,9 +279,27 @@ const getBook = async (req, res) => {
   try {
     const id = req.params.id;
 
-    const book = await prisma.book.findUnique({
+    let book = await prisma.book.findUnique({
       where: { id },
     });
+
+    if (!book) {
+      const userBook = await prisma.userBook.findUnique({
+        where: { id },
+        include: { user: { select: { name: true } } },
+      });
+
+      if (userBook) {
+        book = {
+          id: userBook.id,
+          title: userBook.title,
+          authors: [userBook.user?.name || "Self-Published Author"],
+          coverUrl: userBook.coverUrl,
+          content: userBook.content || "This book is currently empty. Start writing to see your story here!",
+          genre: userBook.genre || "Fiction",
+        };
+      }
+    }
 
     if (!book) return res.status(404).json({ msg: "Book not found" });
 

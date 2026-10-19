@@ -88,6 +88,11 @@ function MyBooks() {
               book={book}
               onEdit={handleEditBook}
               onDelete={handleDeleteBook}
+              onRead={(id) =>
+                navigate(`/reader/${id}`, {
+                  state: { from: "/main/my-books", fromLabel: "My Books" },
+                })
+              }
             />
           ))}
         </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import HTMLFlipBook from "react-pageflip";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import {
   ArrowLeft,
   ChevronLeft,
@@ -115,6 +115,7 @@ function paginateBookText(cleanText, targetChars = 720) {
 function ReaderPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [book, setBook] = useState(null);
   const [pages, setPages] = useState([]);
@@ -358,6 +359,22 @@ function ReaderPage() {
 
   const progressPercent = pages.length > 0 ? Math.round((activePageIndex / pages.length) * 100) : 0;
 
+  const handleExitReader = () => {
+    if (location.state?.from) {
+      navigate(location.state.from);
+    } else if (book?.genre && !book?.gutenId) {
+      navigate("/main/my-books");
+    } else if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate("/main");
+    }
+  };
+
+  const exitLabel =
+    location.state?.fromLabel ||
+    (book?.genre && !book?.gutenId ? "My Books" : "Discover");
+
   return (
     <div className="reader-wrapper">
       <header className="reader-top-bar">
@@ -365,11 +382,11 @@ function ReaderPage() {
           <button
             type="button"
             className="btn-exit-reader"
-            onClick={() => navigate("/main")}
-            aria-label="Back to Discover"
+            onClick={handleExitReader}
+            aria-label={`Back to ${exitLabel}`}
           >
             <ArrowLeft size={18} />
-            <span className="btn-exit-label">Library</span>
+            <span className="btn-exit-label">{exitLabel}</span>
           </button>
         </div>
 

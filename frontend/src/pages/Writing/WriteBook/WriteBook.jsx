@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./WriteBook.css";
+import { BookOpen } from "lucide-react";
 
-import {createBook,fetchBookById,updateBook} from "../../../services/writingService";
+import { createBook, fetchBookById, updateBook } from "../../../services/writingService";
 
 import WritingEditor from "../../../components/Writing/WritingEditor/WritingEditor";
 import WritingTips from "../../../components/Writing/WritingTips/WritingTips";
@@ -27,8 +28,23 @@ function WriteBook() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
 
+  const draftKey = `booknest_draft_${id || "new"}`;
+
   useEffect(() => {
-    if (!isEdit) return;
+    if (!isEdit) {
+      try {
+        const savedDraft = localStorage.getItem(draftKey);
+        if (savedDraft) {
+          const parsed = JSON.parse(savedDraft);
+          if (parsed.title) setTitle(parsed.title);
+          if (parsed.genre) setGenre(parsed.genre);
+          if (parsed.description) setDescription(parsed.description);
+          if (parsed.coverUrl) setCoverUrl(parsed.coverUrl);
+          if (parsed.content) setContent(parsed.content);
+        }
+      } catch {}
+      return;
+    }
 
     async function loadBook() {
       try {
@@ -48,6 +64,19 @@ function WriteBook() {
     loadBook();
   }, [id, isEdit]);
 
+  useEffect(() => {
+    if (loading) return;
+    const timer = setTimeout(() => {
+      try {
+        localStorage.setItem(
+          draftKey,
+          JSON.stringify({ title, genre, description, coverUrl, content })
+        );
+      } catch {}
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [title, genre, description, coverUrl, content, loading, draftKey]);
+
   async function handleCoverUpload(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -64,7 +93,7 @@ function WriteBook() {
         "https://api.cloudinary.com/v1_1/dotbkqkxc/image/upload",
         {
           method: "POST",
-          body: formData
+          body: formData,
         }
       );
 
@@ -73,7 +102,6 @@ function WriteBook() {
       if (!data.secure_url) {
         throw new Error("Upload failed");
       }
-      console.log("Image URL:", data.secure_url);
       setCoverUrl(data.secure_url);
     } catch (err) {
       console.error("UPLOAD ERROR:", err);
@@ -103,7 +131,7 @@ function WriteBook() {
         genre,
         description,
         coverUrl,
-        content
+        content,
       };
 
       if (isEdit) {
@@ -111,6 +139,10 @@ function WriteBook() {
       } else {
         await createBook(payload);
       }
+
+      try {
+        localStorage.removeItem(draftKey);
+      } catch {}
 
       navigate("/main/my-books");
     } catch (err) {
@@ -120,22 +152,40 @@ function WriteBook() {
     }
   }
 
+  if (loading) {
+    return <BookNestLoader text="Loading your book..." />;
+  }
 
-
-    if (loading) {
-      return <BookNestLoader text="Loading your book..." />;
-    }
-    
   return (
     <div className="write-book-page">
       <div className="write-book-header">
         <div>
           <h1>{isEdit ? "Edit Book" : "Write New Book"}</h1>
-          <p>Create and manage your writing</p>
+          <p>Create, refine, and publish your original stories</p>
         </div>
 
         <div className="write-book-actions">
+          {isEdit && (
+            <button
+              type="button"
+              className="preview-reader-btn"
+              onClick={() =>
+                navigate(`/reader/${id}`, {
+                  state: {
+                    from: `/main/write-book/${id}`,
+                    fromLabel: "Editor",
+                  },
+                })
+              }
+              title="Preview this book in the 3D BookNest Reader"
+            >
+              <BookOpen size={16} />
+              Preview in Reader
+            </button>
+          )}
+
           <button
+            type="button"
             className="cancel-btn"
             onClick={() => navigate("/main/my-books")}
           >
@@ -143,6 +193,7 @@ function WriteBook() {
           </button>
 
           <button
+            type="button"
             className="save-btn"
             onClick={handleSave}
             disabled={saving || uploading}
@@ -167,6 +218,7 @@ function WriteBook() {
               Title *
               <input
                 value={title}
+                placeholder="Give your book a captivating title..."
                 onChange={(e) => setTitle(e.target.value)}
               />
             </label>
@@ -179,8 +231,13 @@ function WriteBook() {
               >
                 <option>Fiction</option>
                 <option>Non-fiction</option>
+                <option>Mystery & Detective</option>
+                <option>Sci-Fi & Fantasy</option>
+                <option>Romance</option>
+                <option>Philosophy</option>
                 <option>Poetry</option>
                 <option>Biography</option>
+                <option>Horror</option>
               </select>
             </label>
 
@@ -198,16 +255,20 @@ function WriteBook() {
                   <img src={coverUrl} alt="Cover preview" />
                 ) : (
                   <span>
-                    {uploading ? "Uploading..." : "Click to add photo"}
+                    {uploading ? "Uploading..." : "Click to upload cover photo"}
                   </span>
                 )}
               </div>
             </label>
 
             <label>
-              Description
+              <div className="description-label-row">
+                <span>Description / Book Synopsis</span>
+              </div>
               <textarea
                 value={description}
+                rows={4}
+                placeholder="Write a brief synopsis or premise of your book..."
                 onChange={(e) => setDescription(e.target.value)}
               />
             </label>
@@ -216,7 +277,10 @@ function WriteBook() {
 
         {step === "content" && (
           <>
-            <WritingEditor value={content} onChange={setContent} />
+            <WritingEditor
+              value={content}
+              onChange={setContent}
+            />
             <WritingTips />
           </>
         )}

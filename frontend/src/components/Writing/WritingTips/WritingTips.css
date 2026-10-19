@@ -1,15 +1,23 @@
 .writing-tips {
-  margin-top: 20px;
-  padding: 16px;
-  background: #f9fafb;
+  margin-top: 24px;
+  padding: 16px 20px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
-  font-size: 14px;
+  font-size: 13.5px;
+  color: #475569;
 }
 
 .writing-tips h4 {
   margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
 }
 
 .writing-tips ul {
   padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
