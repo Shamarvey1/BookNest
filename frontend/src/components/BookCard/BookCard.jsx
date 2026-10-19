@@ -31,11 +31,15 @@ function BookCard({ book, onRemove, onRead }) {
 
     try {
       if (onRead) {
-        await onRead(book.gutenId || book.id);
+        await onRead(book.gutenId || book.id, book);
       } else {
         let realId = book.id || book.bookId;
         if (!realId && book.gutenId) {
-          const saved = await saveBookAPI(book.gutenId);
+          const saved = await saveBookAPI(book.gutenId, {
+            title: book.title,
+            authors: book.authors,
+            coverUrl: book.coverUrl,
+          });
           realId = saved.id;
         }
         if (realId) {

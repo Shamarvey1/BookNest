@@ -102,8 +102,17 @@ const Home = () => {
     setSearchParams(searchParams);
   };
 
-  const handleRead = async (gutenId) => {
-    const savedBook = await saveBookAPI(gutenId);
+  const handleRead = async (gutenId, bookMeta) => {
+    const savedBook = await saveBookAPI(
+      gutenId,
+      bookMeta
+        ? {
+            title: bookMeta.title,
+            authors: bookMeta.authors,
+            coverUrl: bookMeta.coverUrl,
+          }
+        : {}
+    );
     navigate(`/reader/${savedBook.id}`);
   };
 

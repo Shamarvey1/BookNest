@@ -29,17 +29,17 @@ const mapGutendexBook = (b) => ({
 const pickReadableFormat = (formats = {}) => {
   if (!formats) return { url: null, type: null };
 
-  const txt =
-    formats["text/plain; charset=utf-8"] ||
-    formats["text/plain"];
+  for (const [key, val] of Object.entries(formats)) {
+    if (key.startsWith("text/plain") && val && !val.endsWith(".zip")) {
+      return { url: val, type: "text" };
+    }
+  }
 
-  if (txt) return { url: txt, type: "text" };
-
-  const html =
-    formats["text/html; charset=utf-8"] ||
-    formats["text/html"];
-
-  if (html) return { url: html, type: "html" };
+  for (const [key, val] of Object.entries(formats)) {
+    if (key.startsWith("text/html") && val && !val.endsWith(".zip")) {
+      return { url: val, type: "html" };
+    }
+  }
 
   return { url: null, type: null };
 };
@@ -158,26 +158,93 @@ const saveBook = async (req, res) => {
 
     if (existing) return res.json(existing);
 
-    const metaRes = await axios.get(
-      `https://gutendex.com/books/${gutenId}/`
-    );
-    const meta = metaRes.data;
+    // 1. Resolve metadata (use req.body if supplied, with fast Gutendex fallback)
+    let title = req.body?.title || null;
+    let authors = Array.isArray(req.body?.authors)
+      ? req.body.authors
+      : req.body?.author
+      ? [req.body.author]
+      : [];
+    let coverUrl = req.body?.coverUrl || null;
+    let fallbackFormatUrl = null;
+    let fallbackType = "text";
 
-    const { url, type } = pickReadableFormat(meta.formats);
-    if (!url) {
-      return res
-        .status(400)
-        .json({ msg: "Text/HTML version unavailable" });
+    if (!title) {
+      try {
+        const metaRes = await axios.get(
+          `https://gutendex.com/books/${gutenId}/`,
+          { timeout: 4000 }
+        );
+        const meta = metaRes.data;
+        title = meta.title || title;
+        authors = meta.authors?.map((a) => a.name) || authors;
+        coverUrl = meta.formats?.["image/jpeg"] || coverUrl;
+        const fmt = pickReadableFormat(meta.formats);
+        if (fmt.url) {
+          fallbackFormatUrl = fmt.url;
+          fallbackType = fmt.type;
+        }
+      } catch (metaErr) {
+        // Gutendex timeout or error - continue with direct Gutenberg download
+      }
     }
 
-    const textRes = await axios.get(url, { responseType: "text" });
-    let content = textRes.data;
+    // 2. Fetch text content directly from Project Gutenberg CDN
+    let content = null;
+    const directUrls = [
+      `https://www.gutenberg.org/cache/epub/${gutenId}/pg${gutenId}.txt`,
+      `https://www.gutenberg.org/files/${gutenId}/${gutenId}-0.txt`,
+      fallbackFormatUrl,
+    ].filter(Boolean);
 
-    if (type === "html") {
-      content = htmlToText(content, {
-        wordwrap: 120,
-        preserveNewlines: false,
-      });
+    for (const textUrl of directUrls) {
+      try {
+        const textRes = await axios.get(textUrl, {
+          responseType: "text",
+          headers: {
+            "User-Agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            Accept: "text/plain,text/html,*/*",
+          },
+          timeout: 8000,
+        });
+
+        if (
+          textRes.data &&
+          typeof textRes.data === "string" &&
+          textRes.data.length > 500
+        ) {
+          content = textRes.data;
+          if (textUrl === fallbackFormatUrl && fallbackType === "html") {
+            content = htmlToText(content, {
+              wordwrap: 120,
+              preserveNewlines: false,
+            });
+          }
+          break;
+        }
+      } catch (fetchErr) {
+        // Try next candidate URL
+      }
+    }
+
+    if (!content) {
+      return res
+        .status(400)
+        .json({ msg: "Text content currently unavailable for this book" });
+    }
+
+    // Fallback title / author extraction if still missing
+    if (!title) {
+      const titleMatch = content.match(/Title:\s*(.+)/i);
+      title = titleMatch ? titleMatch[1].trim() : `Gutenberg Book #${gutenId}`;
+    }
+    if (authors.length === 0) {
+      const authorMatch = content.match(/Author:\s*(.+)/i);
+      if (authorMatch) authors = [authorMatch[1].trim()];
+    }
+    if (!coverUrl) {
+      coverUrl = `https://www.gutenberg.org/cache/epub/${gutenId}/pg${gutenId}.cover.medium.jpg`;
     }
 
     // Strip Gutenberg header and footer
@@ -194,9 +261,9 @@ const saveBook = async (req, res) => {
     const savedBook = await prisma.book.create({
       data: {
         gutenId,
-        title: meta.title,
-        authors: meta.authors?.map((a) => a.name) || [],
-        coverUrl: meta.formats?.["image/jpeg"] || null,
+        title,
+        authors,
+        coverUrl,
         content,
       },
     });

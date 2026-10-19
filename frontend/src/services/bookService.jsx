@@ -129,13 +129,19 @@ export const preWarmAllGenresAPI = async () => {
   }
 };
 
-export const saveBookAPI = async (gutenId) => {
+export const saveBookAPI = async (gutenId, meta = {}) => {
   const token = localStorage.getItem("token");
+  const headers = {
+    "Content-Type": "application/json",
+  };
+  if (token) {
+    headers["Authorization"] = "Bearer " + token;
+  }
+
   const res = await fetch(`${API_URL}/save/${gutenId}`, {
     method: "POST",
-    headers: {
-      Authorization: "Bearer " + token,
-    },
+    headers,
+    body: JSON.stringify(meta),
   });
   const result = await res.json().catch(() => null);
   if (!res.ok) {
