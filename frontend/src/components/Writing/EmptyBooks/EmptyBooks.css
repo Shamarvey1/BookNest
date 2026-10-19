@@ -33,7 +33,7 @@
 
 .empty-books-card button {
   width: 100%;
-  background: #2563eb;
+  background: linear-gradient(135deg, #312e81 0%, #4f46e5 50%, #9333ea 100%);
   color: #ffffff;
   border: none;
   border-radius: 12px;
@@ -41,8 +41,11 @@
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .empty-books-card button:hover {
-  background: #1e4ed8;
+  opacity: 0.95;
+  transform: translateY(-1px);
 }

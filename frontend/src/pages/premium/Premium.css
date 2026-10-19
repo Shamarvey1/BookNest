@@ -2,7 +2,7 @@
 
 .netflix-account-page {
   min-height: 100vh;
-  background-color: #f3f3f3;
+  background: transparent;
   color: #333333;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -31,7 +31,7 @@
   width: 38px;
   height: 38px;
   border: 3px solid #dcdcdc;
-  border-top-color: #2563eb;
+  border-top-color: #4f46e5;
   border-radius: 50%;
   animation: netflixSpin 0.75s linear infinite;
 }
@@ -84,9 +84,9 @@
 }
 
 .account-badge.active {
-  background: #eff6ff;
-  color: #2563eb;
-  border: 1px solid #bfdbfe;
+  background: #eef2ff;
+  color: #4f46e5;
+  border: 1px solid #c7d2fe;
 }
 
 .account-badge.free {
@@ -167,20 +167,21 @@
 }
 
 .btn-netflix-primary {
-  background: #2563eb;
+  background: linear-gradient(135deg, #312e81 0%, #4f46e5 50%, #9333ea 100%);
   color: #ffffff;
   border: none;
   font-size: 13px;
   font-weight: 600;
   padding: 10px 22px;
-  border-radius: 2px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background 0.15s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+  transition: all 0.15s ease;
 }
 
 .btn-netflix-primary:hover {
-  background: #1d4ed8;
+  opacity: 0.95;
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.45);
 }
 
 
@@ -221,7 +222,7 @@
 .link-action {
   background: none;
   border: none;
-  color: #2563eb;
+  color: #4f46e5;
   font-size: 13.5px;
   font-weight: 500;
   cursor: pointer;
@@ -231,7 +232,7 @@
 
 .link-action:hover {
   text-decoration: underline;
-  color: #1d4ed8;
+  color: #312e81;
 }
 
 .account-divider {
@@ -269,7 +270,7 @@
 .quality-pill {
   font-size: 10px;
   font-weight: 800;
-  background: #2563eb;
+  background: #4f46e5;
   color: #ffffff;
   padding: 2px 6px;
   border-radius: 2px;
@@ -314,7 +315,7 @@
 .plan-selector-box {
   width: 190px;
   min-height: 125px;
-  background: #3b82f6;
+  background: #4f46e5;
   color: #ffffff;
   border-radius: 3px;
   padding: 14px;
@@ -333,9 +334,9 @@
 }
 
 .plan-selector-box.selected {
-  background: #2563eb;
+  background: linear-gradient(135deg, #312e81 0%, #4f46e5 50%, #9333ea 100%);
   opacity: 1;
-  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.35);
   transform: translateY(-2px);
 }
 
@@ -410,13 +411,13 @@
 }
 
 .matrix-val.active-col {
-  color: #2563eb;
+  color: #4f46e5;
   font-weight: 700;
-  background-color: #f8faff;
+  background-color: #eef2ff;
 }
 
 .text-netflix-blue {
-  color: #2563eb;
+  color: #4f46e5;
   display: inline-block;
   vertical-align: middle;
 }
@@ -437,21 +438,21 @@
 
 .btn-netflix-cta {
   width: 100%;
-  background: #2563eb;
+  background: linear-gradient(135deg, #312e81 0%, #4f46e5 50%, #9333ea 100%);
   color: #ffffff;
   border: none;
   font-size: 16px;
   font-weight: 600;
   padding: 15px 24px;
-  border-radius: 2px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background 0.15s ease, box-shadow 0.15s ease;
-  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+  transition: all 0.15s ease;
 }
 
 .btn-netflix-cta:hover {
-  background: #1d4ed8;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+  opacity: 0.95;
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.45);
 }
 
 
@@ -479,7 +480,7 @@
 }
 
 .settings-link-row:hover {
-  color: #2563eb;
+  color: #4f46e5;
 }
 
 .settings-link-row svg {
@@ -488,7 +489,7 @@
 }
 
 .settings-link-row:hover svg {
-  color: #2563eb;
+  color: #4f46e5;
   transform: translateX(3px);
 }
 

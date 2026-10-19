@@ -125,9 +125,11 @@
 }
 
 .row-nav-btn:hover {
-  background: #2563eb;
-  border-color: #2563eb;
+  background: #4f46e5;
+  border-color: #4f46e5;
+  color: #ffffff;
   transform: translateY(-50%) scale(1.12);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
 }
 
 .row-nav-btn:active {

@@ -64,7 +64,7 @@
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #2563eb, #1d4ed8);
+  background: linear-gradient(90deg, #312e81, #4f46e5);
   border-radius: 3px;
   transition: width 0.3s ease;
 }
@@ -72,7 +72,7 @@
 .progress-text {
   font-size: 12px;
   font-weight: 600;
-  color: #2563eb;
+  color: #4f46e5;
   min-width: 35px;
   text-align: right;
 }
@@ -131,14 +131,15 @@
 }
 
 .btn-resume {
-  background: #2563eb;
+  background: linear-gradient(135deg, #312e81 0%, #4f46e5 50%, #9333ea 100%);
   color: white;
-  border-color: #2563eb;
+  border: none;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
 }
 
 .btn-resume:hover {
-  background: #1d4ed8;
-  border-color: #1d4ed8;
+  opacity: 0.95;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
 }
 
 .btn-remove {

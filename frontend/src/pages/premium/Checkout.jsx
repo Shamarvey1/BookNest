@@ -83,7 +83,7 @@ export default function Checkout() {
         email: "",
       },
       theme: {
-        color: "#1e56ff",
+        color: "#4f46e5",
       },
     };
 
@@ -111,7 +111,7 @@ export default function Checkout() {
         <div className="checkout-grid">
           <div className="checkout-card">
             <div className="checkout-header">
-              <Crown size={28} color="#1e56ff" />
+              <Crown size={28} color="#4f46e5" />
               <div className="checkout-header-copy">
                 <h1>Membership Checkout</h1>
                 <p>Choose a plan and complete payment securely through Razorpay.</p>

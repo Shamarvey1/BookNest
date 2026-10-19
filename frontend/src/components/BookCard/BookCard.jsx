@@ -134,8 +134,8 @@ function BookCard({ book, onRemove, onRead }) {
             <Bookmark
               size={21}
               strokeWidth={2.2}
-              fill={isBookmarked ? "#2563eb" : "none"}
-              color={isBookmarked ? "#2563eb" : "#ffffff"}
+              fill={isBookmarked ? "#4f46e5" : "none"}
+              color={isBookmarked ? "#4f46e5" : "#ffffff"}
             />
           </button>
 

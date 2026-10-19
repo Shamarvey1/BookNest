@@ -26,9 +26,18 @@
 .save-btn {
   padding: 10px 22px;
   border-radius: 999px;
-  background: #2563eb;
+  background: linear-gradient(135deg, #312e81 0%, #4f46e5 50%, #9333ea 100%);
   color: white;
   border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+  font-weight: 600;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.save-btn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
 }
 
 .write-card {

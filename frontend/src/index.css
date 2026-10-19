@@ -4,15 +4,29 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Poppins', sans-serif;
-  background-color: #f9f9f9;
+html {
+  min-height: 100%;
 }
 
-:root{
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #1e293b;
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+
+:root {
   --container-max: 1100px;
   --gap: 16px;
   --radius: 10px;
+
+  --brand-indigo: #312e81;
+  --brand-royal: #4f46e5;
+  --brand-violet: #9333ea;
+  --gradient-brand: linear-gradient(135deg, #312e81 0%, #4f46e5 50%, #9333ea 100%);
+  --gradient-brand-horizontal: linear-gradient(90deg, #312e81 0%, #4f46e5 50%, #9333ea 100%);
+  --gradient-brand-soft: linear-gradient(135deg, rgba(49, 46, 129, 0.06) 0%, rgba(79, 70, 229, 0.06) 50%, rgba(147, 51, 234, 0.06) 100%);
+  --brand-glow: rgba(79, 70, 229, 0.35);
 }
 
 .container{

@@ -16,6 +16,17 @@
   transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 
+.netflix-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #312e81 0%, #4f46e5 50%, #9333ea 100%);
+  opacity: 0.9;
+}
+
 .header-left {
   display: flex;
   align-items: center;
@@ -40,7 +51,10 @@
   font-size: 21px;
   font-weight: 800;
   letter-spacing: -0.4px;
-  color: #2563eb;
+  background: linear-gradient(135deg, #312e81 0%, #4f46e5 50%, #9333ea 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 
@@ -65,7 +79,7 @@
 }
 
 .nav-link.active {
-  color: #2563eb;
+  color: #4f46e5;
   font-weight: 600;
 }
 
@@ -75,8 +89,8 @@
   bottom: -4px;
   left: 0;
   right: 0;
-  height: 2px;
-  background: #2563eb;
+  height: 2.5px;
+  background: linear-gradient(90deg, #312e81 0%, #4f46e5 50%, #9333ea 100%);
   border-radius: 2px;
 }
 
@@ -107,8 +121,8 @@
 
 .netflix-search-box.open:focus-within {
   background: #ffffff;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
 }
 
 .search-toggle-btn {
@@ -191,7 +205,7 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(135deg, #312e81 0%, #4f46e5 100%);
   color: #ffffff;
   font-size: 13px;
   font-weight: 700;
@@ -251,7 +265,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(135deg, #312e81 0%, #4f46e5 100%);
   color: #ffffff;
   font-size: 15px;
   font-weight: 700;
@@ -309,8 +323,8 @@
 }
 
 .dropdown-item:hover {
-  background: #f8fafc;
-  color: #2563eb;
+  background: #eef2ff;
+  color: #4f46e5;
 }
 
 .dropdown-item-label {
@@ -418,8 +432,8 @@
 
 .mobile-nav-item:hover,
 .mobile-nav-item.active {
-  background: #eff6ff;
-  color: #2563eb;
+  background: #eef2ff;
+  color: #4f46e5;
   font-weight: 600;
 }
 

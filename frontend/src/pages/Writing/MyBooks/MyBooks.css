@@ -24,7 +24,7 @@
 }
 
 .new-book-btn {
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  background: linear-gradient(135deg, #312e81 0%, #4f46e5 50%, #9333ea 100%);
   color: white;
   padding: 12px 22px;
   border-radius: 12px;
@@ -32,6 +32,8 @@
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
 .new-book-btn:hover {

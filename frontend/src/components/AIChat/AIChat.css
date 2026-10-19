@@ -124,7 +124,7 @@
 
 .ai-message.user p {
   margin: 0;
-  background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #312e81 0%, #4f46e5 100%);
   color: #ffffff;
   padding: 10px 14px;
   border-radius: 16px 16px 4px 16px;
@@ -207,7 +207,8 @@
 }
 
 .ai-input:focus {
-  border-color: #8b5cf6;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
 }
 
 .ai-input:disabled {
@@ -218,7 +219,7 @@
 .ai-send-btn {
   width: 40px;
   height: 40px;
-  background: #c084fc;
+  background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -228,14 +229,15 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  transition: opacity 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
   flex-shrink: 0;
   line-height: 1;
 }
 
 .ai-send-btn:hover:not(:disabled) {
-  opacity: 0.9;
-  transform: scale(1.03);
+  opacity: 0.95;
+  transform: scale(1.04);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
 }
 
 .ai-send-btn:disabled {
